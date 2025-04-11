@@ -2,78 +2,50 @@
 // Controlador frontal
 // Recoger parámetros GET
 // Llevará a los controllers (función autoload que al coger los parámetros GET carge un controlador concreto- investigar)
-?>
-<!DOCTYPE html>
-<html lang="en">
+require_once 'autoload.php';
+require_once 'config/parameters.php';
+// require_once 'views/layout/header.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Alejandría</title>
-</head>
+function showError()
+{
 
-<body>
-    <!-- Cabecera -->
-    <header id="header" style="border: 1px solid blue;">
-        <div id="logo">
-            <img src="./assets/img/logo_prueba.png" alt="logo de Alejandría">
-            <a href="index.php">Alejandría</a>
-        </div>
-        <div id="perfil_container">
-            <div id="user_logo">
-                <img src="./assets/img/icono-user.webp" alt="" srcset="">
-            </div>
-            <div id="desplegable_menu">
-                <!-- Menu -->
-                <nav id="menu">
-                    <ul>
-                        <li>
-                            <a href="#">Mi perfil</a>
-                        </li>
-                        <li>
-                            <a href="#">Publciaciones</a>
-                        </li>
-                        <li>
-                            <a href="#">Configuración</a>
-                        </li>
-                        <li>
-                            <a href="#">Cerrar sesión</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-    <!-- Contenido central -->
-    <div id="content" style="border: 1px solid green;">
-        <!-- Barra lateral -->
-        <div id="central" style="border: 1px solid pink;">
-            <p>Contenido pincipal</p>
-        </div>
-        <aside id="lateral" style="border: 1px solid yellow;">
-            <!-- Búsqueda -->
-            <div id="search">
-                <form action="">
-                    <input type="text" name="" id="" placeholder="El camino de los ...">
-                    <input type="submit" value="Buscar">
-                </form>
-            </div>
-            <!-- Recomendaciones -->
-            <div id="recomendation">
-                <p>Aquí las recomendaciones</p>
-            </div>
-            <!-- Lectura actual -->
-            <div id="current_book">
-                <p>Aquí el libro que estás leyendo</p>
+    $error = new errorController();
+    $error->index();
+}
 
-            </div>
-        </aside>
-    </div>
-    <!-- Pie de página -->
-    <footer id="footer" style="border: 1px solid grey;">
-        <p>Desarrollado por Eva Alonso &copy; <?= date('Y') ?></p>
-    </footer>
-</body>
 
-</html>
+// Controla a que controlador va
+//Si existe la variable GET generamos una variable
+if (isset($_GET['controller'])) {
+    $nombre_controlador = $_GET['controller'] . 'Controller';
+
+    //Si no esta definido los parametros controller y action -> la variable nombre controlador será el valor por defecto
+} elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
+    $nombre_controlador = controller_default;
+} else {
+    showError();
+    exit();
+}
+
+//Si existe esa clase, ese controlador, creo el objeto
+if (class_exists($nombre_controlador)) {
+    $controlador = new $nombre_controlador();
+
+    // Compruebo si existe la acción y el método e invocó ese método
+    if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
+        $action = $_GET['action'];
+        $controlador->$action();
+
+        // Cargamos la action como default si no existen las variables GET
+    } elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
+        $action_default = action_default;
+        $controlador->$action_default();
+    } else {
+        showError();
+    }
+} else {
+    showError();
+}
+
+// require_once 'views/layout/sidebar.php';
+// require_once 'views/layout/footer.php';
