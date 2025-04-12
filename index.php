@@ -4,6 +4,7 @@
 // Llevará a los controllers (función autoload que al coger los parámetros GET carge un controlador concreto- investigar)
 require_once 'autoload.php';
 require_once 'config/parameters.php';
+require_once 'config/db.php';
 // require_once 'views/layout/header.php';
 
 function showError()

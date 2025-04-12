@@ -1,0 +1,61 @@
+<?php
+
+class Role
+{
+    private int $id;
+    private string $name;
+
+    public static function createById(int $id): self
+    {
+
+        $db = Database::connect();
+
+        $stmt = $db->prepare("SELECT * FROM roles WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+
+        $role = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if (!$role) {
+            throw new RuntimeException("Role con ID $id no encontrado");
+        }
+
+        $instance = new self();
+        $instance->id = $role->id;
+        $instance->name = $role->name;
+
+        return $instance;
+    }
+
+    public static function createByName(string $name): self
+    {
+       
+            $db = Database::connect();
+
+            $stmt = $db->prepare("SELECT * FROM roles WHERE name = :name");
+            $stmt->execute([':name' => $name]);
+
+            $role = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if (!$role) {
+                throw new RuntimeException("Role con nombre $name no encontrado");
+            }
+
+            $instance = new self();
+            $instance->id = $role->id;
+            $instance->name = $role->name;
+
+            return $instance;
+       
+       
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+}
