@@ -23,20 +23,21 @@ body {
         color: black;
     }
 
-    a:hover{
+    a:hover {
         background-color: #fff;
-        opacity: 0.7;        
+        opacity: 0.7;
         border-radius: 8px;
     }
 
 }
-#container{
+
+#container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    form{
+    form {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,3 +45,6 @@ body {
     }
 
 }
+
+
+

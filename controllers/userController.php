@@ -30,8 +30,14 @@ class UserController
             $nombre = isset($_POST['username']) ? $_POST['username'] : false;
             $email = isset($_POST['email']) ? $_POST['email'] : false;
             $password = isset($_POST['password']) ? $_POST['password'] : false;
+            $confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : false;
             $role = isset($_POST['role']) ? $_POST['role'] : false;
 
+            if ($password != $confirmPassword) {
+                $_SESSION['error_password'] = "Error, las contraseñas no coinciden";
+                header("Location:" . base_url . 'user/register');
+                exit();
+            }
 
             // Cada valor se le pasa al setter FALTARÍA LA VALIDACIÓN DEL PROYECTO ANTERIOR
             if ($nombre  && $email && $password && $role) {
@@ -49,8 +55,11 @@ class UserController
                     $_SESSION['register'] = "complete";
                     // Cookie o por GET
                     $_SESSION['email'] = $usuario->getEmail();
+                    header("Location:" . base_url . 'user/login');
+                    exit();
                 } else {
                     $_SESSION['register'] = "failed";
+
                 }
             } else {
                 $_SESSION['register'] = "failed";
@@ -59,8 +68,8 @@ class UserController
             $_SESSION['register'] = "failed";
             // Control de errores 
         }
-
-        header("Location:" . base_url . 'user/login');
+        header("Location:" . base_url . 'user/register');
+        
     }
 
     public function loginUser()
@@ -75,10 +84,6 @@ class UserController
             $usuario->setEmail($_POST['email']);
             $usuario->setPassword($_POST['password']);
 
-            echo 'Lo que me viene del post';
-            var_dump($_POST);
-            var_dump($usuario);
-
             $identity = $usuario->login();
 
 
@@ -92,7 +97,9 @@ class UserController
                     $_SESSION['admin'] = true;
                 }
             } else {
-                $_SESSION['error_login'] = 'Identificación fallida !!';
+                $_SESSION['error_login'] = 'Credenciales incorrectas';
+                header("Location:" . base_url . 'user/login');
+                exit();
             }
         }
         // Redirigimos a la base_url siempre

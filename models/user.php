@@ -78,6 +78,8 @@ class User
 
     public function setPassword(string $password): void
     {
+
+
         $this->password = $password;
     }
 
@@ -108,18 +110,18 @@ class User
     // MÉTODOS DE BASE DE DATOS
     public function save(): bool
     {
-        $this->validateForSave();
-
         try {
+            $this->validateForSave();
+
             $stmt = $this->db->prepare(
                 "INSERT INTO users (name, email, password, id_role, biography, profile_img) 
-                 VALUES (:name, :email, :password, :role, :biography, :profileImage)"
+                VALUES (:name, :email, :password, :role, :biography, :profileImage)"
             );
 
             $stmt->execute([
                 ':name' => $this->name,
                 ':email' => $this->email,
-                ':password' => $this->getpassword(),
+                ':password' => $this->getPassword(),
                 ':role' => $this->role->getId(),
                 ':biography' => $this->biography,
                 ':profileImage' => $this->profileImage
@@ -127,10 +129,47 @@ class User
 
             $this->id = $this->db->lastInsertId();
             return true;
+        } catch (InvalidArgumentException $e) {
+            // Captura específicamente errores de validación
+            $_SESSION['register'] = "failed";
+            error_log("Error de validación: " . $e->getMessage());
+            return false;
         } catch (PDOException $e) {
-            var_dump("Error al guardar usuario: " . $e->getMessage());
+            error_log("Error al guardar usuario: " . $e->getMessage());
             return false;
         }
+    }
+
+    public function emailExists(): bool
+    {
+        try {
+            $stmt = $this->db->prepare(
+                "SELECT COUNT(*) FROM users WHERE email = :email"
+            );
+            $stmt->execute([':email' => $this->email]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $e) {
+            error_log("Error al comprobar email: " . $e->getMessage());
+            throw $e; // Re-lanza la excepción para manejo superior
+        }
+    }
+
+    private function validateForSave(): void
+    {
+        if (empty($this->name) || empty($this->email) || empty($this->password)) {
+            $_SESSION['register'] = "failed";
+            throw new InvalidArgumentException("Los campos no pueden estar vacíos");
+        }
+
+        if ($this->emailExists()) {
+            $_SESSION['register'] = "failed";
+            throw new InvalidArgumentException("El email ya existe");
+        }
+    }
+
+    public function verifyPassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
     }
 
 
@@ -196,40 +235,6 @@ class User
     //         return false;
     //     }
     // }
-
-    public function emailExists(): bool
-    {
-        try {
-            $stmt = $this->db->prepare(
-                "SELECT COUNT(*) FROM users WHERE email = :email"
-            );
-
-            $stmt->execute([':email' => $this->email]);
-            return $stmt->fetchColumn() > 0;
-        } catch (PDOException $e) {
-            error_log("Error al verificar email: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    // Métodos auxiliares
-    private function validateForSave(): void
-    {
-        if (empty($this->name) || empty($this->email) || empty($this->password)) {
-            throw new RuntimeException("Faltan datos");
-        }
-
-        if ($this->emailExists()) {
-            throw new RuntimeException("El email ya está registrado");
-        }
-    }
-
-    public function verifyPassword(string $password): bool
-    {
-        return password_verify($password, $this->password);
-    }
-
-
 
     // MÉTODO PARA DEBUG
     public function debugDump(): void

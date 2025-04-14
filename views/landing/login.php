@@ -20,7 +20,7 @@
         </div>
     </header>
 
-   
+
 
 
 
@@ -29,11 +29,22 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm p-4">
                     <h2 class="mb-4 text-center">Inicia sesión</h2>
+                    <?php if (isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
+                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                            Registro completado correctamente
+                        </div>
+                    <?php elseif (isset($_SESSION['error_login'])): ?>
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            <?= $_SESSION['error_login'] ?>
+                        </div>
+                    <?php endif; ?>
                     <form method="post" action="<?= base_url ?>user/loginUser">
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo" required <?= isset($_SESSION['email']) ? 'value="' . $_SESSION['email'] . '"' : '' ?>>
                         </div>
+                        <?php Utils::deleteSession('register'); ?>
+                        <?php Utils::deleteSession('error_login'); ?>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
