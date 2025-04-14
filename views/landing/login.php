@@ -20,6 +20,8 @@
         </div>
     </header>
 
+   
+
 
 
     <div class="container">
@@ -27,10 +29,10 @@
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm p-4">
                     <h2 class="mb-4 text-center">Inicia sesión</h2>
-                    <form method="post" action="<?= base_url ?>index">
+                    <form method="post" action="<?= base_url ?>user/loginUser">
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo" required <?= isset($_SESSION['email']) ? 'value="' . $_SESSION['email'] . '"' : '' ?>>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>

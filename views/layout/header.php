@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="<?= base_url ?>/assets/css/styles.css">
     <title>Alejandría</title>
 </head>
 
@@ -12,12 +12,12 @@
     <!-- Cabecera -->
     <header id="header" style="border: 1px solid blue;">
         <div id="logo">
-            <img src="./assets/img/logo_prueba.png" alt="logo de Alejandría">
+            <img src="<?= base_url ?>/assets/img/logo_prueba.png" alt="logo de Alejandría">
             <a href="index.php">Alejandría</a>
         </div>
         <div id="perfil_container">
             <div id="user_logo">
-                <img src="./assets/img/icono-user.webp" alt="" srcset="">
+                <img src="<?= base_url ?>/assets/img/icono-user.webp" alt="" srcset="">
             </div>
             <div id="desplegable_menu">
                 <!-- Menu -->
@@ -33,7 +33,7 @@
                             <a href="#">Configuración</a>
                         </li>
                         <li>
-                            <a href="#">Cerrar sesión</a>
+                            <a href="<?=base_url?>user/logout">Cerrar sesión</a>
                         </li>
                     </ul>
                 </nav>

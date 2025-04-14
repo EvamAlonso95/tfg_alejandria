@@ -1,7 +1,8 @@
 <?php
+// Iniciamos la sesión para poder usarla en el controlador frontal
 require_once './models/user.php';
 
-class userController
+class UserController
 {
 
     public function index()
@@ -14,7 +15,13 @@ class userController
         require_once 'views/landing/register.php';
     }
 
+    public function login()
+    {
+        require_once 'views/landing/login.php';
+    }
 
+
+    // Método para guardar el usuario
     public function save()
     {
         if (isset($_POST)) {
@@ -35,9 +42,13 @@ class userController
                 $usuario->setRole($role);
 
                 $save = $usuario->save();
-                var_dump($save);
+                // var_dump($usuario);
+
+
                 if ($save) {
                     $_SESSION['register'] = "complete";
+                    // Cookie o por GET
+                    $_SESSION['email'] = $usuario->getEmail();
                 } else {
                     $_SESSION['register'] = "failed";
                 }
@@ -46,13 +57,56 @@ class userController
             }
         } else {
             $_SESSION['register'] = "failed";
+            // Control de errores 
         }
-        // header("Location:" . base_url . 'user/register');
-        var_dump($_SESSION['register']);
+
+        header("Location:" . base_url . 'user/login');
     }
 
-    public function login()
+    public function loginUser()
     {
-        require_once 'views/landing/login.php';
+        // Si hay datos por post
+        if (isset($_POST)) {
+            // Identificar al usuario
+            // Consulta a la base de datos
+            //Creamos un objeto del modelo
+            $usuario = new User();
+            // Seteamos el email y la pasword al objeto
+            $usuario->setEmail($_POST['email']);
+            $usuario->setPassword($_POST['password']);
+
+            echo 'Lo que me viene del post';
+            var_dump($_POST);
+            var_dump($usuario);
+
+            $identity = $usuario->login();
+
+
+
+            //Si llega identity y es un objeto
+            if ($identity && is_object($identity)) {
+                // Creamos la sesion donde va la identidad del usuario
+                $_SESSION['identity'] = $identity;
+                // Si el rol es admin, creamos una sesion para el admin como true
+                if ($identity->rol == 'admin') {
+                    $_SESSION['admin'] = true;
+                }
+            } else {
+                $_SESSION['error_login'] = 'Identificación fallida !!';
+            }
+        }
+        // Redirigimos a la base_url siempre
+        header("Location:" . base_url . 'dashboard');
+    }
+
+    public function logout()
+    {
+        if (isset($_SESSION['identity'])) {
+            unset($_SESSION['identity']);
+        }
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
+        header("Location:" . base_url . 'user/login');
     }
 }

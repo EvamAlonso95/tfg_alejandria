@@ -1,10 +1,14 @@
 <IfModule mod_rewrite.c>
-# Activar rewrite
-RewriteEngine on
-ErrorDocument 404 http://localhost/alejandria/error/index
+    # Activar rewrite
+    RewriteEngine on
+    ErrorDocument 404 http://localhost/alejandria/error/index
 
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{SCRIPT_FILENAME} !-f
+    RewriteCond %{SCRIPT_FILENAME} !-d
+    RewriteCond %{SCRIPT_FILENAME} !-f
 
-RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
+    # Regla para URLs con controlador y acción
+    RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=$2 [L,QSA]
+    
+    # Regla para URLs con solo controlador (acción por defecto 'index')
+    RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?controller=$1&action=index [L,QSA]
 </IfModule>

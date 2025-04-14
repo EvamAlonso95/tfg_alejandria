@@ -5,7 +5,7 @@ class User
     private ?int $id = null;
     private ?string $name = null;
     private ?string $email = null;
-    private ?string $passwordHash = null;
+    private ?string $password = null;
     private ?string $biography = null;
     private ?string $profileImage = null;
     private Role $role;
@@ -31,7 +31,6 @@ class User
         return $this->name;
     }
 
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -52,9 +51,13 @@ class User
         return $this->role;
     }
 
+    public function getpassword(): ?string
+    {
+        return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 4]);
+    }
+
     // SETTERS con validación
 
-    // SETTERS MEJORADOS
     public function setName(string $name): void
     {
         $name = trim($name);
@@ -75,14 +78,7 @@ class User
 
     public function setPassword(string $password): void
     {
-        if (strlen($password) < 6) {
-            throw new InvalidArgumentException("La contraseña debe tener al menos 6 caracteres");
-        }
-        $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
-        if ($hash === false) {
-            throw new RuntimeException("Error al generar el hash de la contraseña");
-        }
-        $this->passwordHash = $hash;
+        $this->password = $password;
     }
 
     public function setBiography(string $biography): void
@@ -123,7 +119,7 @@ class User
             $stmt->execute([
                 ':name' => $this->name,
                 ':email' => $this->email,
-                ':password' => $this->passwordHash,
+                ':password' => $this->getpassword(),
                 ':role' => $this->role->getId(),
                 ':biography' => $this->biography,
                 ':profileImage' => $this->profileImage
@@ -137,33 +133,69 @@ class User
         }
     }
 
-    public function login(): bool
+
+    public function login()
     {
-        try {
-            $stmt = $this->db->prepare(
-                "SELECT id, name, email, password, role, biography, profile_image 
-                 FROM users WHERE email = :email LIMIT 1"
-            );
+        $result = false;
+        $email = $this->email;
+        $password = $this->password;
 
-            $stmt->execute([':email' => $this->email]);
-            $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ($user && password_verify($this->passwordHash, $user->password)) {
-                $this->id = $user->id;
-                $this->name = $user->name;
-                $this->email = $user->email;
-                $this->role = $user->role;
-                $this->biography = $user->biography;
-                $this->profileImage = $user->profile_image;
-                return true;
+        // Comprobar si existe el usuario usando parámetros preparados
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        // Obtener el resultado
+        $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($usuario) {
+            // Verificar la contraseña
+            if (password_verify($password, $usuario->password)) {
+
+                $result = $usuario;
             }
-
-            return false;
-        } catch (PDOException $e) {
-            error_log("Error en login: " . $e->getMessage());
-            return false;
         }
+
+        return $result;
     }
+    // public function login(): bool
+    // {
+
+    //     $result = false;
+    //     if (empty($this->email) || empty($this->password)) {
+    //         return $result;
+    //     }
+
+
+    //     try {
+    //         $stmt = $this->db->prepare(
+    //             "SELECT * FROM users WHERE email = :email"
+    //         );
+
+    //         $stmt->execute([':email' => $this->email]);
+    //         $user = $stmt->fetch(PDO::FETCH_OBJ);
+    //         // var_dump($user);
+    //         // die();
+    //         if ($user && password_verify($this->password, $user->password)) {
+    //             // var_dump(password_verify($this->password, $user->password));
+    //             // die();
+    //             $this->id = $user->id;
+    //             $this->name = $user->name;
+    //             $this->email = $user->email;
+    //             $this->role = $user->role;
+    //             $this->biography = $user->biography;
+    //             $this->profileImage = $user->profile_image;
+    //             return true;
+    //         }
+
+    //         return false;
+    //     } catch (PDOException $e) {
+    //         error_log("Error en login: " . $e->getMessage());
+    //         return false;
+    //     }
+    // }
 
     public function emailExists(): bool
     {
@@ -183,7 +215,7 @@ class User
     // Métodos auxiliares
     private function validateForSave(): void
     {
-        if (empty($this->name) || empty($this->email) || empty($this->passwordHash)) {
+        if (empty($this->name) || empty($this->email) || empty($this->password)) {
             throw new RuntimeException("Faltan datos");
         }
 
@@ -194,8 +226,10 @@ class User
 
     public function verifyPassword(string $password): bool
     {
-        return password_verify($password, $this->passwordHash);
+        return password_verify($password, $this->password);
     }
+
+
 
     // MÉTODO PARA DEBUG
     public function debugDump(): void
@@ -204,7 +238,7 @@ class User
         echo "ID: " . $this->id . "\n";
         echo "Name: " . $this->name . "\n";
         echo "Email: " . $this->email . "\n";
-        echo "Password Hash: " . ($this->passwordHash ? '***HASHED***' : 'NULL') . "\n";
+        echo "Password Hash: " . ($this->password ? '***HASHED***' : 'NULL') . "\n";
         echo "Biography: " . $this->biography . "\n";
         echo "Profile Image: " . $this->profileImage . "\n";
         echo "Role: " . $this->role . "\n";
