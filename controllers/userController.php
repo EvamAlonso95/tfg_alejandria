@@ -59,7 +59,6 @@ class UserController
                     exit();
                 } else {
                     $_SESSION['register'] = "failed";
-
                 }
             } else {
                 $_SESSION['register'] = "failed";
@@ -69,42 +68,78 @@ class UserController
             // Control de errores 
         }
         header("Location:" . base_url . 'user/register');
-        
     }
 
     public function loginUser()
     {
-        // Si hay datos por post
-        if (isset($_POST)) {
-            // Identificar al usuario
-            // Consulta a la base de datos
-            //Creamos un objeto del modelo
-            $usuario = new User();
-            // Seteamos el email y la pasword al objeto
-            $usuario->setEmail($_POST['email']);
-            $usuario->setPassword($_POST['password']);
+        // Verificar si hay datos POST
+        if (!isset($_POST['email']) || !isset($_POST['password'])) {
+            $_SESSION['error_login'] = 'Credenciales no proporcionadas';
+            header("Location:" . base_url . 'user/login');
+            exit();
+        }
 
-            $identity = $usuario->login();
+        // Crear objeto usuario y setear credenciales
+        $usuario = new User();
+        $usuario->setEmail(trim($_POST['email']));
+        $usuario->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
 
+        // Intentar login
+        $identity = $usuario->login();
 
+        // Si el login falla
+        if (!$identity || !is_object($identity)) {
+            $_SESSION['error_login'] = 'Credenciales incorrectas';
+            header("Location:" . base_url . 'user/login');
+            exit();
+        }
 
-            //Si llega identity y es un objeto
-            if ($identity && is_object($identity)) {
-                // Creamos la sesion donde va la identidad del usuario
-                $_SESSION['identity'] = $identity;
-                // Si el rol es admin, creamos una sesion para el admin como true
-                if ($identity->rol == 'admin') {
-                    $_SESSION['admin'] = true;
+        // Iniciar sesión si no está iniciada
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Limpiar sesiones anteriores
+        unset($_SESSION['admin'], $_SESSION['author'], $_SESSION['reader'], $_SESSION['role'], $_SESSION['error_login']);
+
+        // Guardar identidad del usuario
+        $_SESSION['identity'] = $identity;
+
+        // Obtener roles del usuario (asumo que getRoles() devuelve los roles del usuario logueado)
+        $roles = $usuario->getRoles($identity->id); // Pasar el ID del usuario logueado
+
+        $user_id_role = $identity->id_role;
+
+        var_dump($roles);
+        var_dump($user_id_role);
+
+        foreach ($roles as $rol) {
+            if (isset($rol['id']) && $rol['id'] == $user_id_role) {
+                switch (strtolower($rol['name'])) {
+                    case 'admin':
+                        $_SESSION['admin'] = true;
+                        $_SESSION['role'] = 'admin';
+                        break;
+                    case 'author':
+                        $_SESSION['author'] = true;
+                        $_SESSION['role'] = 'author';
+                        break;
+                    case 'reader':
+                        $_SESSION['reader'] = true;
+                        $_SESSION['role'] = 'reader';
+                        break;
                 }
-            } else {
-                $_SESSION['error_login'] = 'Credenciales incorrectas';
-                header("Location:" . base_url . 'user/login');
-                exit();
             }
         }
-        // Redirigimos a la base_url siempre
+
+        // Redirigir al dashboard
         header("Location:" . base_url . 'dashboard');
+        exit();
     }
+
+
+
+    // Método para cerrar sesión
 
     public function logout()
     {

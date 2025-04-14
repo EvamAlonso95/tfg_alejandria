@@ -20,7 +20,7 @@ class User
         }
     }
 
-    // GETTERS
+    // -- GETTERS --
     public function getId(): ?int
     {
         return $this->id;
@@ -56,7 +56,7 @@ class User
         return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 4]);
     }
 
-    // SETTERS con validación
+    // -- SETTERS --
 
     public function setName(string $name): void
     {
@@ -107,7 +107,8 @@ class User
         $this->role = $role;
     }
 
-    // MÉTODOS DE BASE DE DATOS
+    // -- MÉTODOS  --
+    // Método para guardar el usuario en la base de datos
     public function save(): bool
     {
         try {
@@ -140,6 +141,7 @@ class User
         }
     }
 
+    // Método para comprobar si el email ya existe en la base de datos
     public function emailExists(): bool
     {
         try {
@@ -154,6 +156,7 @@ class User
         }
     }
 
+    // Método para validar los datos antes de guardar
     private function validateForSave(): void
     {
         if (empty($this->name) || empty($this->email) || empty($this->password)) {
@@ -167,12 +170,12 @@ class User
         }
     }
 
+    // Método para verificar la contraseña
     public function verifyPassword(string $password): bool
     {
         return password_verify($password, $this->password);
     }
-
-
+    // Método para iniciar sesión
     public function login()
     {
         $result = false;
@@ -198,45 +201,19 @@ class User
         }
 
         return $result;
+    } 
+
+    // Método para devolver los roles
+    public function getRoles(): array
+    {
+        $sql = "SELECT * FROM roles";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // public function login(): bool
-    // {
+     
 
-    //     $result = false;
-    //     if (empty($this->email) || empty($this->password)) {
-    //         return $result;
-    //     }
-
-
-    //     try {
-    //         $stmt = $this->db->prepare(
-    //             "SELECT * FROM users WHERE email = :email"
-    //         );
-
-    //         $stmt->execute([':email' => $this->email]);
-    //         $user = $stmt->fetch(PDO::FETCH_OBJ);
-    //         // var_dump($user);
-    //         // die();
-    //         if ($user && password_verify($this->password, $user->password)) {
-    //             // var_dump(password_verify($this->password, $user->password));
-    //             // die();
-    //             $this->id = $user->id;
-    //             $this->name = $user->name;
-    //             $this->email = $user->email;
-    //             $this->role = $user->role;
-    //             $this->biography = $user->biography;
-    //             $this->profileImage = $user->profile_image;
-    //             return true;
-    //         }
-
-    //         return false;
-    //     } catch (PDOException $e) {
-    //         error_log("Error en login: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
-
-    // MÉTODO PARA DEBUG
+    // Método para debugear
     public function debugDump(): void
     {
         echo "<pre>DEBUG User Object:\n";

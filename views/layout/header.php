@@ -21,19 +21,28 @@
             </div>
             <div id="desplegable_menu">
                 <!-- Menu -->
-                <nav id="menu">
+                <nav id="menu" aria-label="Navegación principal">
                     <ul>
+                        <!-- Elemento común para todos los usuarios -->
                         <li>
-                            <a href="#">Mi perfil</a>
+                            <a href="<?= base_url ?>user/profile" class="menu-link">Mi perfil</a>
                         </li>
+
+                        <!-- Solo visible para autores -->
+                        <?php if ($_SESSION['role'] === 'author'): ?>                        
+                            <li class="author-only">
+                                <a href="<?= base_url ?>post/manage" class="menu-link">Publicaciones</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <!-- Elemento común para todos los usuarios -->
                         <li>
-                            <a href="#">Publicaciones</a>
+                            <a href="<?= base_url ?>user/settings" class="menu-link">Configuración</a>
                         </li>
+
+                        <!-- Opción de cierre de sesión -->
                         <li>
-                            <a href="#">Configuración</a>
-                        </li>
-                        <li>
-                            <a href="<?=base_url?>user/logout">Cerrar sesión</a>
+                            <a href="<?= base_url ?>user/logout" class="menu-link logout">Cerrar sesión</a>
                         </li>
                     </ul>
                 </nav>
