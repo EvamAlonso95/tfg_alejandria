@@ -1,4 +1,4 @@
-<?php Utils::isIdentity()?>
+<?php Utils::isIdentity() ?>
 <!-- Cabecera -->
 <header id="header" style="border: 1px solid blue;">
     <div id="logo">
@@ -7,7 +7,10 @@
     </div>
     <div id="perfil_container">
         <div id="user_logo">
-            <img src="<?= base_url ?>/assets/img/icono-user.webp" alt="" srcset="">
+            <img src="<?= isset($_SESSION['identity']->profile_img) && file_exists($_SESSION['identity']->profile_img)
+                            ? base_url . '/' . $_SESSION['identity']->profile_img
+                            : base_url . '/assets/img/icono-user.webp' ?>"
+                alt="Foto de perfil">
         </div>
         <div id="desplegable_menu">
             <!-- Menu -->

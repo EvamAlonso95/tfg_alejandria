@@ -220,6 +220,29 @@ class User
     }
 
 
+    //Método para editar los datos del usuario
+    public function editUser()
+    {
+        try {
+            $stmt = $this->db->prepare(
+                "UPDATE users SET name = :name, email = :email, biography = :biography, profile_img = :profileImage WHERE id = :id"
+            );
+
+            $stmt->execute([
+                ':name' => $this->name,
+                ':email' => $this->email,
+                ':biography' => $this->biography,
+                ':profileImage' => $this->profileImage,
+                ':id' => $this->id
+            ]);
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error al editar usuario: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
     // Método para devolver los roles REVISAR ESTO, TIENE QUE IR A LA CLASE ROL
     public function getRoles(): array

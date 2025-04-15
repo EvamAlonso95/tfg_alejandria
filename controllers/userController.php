@@ -22,12 +22,25 @@ class UserController
 
     public function profile()
     {
-      if(isset($_SESSION['identity'])){
-        $user = new User();
-        $user->setId($_SESSION['identity']->id);
-        $user = $user->getOneUser(); // Obtener el usuario de la base de datos
-        require_once 'views/profiles/userProfile.php';
-      }
+        if (isset($_SESSION['identity'])) {
+            $user = new User();
+            $user->setId($_SESSION['identity']->id);
+            $user = $user->getOneUser(); // Obtener el usuario de la base de datos
+
+            require_once 'views/profiles/userProfile.php';
+        }
+    }
+
+    // Método para ir a la vista editar guardando el id
+    public function edit()
+    {
+
+        if (isset($_SESSION['identity'])) {
+            $user = new User();
+            $user->setId($_SESSION['identity']->id);
+            $user = $user->getOneUser(); // Obtener el usuario de la base de datos
+            require_once 'views/profiles/editProfile.php';
+        }
     }
 
 
@@ -80,6 +93,7 @@ class UserController
         header("Location:" . base_url . 'user/register');
     }
 
+    // Método para logear al usuario
     public function loginUser()
     {
         // Verificar si hay datos POST
@@ -145,6 +159,44 @@ class UserController
         // Redirigir al dashboard
         header("Location:" . base_url . 'dashboard');
         exit();
+    }
+
+    // Método para editar el usuario
+    public function editUser()
+    {
+        var_dump($_POST);
+
+        if (isset($_POST)) {
+            $user = new User();
+            $user->setId($_SESSION['identity']->id);
+            $user->setName($_POST['name']);
+            $user->setEmail($_POST['email']);
+            $user->setBiography($_POST['biography']);
+
+            // Comprobar si se ha subido una imagen
+            if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] == 0) {
+                $file = $_FILES['profileImg'];
+                $fileName = $file['name'];
+                $filePath = 'uploads/images/' . $fileName;
+                move_uploaded_file($file['tmp_name'], $filePath);
+                $user->setProfileImage($filePath);
+            }
+
+            // Guardar los cambios
+            $user->editUser();
+
+            // Actualizar la sesión con los nuevos datos
+            $_SESSION['identity']->name = $_POST['name'];
+            $_SESSION['identity']->email = $_POST['email'];
+            $_SESSION['identity']->biography = $_POST['biography'];
+            if (isset($filePath)) {
+                $_SESSION['identity']->profile_img = $filePath;
+            }
+
+            header("Location:" . base_url . 'user/profile');
+        } else {
+            header("Location:" . base_url . 'user/edit');
+        }
     }
 
 

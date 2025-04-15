@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="<?= base_url ?>/assets/css/styles.css">
   <title>Tu Perfil</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
 
-  </style>
 </head>
 
 <body>
@@ -19,14 +17,14 @@
 
   <main class="container my-4">
     <h1 class="text-start mb-4"><?= $user->name ?></h1>
-
-
+    
     <!-- Datos del usuario -->
     <div class="row text-center text-md-start mb-4 align-items-stretch">
       <!-- Foto -->
       <div class="col-md-4 mb-3">
         <div class="border p-3 h-100 d-flex justify-content-center align-items-center">
-          <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+          <img src="<?= base_url . $user->profile_img ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+        
         </div>
       </div>
 
@@ -46,7 +44,7 @@
             <textarea id="biografia" class="form-control" rows="3" readonly><?= $user->biography ?></textarea>
           </div>
           <div class="text-end mt-2">
-            <a href="#editar-perfil" class="btn btn-sm btn-outline-primary">Editar perfil</a>
+            <a href="<?= base_url ?>user/edit" class="btn btn-sm btn-outline-primary">Editar perfil</a>
           </div>
         </div>
       </div>

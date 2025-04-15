@@ -38,4 +38,9 @@ class Utils
             return true;
         }
     }
+
+    //Una funcion que verifique
+
+    // Redirigir
+   
 }
