@@ -1,4 +1,4 @@
-<?php Utils::isIdentity() ?>
+<?php Utils::requireLogin(); ?>
 <!-- Cabecera -->
 <header id="header" style="border: 1px solid blue;">
     <div id="logo">

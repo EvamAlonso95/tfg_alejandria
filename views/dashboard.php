@@ -1,5 +1,6 @@
 <?php
 require_once 'views/layout/header.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

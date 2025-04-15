@@ -9,6 +9,7 @@ require_once 'helpers/Utils.php';
 session_start(); // Iniciamos la sesión para poder usarla en el controlador frontal
 // require_once 'views/layout/header.php';
 
+ // Verifica si el usuario no está autenticado
 function showError()
 {
 

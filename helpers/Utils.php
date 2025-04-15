@@ -20,7 +20,15 @@ class Utils
         }
     }
 
-
+    public static function requireLogin()
+    {
+        if (isset($_SESSION['identity'])) {
+            header('Location:' . base_url );
+            exit();
+        } else {
+            return true;
+        }
+    }
     //Una funcion que verifique
 
     // Redirigir
