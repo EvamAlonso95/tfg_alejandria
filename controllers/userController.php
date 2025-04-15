@@ -22,7 +22,12 @@ class UserController
 
     public function profile()
     {
+      if(isset($_SESSION['identity'])){
+        $user = new User();
+        $user->setId($_SESSION['identity']->id);
+        $user = $user->getOneUser(); // Obtener el usuario de la base de datos
         require_once 'views/profiles/userProfile.php';
+      }
     }
 
 

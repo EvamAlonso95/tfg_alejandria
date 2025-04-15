@@ -58,6 +58,12 @@ class User
 
     // -- SETTERS --
 
+    public function setId(int $id): void
+    {
+       
+        $this->id = $id;
+    }
+
     public function setName(string $name): void
     {
         $name = trim($name);
@@ -201,9 +207,21 @@ class User
         }
 
         return $result;
-    } 
+    }
 
-    // Método para devolver los roles
+    // Método para obtener un usuario por su ID
+    public function getOneUser()
+    {
+        $sql = "SELECT * FROM users WHERE id = :id"; // Usamos un placeholder fijo ":id"
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+
+
+    // Método para devolver los roles REVISAR ESTO, TIENE QUE IR A LA CLASE ROL
     public function getRoles(): array
     {
         $sql = "SELECT * FROM roles";
@@ -211,7 +229,7 @@ class User
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-     
+
 
     // Método para debugear
     public function debugDump(): void

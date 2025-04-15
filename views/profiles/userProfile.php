@@ -18,7 +18,7 @@
 
 
   <main class="container my-4">
-    <h1 class="text-start mb-4">Tu perfil</h1>
+    <h1 class="text-start mb-4"><?= $user->name ?></h1>
 
 
     <!-- Datos del usuario -->
@@ -34,16 +34,16 @@
       <div class="col mb-3">
         <div class="border p-3 d-flex flex-column gap-2 h-100">
           <div>
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" value="Juan Pérez" readonly>
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" class="form-control" value="<?= $user->name ?>" readonly>
           </div>
           <div>
-            <label for="correo" class="form-label">Correo</label>
-            <input type="email" id="correo" class="form-control" value="juan@example.com" readonly>
+            <label for="correo" class="form-label">Correo:</label>
+            <input type="email" id="correo" class="form-control" value="<?= $user->email ?>" readonly>
           </div>
           <div>
-            <label for="biografia" class="form-label">Biografía</label>
-            <textarea id="biografia" class="form-control" rows="3" readonly>Apasionado por la lectura y la tecnología.</textarea>
+            <label for="biografia" class="form-label">Biografía:</label>
+            <textarea id="biografia" class="form-control" rows="3" readonly><?= $user->biography ?></textarea>
           </div>
           <div class="text-end mt-2">
             <a href="#editar-perfil" class="btn btn-sm btn-outline-primary">Editar perfil</a>
