@@ -84,8 +84,6 @@ class User
 
     public function setPassword(string $password): void
     {
-
-
         $this->password = $password;
     }
 
@@ -219,7 +217,6 @@ class User
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-
     //Método para editar los datos del usuario
     public function editUser()
     {
@@ -245,13 +242,13 @@ class User
 
 
     // Método para devolver los roles REVISAR ESTO, TIENE QUE IR A LA CLASE ROL
-    public function getRoles(): array
-    {
-        $sql = "SELECT * FROM roles";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    // public function getRoles(): array
+    // {
+    //     $sql = "SELECT * FROM roles";
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
 
 
     // Método para debugear

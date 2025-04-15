@@ -129,8 +129,9 @@ class UserController
         // Guardar identidad del usuario
         $_SESSION['identity'] = $identity;
 
+        $role = new Role();
         // Obtener roles del usuario (asumo que getRoles() devuelve los roles del usuario logueado)
-        $roles = $usuario->getRoles($identity->id); // Pasar el ID del usuario logueado
+        $roles = $role->getRoles($identity->id); // Pasar el ID del usuario logueado
 
         $user_id_role = $identity->id_role;
 
@@ -198,9 +199,6 @@ class UserController
             header("Location:" . base_url . 'user/edit');
         }
     }
-
-
-
     // Método para cerrar sesión
 
     public function logout()

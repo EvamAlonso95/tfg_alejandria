@@ -4,7 +4,16 @@ class Role
 {
     private int $id;
     private string $name;
+    private PDO $db;
 
+    public function __construct()
+    {
+        try {
+            $this->db = Database::connect();
+        } catch (PDOException $e) {
+            throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
+        }
+    }
     public static function createById(int $id): self
     {
 
@@ -28,25 +37,23 @@ class Role
 
     public static function createByName(string $name): self
     {
-       
-            $db = Database::connect();
 
-            $stmt = $db->prepare("SELECT * FROM roles WHERE name = :name");
-            $stmt->execute([':name' => $name]);
+        $db = Database::connect();
 
-            $role = $stmt->fetch(PDO::FETCH_OBJ);
+        $stmt = $db->prepare("SELECT * FROM roles WHERE name = :name");
+        $stmt->execute([':name' => $name]);
 
-            if (!$role) {
-                throw new RuntimeException("Role con nombre $name no encontrado");
-            }
+        $role = $stmt->fetch(PDO::FETCH_OBJ);
 
-            $instance = new self();
-            $instance->id = $role->id;
-            $instance->name = $role->name;
+        if (!$role) {
+            throw new RuntimeException("Role con nombre $name no encontrado");
+        }
 
-            return $instance;
-       
-       
+        $instance = new self();
+        $instance->id = $role->id;
+        $instance->name = $role->name;
+
+        return $instance;
     }
 
     public function getId(): ?int
@@ -57,5 +64,14 @@ class Role
     public function getName(): string
     {
         return $this->name;
+    }
+
+    // Método para obtener todos los roles
+    public function getRoles(): array
+    {
+        $sql = "SELECT * FROM roles";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
