@@ -1,20 +1,28 @@
-</div>
-        <aside id="lateral" style="border: 1px solid yellow;">
-            <!-- Búsqueda -->
-            <div id="search">
-                <form action="">
-                    <input type="text" name="" id="" placeholder="El camino de los ...">
-                    <input type="submit" value="Buscar">
-                </form>
-            </div>
-            <!-- Recomendaciones -->
-            <div id="recomendation">
-                <p>Aquí las recomendaciones</p>
-            </div>
-            <!-- Lectura actual -->
-            <div id="current_book">
-                <p>Aquí el libro que estás leyendo</p>
+<div class="col-md-4">
 
-            </div>
-        </aside>
+  <!-- Búsqueda -->
+  <div class="mb-4">
+    <input type="text" class="form-control" placeholder="Búsqueda">
+  </div>
+
+  <!-- Recomendación -->
+  <div class="card mb-4 text-center">
+    <div class="card-body">
+      <div class="mb-3" style="height: 200px; background-color: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+        Imagen Recomendación
+      </div>
+      <button class="btn btn-outline-primary w-100">Descubre más</button>
     </div>
+  </div>
+
+  <!-- Lectura actual -->
+  <div class="card text-center">
+    <div class="card-body">
+      <h6>Estás leyendo...</h6>
+      <div style="height: 150px; background-color: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+        Tu lectura actual
+      </div>
+    </div>
+  </div>
+
+</div>

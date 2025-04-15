@@ -7,7 +7,7 @@
     <title>Inicia sesión</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url ?>/assets/css/landing_styles.css">
+    <link rel="stylesheet" href="<?= base_url ?>/assets/css/landingStyles.css">
 </head>
 
 <body class=" d-flex flex-column align-items-center min-vh-100">

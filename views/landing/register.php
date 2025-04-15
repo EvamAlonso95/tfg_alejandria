@@ -7,7 +7,7 @@
     <title>Regístrate</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url ?>/assets/css/landing_styles.css">
+    <link rel="stylesheet" href="<?= base_url ?>/assets/css/landingStyles.css">
 </head>
 
 <body class=" d-flex flex-column align-items-center min-vh-100">
@@ -82,10 +82,10 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS Bundle
     <!-- Asegúrate de tener estas dependencias -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 
 </html>

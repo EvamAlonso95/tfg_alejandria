@@ -20,6 +20,11 @@ class UserController
         require_once 'views/landing/login.php';
     }
 
+    public function profile()
+    {
+        require_once 'views/profiles/userProfile.php';
+    }
+
 
     // Método para guardar el usuario
     public function save()
