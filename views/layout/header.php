@@ -27,13 +27,9 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="<?= base_url ?>user/profile">Mi perfil</a></li>
                             <li><a class="dropdown-item" href="<?= base_url ?>user/edit">Configuración</a></li>
-<<<<<<< HEAD
                             <?php if ($_SESSION['role'] == 'author') : ?>
                                 <li><a class="dropdown-item" href="#">Publicaciones</a></li>
                             <?php endif; ?>
-=======
-                            <li><a class="dropdown-item" href="#">Publicaciones</a></li>
->>>>>>> c1e98ef1297bfd727454c3ccb27692d4ecfc92d8
                             <li><a class="dropdown-item" href="<?= base_url ?>user/logout">Cerrar sesión</a></li>
                         </ul>
                     </li>

@@ -52,7 +52,7 @@ class UserController extends BaseController
         if (isset($_POST)) {
 
             // Si existe el post, será el valor de la variable, sino será false
-            $nombre = isset($_POST['username']) ? $_POST['username'] : false;
+            $name = isset($_POST['username']) ? $_POST['username'] : false;
             $email = isset($_POST['email']) ? $_POST['email'] : false;
             $password = isset($_POST['password']) ? $_POST['password'] : false;
             $confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : false;
@@ -65,21 +65,23 @@ class UserController extends BaseController
             }
 
             // Cada valor se le pasa al setter FALTARÍA LA VALIDACIÓN DEL PROYECTO ANTERIOR
-            if ($nombre  && $email && $password && $role) {
-                $usuario = new User();
-                $usuario->setName($nombre);
-                $usuario->setEmail($email);
-                $usuario->setPassword($password);
-                $usuario->setRole($role);
+            if ($name  && $email && $password && $role) {
+                $user = new User();
+                $user->setName($name);
+                $user->setEmail($email);
+                $user->setPassword($password);
+                $user->setRole($role);
+                $user->setProfileImage('uploads/images/default.jpg'); // Imagen por defecto
+                $user->setBiography('');
 
-                $save = $usuario->save();
+                $save = $user->save();
                 // var_dump($usuario);
 
 
                 if ($save) {
                     $_SESSION['register'] = "complete";
                     // Cookie o por GET
-                    $_SESSION['email'] = $usuario->getEmail();
+                    $_SESSION['email'] = $user->getEmail();
                     header("Location:" . base_url . 'user/login');
                     exit();
                 } else {
@@ -106,12 +108,12 @@ class UserController extends BaseController
         }
 
         // Crear objeto usuario y setear credenciales
-        $usuario = new User();
-        $usuario->setEmail(trim($_POST['email']));
-        $usuario->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
+        $user = new User();
+        $user->setEmail(trim($_POST['email']));
+        $user->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
 
         // Intentar login
-        $identity = $usuario->login();
+        $identity = $user->login();
 
         // Si el login falla
         if (!$identity || !is_object($identity)) {
