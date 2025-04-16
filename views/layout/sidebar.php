@@ -6,7 +6,7 @@
   </div>
 
   <!-- Recomendación -->
-  <div class="card mb-4 text-center">
+  <div class="card card-recomendation mb-4 text-center">
     <div class="card-body">
       <div class="mb-3" style="height: 200px; background-color: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
         Imagen Recomendación
