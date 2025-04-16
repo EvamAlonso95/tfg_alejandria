@@ -1,68 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php require_once './views/layout/head.php' ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicia sesión</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url ?>/assets/css/landingStyles.css">
-</head>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-sm rounded-3 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold mb-3">Inicia sesión</h2>
+                    </div>
 
-<body class=" d-flex flex-column align-items-center min-vh-100">
-    <header class=" shadow-sm py-3 mb-4 w-100">
-        <div class="container-fluid d-flex align-items-center ps-3 gap-2">
-            <a href="<?= base_url ?>" class="d-flex align-items-center text-decoration-none">
-                <img src="<?= base_url ?>/assets/img/logo_prueba.png" alt="Logo de Alejandría" style="height: 40px;">
-                <span class="h5 mb-0 text-dark fw-bold ms-2">Alejandría</span>
-            </a>
-        </div>
-    </header>
-
-
-
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow-sm p-4">
-                    <h2 class="mb-4 text-center">Inicia sesión</h2>
+                    <!-- Alertas -->
                     <?php if (isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
                         <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                            Registro completado correctamente
+                            <span>Registro completado correctamente</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php elseif (isset($_SESSION['error_login'])): ?>
                         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                            <?= $_SESSION['error_login'] ?>
+                            <span><?= $_SESSION['error_login'] ?></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php endif; ?>
-                    <form method="post" action="<?= base_url ?>user/loginUser">
+                    <?php Utils::deleteSession('register'); ?>
+                    <?php Utils::deleteSession('error_login'); ?>
+
+                    <!-- Formulario -->
+                    <form method="post" action="<?= base_url ?>user/loginUser" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo" required <?= isset($_SESSION['email']) ? 'value="' . $_SESSION['email'] . '"' : '' ?>>
+                            <label for="email" class="form-label fw-semibold">Correo electrónico</label>
+                            <div class="input-group has-validation">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="tucorreo@ejemplo.com" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa un correo válido
+                                </div>
+                            </div>
                         </div>
-                        <?php Utils::deleteSession('register'); ?>
-                        <?php Utils::deleteSession('error_login'); ?>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-semibold">Contraseña</label>
+                            <div class="input-group has-validation">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Ingresa tu contraseña" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa tu contraseña
+                                </div>
+                            </div>
                         </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary py-2 fw-semibold">
+                                Iniciar sesión
+                            </button>
                         </div>
                     </form>
-                    <div class="mt-3 text-center">
-                        <span>¿No tienes cuenta? <a href="<?= base_url ?>user/register">Regístrate</a></span>
+
+                    <div class="text-center pt-3">
+                        <p class="mb-0 text-muted">¿No tienes cuenta?
+                            <a href="<?= base_url ?>user/register" class="text-decoration-none fw-semibold">Regístrate</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap JS Bundle (with Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<?php require_once './views/layout/footer.php' ?>

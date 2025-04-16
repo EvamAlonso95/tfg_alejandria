@@ -1,7 +1,3 @@
-<?php
-require_once 'views/layout/header.php';
-
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,13 +13,17 @@ require_once 'views/layout/header.php';
 </head>
 
 <body>
-    <?php
-require_once 'views/layout/main.php';
-require_once 'views/layout/sidebar.php';
 
-var_dump($_SESSION['identity']);
-var_dump($_SESSION['role']);
+  <?php
+
+  require_once 'views/layout/header.php';
+
+  require_once 'views/layout/main.php';
+  require_once 'views/layout/sidebar.php';
+
+  var_dump($_SESSION['identity']);
+  var_dump($_SESSION['role']);
 
 
 
-require_once 'views/layout/footer.php';
+  require_once 'views/layout/footer.php';

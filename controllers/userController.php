@@ -2,7 +2,7 @@
 // Iniciamos la sesión para poder usarla en el controlador frontal
 require_once './models/user.php';
 
-class UserController
+class UserController extends BaseController
 {
 
     public function index()
@@ -12,20 +12,24 @@ class UserController
 
     public function register()
     {
+        $this->showFooter = false;
+        $this->showUserMenu = false;
         require_once 'views/landing/register.php';
     }
 
     public function login()
     {
+        $this->showFooter = false;
+        $this->showUserMenu = false;
         require_once 'views/landing/login.php';
     }
 
     public function profile()
     {
         if (isset($_SESSION['identity'])) {
-            $user = new User();
-            $user->setId($_SESSION['identity']->id);
-            $user = $user->getOneUser(); // Obtener el usuario de la base de datos
+            $user =  User::createById($_SESSION['identity']->id);
+            $title = 'Perfil de usuario - ' . $user->getName();
+
 
             require_once 'views/profiles/userProfile.php';
         }
@@ -36,9 +40,7 @@ class UserController
     {
 
         if (isset($_SESSION['identity'])) {
-            $user = new User();
-            $user->setId($_SESSION['identity']->id);
-            $user = $user->getOneUser(); // Obtener el usuario de la base de datos
+            $user =  User::createById($_SESSION['identity']->id);
             require_once 'views/profiles/editProfile.php';
         }
     }
@@ -135,8 +137,8 @@ class UserController
 
         $user_id_role = $identity->id_role;
 
-        var_dump($roles);
-        var_dump($user_id_role);
+        // var_dump($roles);
+        // var_dump($user_id_role);
 
         foreach ($roles as $rol) {
             if (isset($rol['id']) && $rol['id'] == $user_id_role) {

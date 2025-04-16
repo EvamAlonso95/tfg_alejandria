@@ -11,6 +11,22 @@ class User
     private Role $role;
     private PDO $db;
 
+    public static function createById(int $id)
+    {
+        $user = new User();
+        $user->setId($id);
+
+        $data =  $user->getOneUser();
+
+        $user->setName($data->name);
+        $user->setEmail($data->email);
+        $user->setBiography($data->biography);
+        $user->setProfileImage($data->profile_img);
+        $user->setRole($data->id_role);
+        $user->setPassword($data->password);
+        return $user;
+    }
+
     public function __construct()
     {
         try {
@@ -60,7 +76,7 @@ class User
 
     public function setId(int $id): void
     {
-       
+
         $this->id = $id;
     }
 
@@ -74,12 +90,8 @@ class User
     }
 
     public function setEmail(string $email): void
-    {
-        $email = trim($email);
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException("Email inválido: " . $email);
-        }
-        $this->email = $email;
+    {        
+        $this->email = trim($email);
     }
 
     public function setPassword(string $password): void
@@ -105,11 +117,15 @@ class User
     }
 
 
-    public function setRole(string $nameRole): void
+    public function setRole(string | int $nameRole): void
     {
-        $role = Role::createByName($nameRole);
-        $this->role = $role;
+        if (is_int($nameRole)) {
+            $this->role = Role::createById($nameRole);
+            return;
+        }
+        $this->role = Role::createByName($nameRole);;
     }
+
 
     // -- MÉTODOS  --
     // Método para guardar el usuario en la base de datos

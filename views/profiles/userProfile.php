@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
+  <?php
+  /** @var User $user */
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="<?= base_url ?>/assets/css/styles.css">
-  <title>Tu Perfil</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  require_once 'views/layout/head.php'; ?>
 
-</head>
-
-<body>
-
-  <?php require_once 'views/layout/header.php'; ?>
 
 
   <main class="container my-4">
-    <h1 class="text-start mb-4"><?= $user->name ?></h1>
-    
+    <h1 class="text-start mb-4"><?= $user->getName() ?></h1>
+
     <!-- Datos del usuario -->
     <div class="row text-center text-md-start mb-4 align-items-stretch">
       <!-- Foto -->
       <div class="col-md-4 mb-3">
         <div class="border p-3 h-100 d-flex justify-content-center align-items-center">
-          <img src="<?= base_url . $user->profile_img ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
-        
+          <img src="<?= base_url . $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+
         </div>
       </div>
 
@@ -33,15 +23,15 @@
         <div class="border p-3 d-flex flex-column gap-2 h-100">
           <div>
             <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" id="nombre" class="form-control" value="<?= $user->name ?>" readonly>
+            <input type="text" id="nombre" class="form-control" value="<?= $user->getName() ?>" readonly>
           </div>
           <div>
             <label for="correo" class="form-label">Correo:</label>
-            <input type="email" id="correo" class="form-control" value="<?= $user->email ?>" readonly>
+            <input type="email" id="correo" class="form-control" value="<?= $user->getEmail() ?>" readonly>
           </div>
           <div>
             <label for="biografia" class="form-label">Biografía:</label>
-            <textarea id="biografia" class="form-control" rows="3" readonly><?= $user->biography ?></textarea>
+            <textarea id="biografia" class="form-control" rows="3" readonly><?= $user->getBiography() ?></textarea>
           </div>
           <div class="text-end mt-2">
             <a href="<?= base_url ?>user/edit" class="btn btn-sm btn-outline-primary">Editar perfil</a>
