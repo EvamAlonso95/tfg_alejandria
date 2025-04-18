@@ -1,55 +1,73 @@
 <?php
-// Controlador frontal
-// Recoger parámetros GET
-// Llevará a los controllers (función autoload que al coger los parámetros GET carge un controlador concreto- investigar)
-require_once 'autoload.php';
-require_once 'config/parameters.php';
-require_once 'config/db.php';
-require_once 'helpers/Utils.php';
-session_start(); // Iniciamos la sesión para poder usarla en el controlador frontal
-// require_once 'views/layout/header.php';
+/**
+ * Controlador Frontal (Front Controller)
+ *
+ * Punto de entrada principal para la aplicación. 
+ * Se encarga de gestionar las peticiones entrantes (parámetros por GET), 
+ * cargar configuraciones necesarias y redirigir la ejecución al controlador y acción correspondientes.
+ */
 
- // Verifica si el usuario no está autenticado
+// Carga automática de clases de controladores
+require_once 'autoload.php';
+
+// Carga de parámetros globales de configuración
+require_once 'config/parameters.php';
+
+// Conexión a la base de datos
+require_once 'config/db.php';
+
+// Funciones auxiliares (helpers)
+require_once 'helpers/Utils.php';
+
+// Inicia la sesión para poder manejar información persistente entre peticiones
+session_start();
+
+/**
+ * Función que carga el controlador de errores por defecto
+ *
+ * @return void
+ */
 function showError()
 {
-
     $error = new errorController();
     $error->index();
 }
 
+// Lógica para determinar qué controlador cargar
 
-// Controla a que controlador va
-//Si existe la variable GET generamos una variable
+// Si se proporciona el parámetro 'controller' por GET, lo usamos para construir el nombre de la clase
 if (isset($_GET['controller'])) {
     $nombre_controlador = $_GET['controller'] . 'Controller';
 
-    //Si no esta definido los parametros controller y action -> la variable nombre controlador será el valor por defecto
+    // Si no se han definido ni 'controller' ni 'action', usamos los valores por defecto
 } elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
     $nombre_controlador = controller_default;
+
+    // Si se proporciona solo uno de los dos o algo incorrecto, mostramos error
 } else {
     showError();
     exit();
 }
 
-//Si existe esa clase, ese controlador, creo el objeto
+// Verificamos si el controlador existe y ejecutamos la acción
+
 if (class_exists($nombre_controlador)) {
+    // Instanciamos el controlador
     $controlador = new $nombre_controlador();
 
-    // Compruebo si existe la acción y el método e invocó ese método
+    // Verificamos si se proporciona una acción válida y si existe el método
     if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
         $action = $_GET['action'];
         $controlador->$action();
 
-        // Cargamos la action como default si no existen las variables GET
+        // Si no se ha proporcionado ninguna acción, usamos la acción por defecto
     } elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
         $action_default = action_default;
         $controlador->$action_default();
     } else {
-        showError();
+        showError(); // Acción no válida
     }
-} else {
-    showError();
-}
 
-// require_once 'views/layout/sidebar.php';
-// require_once 'views/layout/footer.php';
+} else {
+    showError(); // Controlador no válido
+}

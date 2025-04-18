@@ -30,7 +30,7 @@ class UserController extends BaseController
             $user =  User::createById($_SESSION['identity']->id);
             $title = 'Perfil de usuario - ' . $user->getName();
 
-
+            
             require_once 'views/profiles/userProfile.php';
         }
     }
