@@ -1,6 +1,6 @@
-<div id="content" style="border: 1px solid green;">
+<div id="content";">
        
-        <div id="central" style="border: 1px solid pink;">
+        <div id="central"">
         </div>
          <!-- Barra lateral -->
         <?php include_once 'sidebar.php'; ?>
