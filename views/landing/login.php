@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary py-2 fw-semibold">
+                            <button type="submit" class="btn btn-earth py-2 fw-semibold">
                                 Iniciar sesión
                             </button>
                         </div>

@@ -14,6 +14,7 @@ class UserController extends BaseController
     {
         $this->showFooter = false;
         $this->showUserMenu = false;
+        $this->title = 'Registro de usuario';
         require_once 'views/landing/register.php';
     }
 
@@ -21,6 +22,7 @@ class UserController extends BaseController
     {
         $this->showFooter = false;
         $this->showUserMenu = false;
+        $this->title = 'Iniciar sesión';
         require_once 'views/landing/login.php';
     }
 
@@ -28,9 +30,9 @@ class UserController extends BaseController
     {
         if (isset($_SESSION['identity'])) {
             $user =  User::createById($_SESSION['identity']->id);
-            $title = 'Perfil de usuario - ' . $user->getName();
+            $this->title = 'Perfil de usuario - ' . $user->getName();
 
-            
+
             require_once 'views/profiles/userProfile.php';
         }
     }
@@ -41,6 +43,7 @@ class UserController extends BaseController
 
         if (isset($_SESSION['identity'])) {
             $user =  User::createById($_SESSION['identity']->id);
+            $this->title = 'Editar perfil - ' . $user->getName();
             require_once 'views/profiles/editProfile.php';
         }
     }

@@ -3,12 +3,19 @@ $user = isset($_SESSION['identity']) ? user::createById($_SESSION['identity']->i
 $isLogged = false;
 $profileImg =  base_url . '/assets/img/icono-user.webp';
 $urlHome = base_url;
+$isAdmin = false;
+$isAuthor = false;
 if (!is_null($user)) {
     $profileImg = base_url . $user->getProfileImage();
+    $roleName = $user->getRole()->getName();
+    if ($roleName == 'admin') {
+        $isAdmin = true;
+    } elseif ($roleName == 'author') {
+        $isAuthor = true;
+    }
     $isLogged = true;
     $urlHome = base_url . 'dashboard';
 }
-
 ?>
 <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container">
@@ -33,9 +40,16 @@ if (!is_null($user)) {
                     <li class="nav-item d-md-none">
                         <a class="nav-link" href="<?= base_url ?>user/edit">Configuración</a>
                     </li>
-                    <li class="nav-item d-md-none">
-                        <a class="nav-link" href="#">Publicaciones</a>
-                    </li>
+                    <?php if ($isAdmin): ?>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" href="<?= base_url ?>admin/index">Panel de administración</a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($isAuthor): ?>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" href="#">Publicaciones</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item d-md-none">
                         <a class="nav-link" href="<?= base_url ?>user/logout">Cerrar sesión</a>
                     </li>
@@ -61,7 +75,17 @@ if (!is_null($user)) {
                         <?php if ($isLogged): ?>
                             <li><a class="dropdown-item" href="<?= base_url ?>user/profile">Mi perfil</a></li>
                             <li><a class="dropdown-item" href="<?= base_url ?>user/edit">Configuración</a></li>
-                            <li><a class="dropdown-item" href="#">Publicaciones</a></li>
+                            <?php if ($isAdmin): ?>
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url ?>admin/index">Panel de administración</a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($isAuthor): ?>
+                                <li>
+                                    <a class="dropdown-item" href="#">Publicaciones</a>
+                                </li>
+                            <?php endif; ?>
+
                             <li><a class="dropdown-item" href="<?= base_url ?>user/logout">Cerrar sesión</a></li>
                         <?php else: ?>
                             <li><a class="dropdown-item" href="<?= base_url ?>user/login">Iniciar sesión</a></li>

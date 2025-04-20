@@ -93,7 +93,7 @@
 
                         <!-- Botón de registro -->
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-success py-2 fw-semibold">
+                            <button type="submit" class="btn btn-earth py-2 fw-semibold">
                                 <i class="bi bi-person-plus me-2"></i>Regístrate
                             </button>
                         </div>
