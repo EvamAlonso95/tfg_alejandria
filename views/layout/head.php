@@ -20,17 +20,9 @@
 
     <title><?= $this->title ?? 'Alejandria' ?></title>
 
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json"
-                }
-            });
-        });
-    </script>
 
 
+</head>
 
 <body>
     <?php require_once 'header.php'; ?>

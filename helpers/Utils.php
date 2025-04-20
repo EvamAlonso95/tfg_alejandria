@@ -20,6 +20,7 @@ class Utils
         }
     }
 
+    //TODO: MEterselo a todas las páginas que correspondan
     public static function requireLogin()
     {
         if (isset($_SESSION['identity'])) {
@@ -29,6 +30,9 @@ class Utils
             return true;
         }
     }
+
+    //TODO: require admin
+    //TODO: require author
     //Una funcion que verifique
 
     // Redirigir

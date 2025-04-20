@@ -233,6 +233,22 @@ class User
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    // Método para obtener todos los usuarios
+    public static function getAllUsers()
+    {
+        $temp = new User();
+        $sql = "SELECT id FROM users";
+        $stmt = $temp->db->prepare($sql);
+        $stmt->execute();
+        $dataUsers = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $users = [];
+        // Crear un array de objetos User a partir de los IDs obtenidos
+        foreach ($dataUsers as $user) {
+            array_push($users, self::createById($user->id));
+        }
+        return $users;
+    }
+
     //Método para editar los datos del usuario
     public function editUser()
     {
@@ -257,14 +273,6 @@ class User
     }
 
 
-    // Método para devolver los roles REVISAR ESTO, TIENE QUE IR A LA CLASE ROL
-    // public function getRoles(): array
-    // {
-    //     $sql = "SELECT * FROM roles";
-    //     $stmt = $this->db->prepare($sql);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
 
 
     // Método para debugear
