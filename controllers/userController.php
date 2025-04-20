@@ -122,11 +122,6 @@ class UserController extends BaseController
             exit();
         }
 
-        // Iniciar sesión si no está iniciada
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         // Limpiar sesiones anteriores
         unset($_SESSION['admin'], $_SESSION['author'], $_SESSION['reader'], $_SESSION['role'], $_SESSION['error_login']);
 

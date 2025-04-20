@@ -90,7 +90,7 @@ class User
     }
 
     public function setEmail(string $email): void
-    {        
+    {
         $this->email = trim($email);
     }
 
@@ -202,8 +202,8 @@ class User
         $email = $this->email;
         $password = $this->password;
 
-
-        // Comprobar si existe el usuario usando parámetros preparados
+        //TODO:CONTRASEÑA TAMBIEN
+        // Comprobar si existe el usuario usando parámetros preparados  
         $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':email', $email);

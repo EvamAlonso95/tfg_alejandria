@@ -1,79 +1,75 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<?php
+$user = isset($_SESSION['identity']) ? user::createById($_SESSION['identity']->id)  : null;
+$isLogged = false;
+$profileImg =  base_url . '/assets/img/icono-user.webp';
+$urlHome = base_url;
+if (!is_null($user)) {
+    $profileImg = base_url . $user->getProfileImage();
+    $isLogged = true;
+    $urlHome = base_url . 'dashboard';
+}
+
+?>
+<nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container">
-        <div class="d-flex align-items-center">
-            <img src="<?= base_url ?>/assets/img/logo_prueba.png"
-                alt="logo de Alejandría"
-                class="me-2"
-                height="32"
-                loading="lazy">
-            <a class="navbar-brand" href="<?= base_url ?>dashboard">Alejandría</a>
-        </div>
+        <!-- Logo -->
+        <a class="navbar-brand" href="<?= $urlHome ?>">
+            <img src="<?= base_url ?>/assets/img/logo_prueba.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Alejandría
+        </a>
 
-        <?php if ($this->showUserMenu): ?>
-            <button class="navbar-toggler ms-auto"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Toggler solo visible en móvil -->
+        <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <img height="32" class="rounded-circle" src="<?= $profileImg ?>" alt="Foto de perfil">
+        </button>
 
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-                    <!-- Versión de escritorio (pantallas grandes) -->
-                    <li class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <img height="32"
-                                class="rounded-circle"
-                                src="<?= isset($_SESSION['identity']->profile_img) && file_exists($_SESSION['identity']->profile_img)
-                                            ? base_url . '/' . $_SESSION['identity']->profile_img
-                                            : base_url . '/assets/img/icono-user.webp' ?>"
-                                alt="Foto de perfil">
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="<?= base_url ?>user/profile">Mi perfil</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url ?>user/edit">Configuración de perfil</a></li>
-                            <?php if ($_SESSION['role'] == 'author') : ?>
-                                <li><a class="dropdown-item" href="#">Publicaciones</a></li>
-                            <?php endif; ?>
-                            <li><a class="dropdown-item" href="<?= base_url ?>user/logout">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- Versión móvil (pantallas pequeñas) -->
-                    <li class="nav-item d-block d-lg-none">
+        <!-- Menú colapsable SOLO para móviles -->
+        <div class="collapse navbar-collapse d-md-none" id="mobileNavbar">
+            <ul class="navbar-nav ms-auto">
+                <?php if ($isLogged): ?>
+                    <li class="nav-item d-md-none">
                         <a class="nav-link" href="<?= base_url ?>user/profile">Mi perfil</a>
                     </li>
-                    <li class="nav-item d-block d-lg-none">
+                    <li class="nav-item d-md-none">
                         <a class="nav-link" href="<?= base_url ?>user/edit">Configuración</a>
                     </li>
-                    <?php if ($_SESSION['role'] == 'author') : ?>
-                        <li class="nav-item d-block d-lg-none">
-                            <a class="nav-link" href="#">Publicaciones</a>
-                        </li>
-                    <?php endif; ?>
-                    <li class="nav-item d-block d-lg-none">
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="#">Publicaciones</a>
+                    </li>
+                    <li class="nav-item d-md-none">
                         <a class="nav-link" href="<?= base_url ?>user/logout">Cerrar sesión</a>
                     </li>
+                <?php else: ?>
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="<?= base_url ?>user/login">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" href="<?= base_url ?>user/register">Registrarse</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
 
-                </ul>
-            </div>
-
-
-
-        <?php else: ?>
-            <div class="d-flex gap-2">
-                <a href="<?= base_url ?>user/register" class="btn btn-sm btn-outline-primary px-3">Regístrate</a>
-                <a href="<?= base_url ?>user/login" class="btn btn-sm btn-primary px-3">Inicia sesión</a>
-            </div>
-        <?php endif; ?>
+        <!-- Menú de escritorio SOLO visible en md y superiores -->
+        <div class="d-none d-md-block ms-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img height="32" class="rounded-circle" src="<?= $profileImg ?>" alt="Foto de perfil">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <?php if ($isLogged): ?>
+                            <li><a class="dropdown-item" href="<?= base_url ?>user/profile">Mi perfil</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url ?>user/edit">Configuración</a></li>
+                            <li><a class="dropdown-item" href="#">Publicaciones</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url ?>user/logout">Cerrar sesión</a></li>
+                        <?php else: ?>
+                            <li><a class="dropdown-item" href="<?= base_url ?>user/login">Iniciar sesión</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url ?>user/register">Registrarse</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

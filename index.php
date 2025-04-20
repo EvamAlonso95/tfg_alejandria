@@ -19,8 +19,12 @@ require_once 'config/db.php';
 // Funciones auxiliares (helpers)
 require_once 'helpers/Utils.php';
 
+
 // Inicia la sesión para poder manejar información persistente entre peticiones
 session_start();
+
+// Cargamos el modelo user porque es un elemento presente en todas las páginas (header)
+require_once 'models/user.php';
 
 /**
  * Función que carga el controlador de errores por defecto
