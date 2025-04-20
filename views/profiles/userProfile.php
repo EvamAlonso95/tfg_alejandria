@@ -38,12 +38,8 @@
       </div>
     </section>
 
-    <?php
-    if ($_SESSION['role'] === 'admin') {
-      require_once 'views/profiles/adminModule.php';
-    } else {
-      require_once 'views/profiles/userReadingsModule.php';
-    } ?>
+    <?php require_once 'views/profiles/readingsModule.php'; ?>
+
 
   </main>
 

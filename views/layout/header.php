@@ -42,7 +42,7 @@ if (!is_null($user)) {
                     </li>
                     <?php if ($isAdmin): ?>
                         <li class="nav-item d-md-none">
-                            <a class="nav-link" href="<?= base_url ?>admin/index">Panel de administración</a>
+                            <a class="nav-link" href="<?= base_url ?>admin">Panel de administración</a>
                         </li>
                     <?php endif; ?>
                     <?php if ($isAuthor): ?>
@@ -77,7 +77,7 @@ if (!is_null($user)) {
                             <li><a class="dropdown-item" href="<?= base_url ?>user/edit">Configuración</a></li>
                             <?php if ($isAdmin): ?>
                                 <li>
-                                    <a class="dropdown-item" href="<?= base_url ?>admin/index">Panel de administración</a>
+                                    <a class="dropdown-item" href="<?= base_url ?>admin">Panel de administración</a>
                                 </li>
                             <?php endif; ?>
                             <?php if ($isAuthor): ?>
