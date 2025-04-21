@@ -4,7 +4,7 @@
 
     <img src="./assets/img/logo_prueba.png" alt="Logo Alejandría" class="img-fluid mb-4" style="max-width: 300px;">
     <div>
-        <p class="fs-4 fst-italic">"Frase literaria random"</p>
+        <p class="fs-4 fst-italic"><?= Utils::obtenerFraseLiterariaAleatoria() ?></p>
     </div>
 </main>
 
