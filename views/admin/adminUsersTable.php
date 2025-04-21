@@ -7,6 +7,7 @@
     <div class="row">
         <div class="col-2 offset-10">
             <div class="text-center">
+                <!-- TODO: solo visible si estamos en el panel de administración de libros -->
                 <!-- Boton -->
                 <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalUSer" id="buttonCreate">
                     Crear</button>
@@ -37,6 +38,8 @@
                         <td><?php echo $user->getBiography(); ?></td>
                         <td><img src="<?php echo base_url  . $user->getProfileImage(); ?>" alt="Imagen de perfil" width="50"></td>
                         <td><?php echo $user->getRole()->getName(); ?></td>
+                        <td><a href="#" class="btn btn-warning" role="button">Editar</a></td>
+                        <td><a href="#" class="btn btn-outline-danger" role="button">Eliminar</a></td>
                     </tr>
 
                 <?php }
@@ -60,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form" enctype="multipart/form-data">
+                <form action="<?= base_url ?>user/save" method="post" id="form" enctype="multipart/form-data">
 
                     <label for="name">Introduce el nombre</label>
                     <input type="text name=" name" id="name" class="form-control">

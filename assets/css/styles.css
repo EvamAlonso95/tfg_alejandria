@@ -45,6 +45,18 @@ a:hover {
 
 }
 
+.btn-sage{
+    
+        background-color: var(--color-sage);
+        border: none;
+        
+}
+
+.btn-sage:hover{
+    background-color: var(--color-sand);
+    border: none;
+}
+
 nav.navbar .navbar-collapse .nav-item:hover,
 nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     background-color: var(--color-earth) !important;
