@@ -10,5 +10,7 @@ class DashboardController extends BaseController
         } else {
             header('Location:' . base_url);
         }
+
+        
     }
 }

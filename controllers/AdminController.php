@@ -7,16 +7,19 @@ class AdminController extends BaseController
 {
     public function index()
     {
-        $this->title = 'Panel de administración';
-        $users = User::getAllUsers();
+        if (isset($_SESSION['identity'])) {
 
-
-        require_once 'views/admin/adminPage.php';
+            $this->title = 'Panel de administración';
+            $users = User::getAllUsers();
+            require_once 'views/admin/adminPage.php';
+        } else {
+            header('Location:' . base_url);
+        }
     }
 
-    public function user(){
+    // public function user(){
 
-    }
+    // }
 
     /*public function books(){
         $this->title = 'Panel de administración - Libros';

@@ -12,18 +12,27 @@ class UserController extends BaseController
 
     public function register()
     {
-        $this->showFooter = false;
-        $this->showUserMenu = false;
-        $this->title = 'Registro de usuario';
-        require_once 'views/landing/register.php';
+
+        if (isset($_SESSION['identity'])) {
+            require_once 'views/dashboard.php';
+        } else {
+            $this->showFooter = false;
+            $this->showUserMenu = false;
+            $this->title = 'Registro de usuario';
+            require_once 'views/landing/register.php';
+        }
     }
 
     public function login()
     {
-        $this->showFooter = false;
-        $this->showUserMenu = false;
-        $this->title = 'Iniciar sesión';
-        require_once 'views/landing/login.php';
+        if (isset($_SESSION['identity'])) {
+            require_once 'views/dashboard.php';
+        } else {
+            $this->showFooter = false;
+            $this->showUserMenu = false;
+            $this->title = 'Iniciar sesión';
+            require_once 'views/landing/login.php';
+        }
     }
 
     public function profile()
@@ -31,9 +40,9 @@ class UserController extends BaseController
         if (isset($_SESSION['identity'])) {
             $user =  User::createById($_SESSION['identity']->id);
             $this->title = 'Perfil de usuario - ' . $user->getName();
-
-
             require_once 'views/profiles/userProfile.php';
+        } else {
+            header('Location:' . base_url);
         }
     }
 
@@ -45,6 +54,8 @@ class UserController extends BaseController
             $user =  User::createById($_SESSION['identity']->id);
             $this->title = 'Editar perfil - ' . $user->getName();
             require_once 'views/profiles/editProfile.php';
+        } else {
+            header('Location:' . base_url);
         }
     }
 
