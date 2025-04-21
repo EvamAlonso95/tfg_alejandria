@@ -13,8 +13,7 @@ require_once 'views/layout/head.php'; ?>
             <!-- Imagen y carga -->
             <div class="row mb-3">
                 <div class="col-md-4 text-center mb-2">
-                    <!-- Aquí puedes mostrar una imagen previa si ya existe -->
-                    <div style="width: 100px; height: 100px; background-color: #e9ecef;" class="mx-auto mb-2">
+                    <div class="mx-auto mb-2 w-50">
                         <img src="<?= base_url . $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
                     </div>
                 </div>
@@ -40,7 +39,7 @@ require_once 'views/layout/head.php'; ?>
 
             <!-- Botón -->
             <div class="text-center">
-                <input type="submit" class="btn btn-primary w-100" value="Subir cambios" />
+                <input type="submit" class="btn btn-earth w-100" value="Subir cambios" />
             </div>
         </div>
     </form>

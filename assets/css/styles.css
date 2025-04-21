@@ -19,8 +19,9 @@ body {
 }
 
 a {
-    color: var(--color-almond);
+
     text-decoration: none;
+    color: var(--color-earth);
 
 }
 
@@ -34,12 +35,14 @@ a:hover {
 
     background-color: var(--color-earth);
     border: none;
+    color: #fff;
 
 }
 
 .btn-earth:hover {
     background-color: #ACB087;
     border: none;
+
 }
 
 nav.navbar .navbar-collapse .nav-item:hover,
