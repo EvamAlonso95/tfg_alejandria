@@ -73,6 +73,7 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
 
 
 /*CONTENT*/
+/*
 #content {
     margin: 0px auto;
     overflow: hidden;
@@ -80,7 +81,7 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     display: flex;
 }
 
-/*BARRA LATERAL*/
+/*BARRA LATERAL
 #lateral {
 
     width: 22%;
@@ -122,7 +123,7 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     margin-bottom: 5px;
 }
 
-/* CENTRAL */
+/* CENTRAL 
 
 #central {
     width: 72%;
@@ -170,6 +171,7 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     justify-content: center;
 }
 
+*/
 .profile-section {
     img {}
 
