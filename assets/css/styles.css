@@ -19,7 +19,7 @@ body {
 }
 
 a {
-    color: var(--color-earth);
+    color: var(--color-almond);
     text-decoration: none;
 
 }
@@ -34,6 +34,7 @@ a:hover {
 
     background-color: var(--color-earth);
     border: none;
+
 }
 
 .btn-earth:hover {
