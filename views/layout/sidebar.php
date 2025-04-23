@@ -1,4 +1,4 @@
-<div class="col-md-4 my-4">
+<div class="col-md-3 my-4">
 
   <!-- Búsqueda -->
   <div class="input-group mb-3">
@@ -9,22 +9,23 @@
   </div>
 
   <!-- Recomendación -->
-  <div class="card mb-4 text-center">
+
+  <div class="card w-16 mb-3 d-flex align-items-center ">
+    <img src="<?= base_url ?>/assets/img/default_cover.jpg" class="card-img-top" alt="Portada Libro recomendado">
     <div class="card-body">
-      <div class="mb-3" style="height: 200px; background-color: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
-        Imagen Recomendación
-      </div>
-      <button class="btn btn-outline-primary w-100">Descubre más</button>
+
+      <a href="#" class="btn btn-earth btn-sm">Descubre más lecturas</a>
     </div>
   </div>
 
+
+
+
   <!-- Lectura actual -->
-  <div class="card text-center">
+  <div class="card text-center w-16 mb-3">
     <div class="card-body">
       <h6>Estás leyendo...</h6>
-      <div style="height: 150px; background-color: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center;">
-        Tu lectura actual
-      </div>
+      <img src="<?= base_url ?>/assets/img/actual_reading.jpg" class="card-img-top" alt="Portada Libro recomendado">
     </div>
   </div>
 
