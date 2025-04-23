@@ -4,22 +4,27 @@ class ApiController
 
     public function users()
     {
-        // TODO: isAdmin
-        $userRaw = User::getAllUsers();
-        $users = [];
-        foreach ($userRaw as $user) {
-            $users[] = [
-                'id' => $user->getId(),
-                'name' => $user->getName(),
-                'biography' => $user->getBiography(),
-                'email' => $user->getEmail(),
-                'profile_img' => base_url . $user->getProfileImage(),
-                'role' => $user->getRole()->getName(),
-                'role_id' => $user->getRole()->getId(),
-            ];
-        }
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['data' => $users]);
+       if(Utils::isAdmin()){
+
+           $userRaw = User::getAllUsers();
+           $users = [];
+           foreach ($userRaw as $user) {
+               $users[] = [
+                   'id' => $user->getId(),
+                   'name' => $user->getName(),
+                   'biography' => $user->getBiography(),
+                   'email' => $user->getEmail(),
+                   'profile_img' => base_url . $user->getProfileImage(),
+                   'role' => $user->getRole()->getName(),
+                   'role_id' => $user->getRole()->getId(),
+               ];
+           }
+           header('Content-Type: application/json; charset=utf-8');
+           echo json_encode(['data' => $users]);
+       }else{
+        $error = new ErrorController();
+        $error->forbidden();
+       }
     }
 
     //TODO: editUser()

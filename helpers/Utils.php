@@ -31,8 +31,17 @@ class Utils
         }
     }
 
-    //TODO: require admin
-    //TODO: require author
+   
+    // Si no hay una sesión iniciada como admin, redirige a la página de login
+    public static function  isAdmin()
+    {
+        if (isset($_SESSION['identity']) && $_SESSION['identity']->id_role == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //TODO: require author;
     //Una funcion que verifique
 
     // Redirigir
