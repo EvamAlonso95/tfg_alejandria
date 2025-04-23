@@ -234,7 +234,10 @@ class User
     }
 
     // Método para obtener todos los usuarios
-    public static function getAllUsers()
+    /**
+     * @return User[]
+     */
+    public static function getAllUsers(): array
     {
         $temp = new User();
         $sql = "SELECT id FROM users";
