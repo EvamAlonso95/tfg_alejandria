@@ -60,4 +60,19 @@ class ApiController
 
     //TODO: deleteUser()
     // validar que sea el admin
+    public function deleteUser()  {
+        if (Utils::isAdmin()) {
+            if (isset($_POST['idUser'])) {
+                $user = User::createById($_POST['idUser']);
+                $user->deleteUser();
+                echo json_encode(['success' => 'Se ha podido eliminar el usuario.']);
+                return;
+            } else {
+                echo json_encode(['error' => 'No existe el método solicitado']);
+            }
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
 }

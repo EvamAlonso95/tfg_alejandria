@@ -277,6 +277,21 @@ class User
         }
     }
 
+    // Método para eliminar un usuario
+    public function deleteUser()
+    {
+        try {
+            $stmt = $this->db->prepare(
+                "DELETE FROM users WHERE id = :id"
+            );
+            $stmt->execute([':id' => $this->id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error al eliminar usuario: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
 
 

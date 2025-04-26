@@ -129,7 +129,7 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        return '<button class="btn btn-outline-danger" role="button">Eliminar</button>';
+                        return '<button class="btn btn-outline-danger btn-delete" role="button">Eliminar</button>';
                     }
                 },
                 {
@@ -168,6 +168,36 @@
             const modal = new bootstrap.Modal(document.getElementById('modalUSer'));
             modal.show();
         });
+
+        //Evento para botón Eliminar
+        $('#myTable').on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            // Obtener la fila correspondiente
+            const table = $('#myTable').DataTable();
+            // Obtener los datos de la fila
+            const rowData = table.row($(this).closest('tr')).data();
+
+            // Confirmar eliminación
+            if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+                $.ajax({
+                    url: "<?= base_url ?>api/deleteUser",
+                    type: 'POST',
+                    data: {
+                        idUser: rowData.id
+                    },
+                    success: function(response) {
+                        $('#myTable').DataTable().ajax.reload();
+                        showToast('¡Usuario eliminado correctamente!');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al eliminar:', error);
+                        showToast('Ocurrió un error al eliminar. Intenta de nuevo.', false);
+                    }
+                });
+            }
+        });
+
 
         // Enviar formulario por AJAX
         $('#form').on('submit', function(e) {
