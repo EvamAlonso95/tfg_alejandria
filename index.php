@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controlador Frontal (Front Controller)
  *
@@ -31,6 +32,8 @@ require_once 'models/user.php';
  *
  * @return void
  */
+
+//TODO Controlar los errores del xDebug cuando cargue una clase que no existe
 function showError()
 {
     $error = new errorController();
@@ -71,7 +74,6 @@ if (class_exists($nombre_controlador)) {
     } else {
         showError(); // Acción no válida
     }
-
 } else {
     showError(); // Controlador no válido
 }

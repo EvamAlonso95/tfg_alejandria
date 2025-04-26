@@ -178,7 +178,7 @@ class UserController extends BaseController
     // Método para editar el usuario
     public function editUser()
     {
-        var_dump($_POST);
+        
 
         if (isset($_POST)) {
             $user = new User();

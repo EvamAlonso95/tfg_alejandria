@@ -257,7 +257,7 @@ class User
     {
         try {
             $stmt = $this->db->prepare(
-                "UPDATE users SET name = :name, email = :email, biography = :biography, profile_img = :profileImage WHERE id = :id"
+                "UPDATE users SET name = :name, email = :email, biography = :biography, profile_img = :profileImage, id_role = :role WHERE id = :id"
             );
 
             $stmt->execute([
@@ -265,11 +265,13 @@ class User
                 ':email' => $this->email,
                 ':biography' => $this->biography,
                 ':profileImage' => $this->profileImage,
-                ':id' => $this->id
+                ':id' => $this->id,
+                ':role' => $this->role->getId()
             ]);
 
             return true;
         } catch (PDOException $e) {
+
             error_log("Error al editar usuario: " . $e->getMessage());
             return false;
         }

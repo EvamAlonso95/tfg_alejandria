@@ -15,20 +15,20 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table id="myTable" class="table table-striped table-bordered">
+        <table id="myTable" class="table table-striped table-bordered table-admin">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Biografía</th>
-                    <th>Imagen</th>
-                    <th>Rol</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th class="table-header">Id</th>
+                    <!-- <th>Nombre</th> -->
+                    <th class="table-header">Correo</th>
+                    <!-- <th>Biografía</th> -->
+                    <th class="table-header">Imagen</th>
+                    <th class="table-header">Rol</th>
+                    <th class="table-header">Editar</th>
+                    <th class="table-header">Eliminar</th>
                 </tr>
             </thead>
-          
+
         </table>
 
     </div>
@@ -41,26 +41,27 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo registro</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar rol del usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="form" enctype="multipart/form-data">
+                <form id="form">
 
-                    <label for="name">Introduce el nombre</label>
-                    <input type="text name=" name" id="name" class="form-control">
-                    <br>
-                    <label for="email">Introduce el correo</label>
-                    <input type="email" name="email" id="email" class="form-control">
+
+                    <!-- <label for="name">Introduce el nombre</label>
+                    <input type="text" name="name" id="name" class="form-control">
+                    <br> -->
+                    <!--<label for="email">Introduce el correo</label>
+                    <input type="email" name="email" id="email" class="form-control" readonly>
                     <br>
                     <label for="biography">Introduce la biografía</label>
-                    <textarea name="biography" id="biography" class="form-control"></textarea>
+                    <textarea name="biography" id="biography" class="form-control" readonly></textarea>
                     <br>
-                    <label for="image">Selecciona una imagen</label>
+                     <label for="image">Selecciona una imagen</label>
                     <input type="file" name="image" id="image" class="form-control">
-                    <span id="uploadImage"></span>
-                    <br>
-                    <label for="role">Selecciona un rol</label>
+                    <span id="uploadImage"></span> 
+                    <br> -->
+                    <label for="role">Selecciona el rol</label>
                     <select name="role" id="role" class="form-select">
                         <option value="1">Author</option>
                         <option value="2">Reader</option>
@@ -72,8 +73,7 @@
                         <input type="hidden" name="operation" id="operation">
                         <input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
                     </div>
-
-
+                    
                 </form>
             </div>
 
@@ -90,6 +90,7 @@
     </div>
 </div>
 
+
 <script>
     $(document).ready(function() {
         // Inicializar DataTable
@@ -101,15 +102,15 @@
             columns: [{
                     data: 'id'
                 },
-                {
-                    data: 'name'
-                },
+                // {
+                //     data: 'name'
+                // },
                 {
                     data: 'email'
                 },
-                {
-                    data: 'biography'
-                },
+                // {
+                //     data: 'biography'
+                // },
                 {
                     data: 'profile_img',
                     render: function(data, type, row) {
@@ -147,13 +148,13 @@
             const table = $('#myTable').DataTable();
             // Obtener los datos de la fila
             const rowData = table.row($(this).closest('tr')).data();
-            
+
 
             // Rellenar los campos del modal
             $('#idUser').val(rowData.id);
-            $('#name').val(rowData.name);
-            $('#email').val(rowData.email);
-            $('#biography').val(rowData.biography);
+            // $('#name').val(rowData.name);
+            // $('#email').val(rowData.email);
+            // $('#biography').val(rowData.biography);
             $('#role').val(rowData.role_id);
 
             // Cambiar el texto del botón
@@ -173,9 +174,14 @@
             e.preventDefault();
 
             // Recolectar datos
-            const formData = new FormData(this); // Para incluir la imagen si se selecciona
-            const idUser = $('#idUser').val();
-
+            // const formData = new FormData(this); // Para incluir la imagen si se selecciona
+            // const idUser = $('#idUser').val();
+            const formData = {
+                idUser: $('#idUser').val(),
+                // name: $('#name').val(),
+                role: $('#role').val()
+            };
+            console.log('Enviando datos:', formData);
             // Detectar operación
             const isEdit = $('#operation').val() === 'edit';
             // Modificar el valor de la acción según la operación
@@ -183,23 +189,20 @@
                 "<?= base_url ?>api/editUser" :
                 "<?= base_url ?>api/save";
 
-            
+                console.log(isEdit ? "<?= base_url ?>api/editUser" : "<?= base_url ?>api/save");
+
+
+
             $.ajax({
                 url: url,
                 type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
+                data: formData, // ❗ NO FormData, simple objeto
                 success: function(response) {
-                    document.activeElement.blur(); // Warning de accesibilidad
-
-                    // Cerrar el modal
+                    document.activeElement.blur();
                     $('#modalUSer').modal('hide');
-
                     $('#form')[0].reset();
                     $('#uploadImage').html('');
                     $('#myTable').DataTable().ajax.reload();
-                    // Mostrar toast
                     showToast('¡Usuario actualizado correctamente!');
                 },
                 error: function(xhr, status, error) {
@@ -207,6 +210,30 @@
                     showToast('Ocurrió un error al guardar. Intenta de nuevo.', false);
                 }
             });
+
+            // $.ajax({
+            //     url: url,
+            //     type: 'POST',
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     success: function(response) {
+            //         document.activeElement.blur(); // Warning de accesibilidad
+
+            //         // Cerrar el modal
+            //         $('#modalUSer').modal('hide');
+
+            //         $('#form')[0].reset();
+            //         $('#uploadImage').html('');
+            //         $('#myTable').DataTable().ajax.reload();
+            //         // Mostrar toast
+            //         showToast('¡Usuario actualizado correctamente!');
+            //     },
+            //     error: function(xhr, status, error) {
+            //         console.error('Error al guardar:', error);
+            //         showToast('Ocurrió un error al guardar. Intenta de nuevo.', false);
+            //     }
+            // });
         });
 
         // Mostrar toast

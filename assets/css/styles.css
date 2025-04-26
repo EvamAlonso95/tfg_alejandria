@@ -45,14 +45,14 @@ a:hover {
 
 }
 
-.btn-sage{
-    
-        background-color: var(--color-sage);
-        border: none;
-        
+.btn-sage {
+
+    background-color: var(--color-sage);
+    border: none;
+
 }
 
-.btn-sage:hover{
+.btn-sage:hover {
     background-color: var(--color-sand);
     border: none;
 }
@@ -74,7 +74,7 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
             font-weight: bold;
         }
 
-        .data-value {}
+
 
         /* Condicional */
         &.block {
@@ -88,8 +88,13 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     }
 }
 
-.card img{
+.card img {
     height: 150px;
+}
+
+.table-responsive, .table-header {
+    text-align: center !important;
+     
 }
 
 
