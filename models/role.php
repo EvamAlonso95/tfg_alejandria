@@ -4,7 +4,7 @@ class Role
 {
     private int $id;
     private string $name;
-    private PDO $db;
+    private ?PDO $db;
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Role
         $role = $stmt->fetch(PDO::FETCH_OBJ);
 
         if (!$role) {
-            throw new RuntimeException("Role con ID $id no encontrado");
+            throw new RuntimeException("Rol con ID $id no encontrado");
         }
 
         $instance = new self();
@@ -73,5 +73,9 @@ class Role
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    function __destruct()
+    {
+        $this->db = null;
     }
 }

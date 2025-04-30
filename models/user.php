@@ -8,7 +8,7 @@ class User
     private ?string $biography = null;
     private ?string $profileImage = null;
     private Role $role;
-    private PDO $db;
+    private ?PDO $db;
 
     public static function createById(int $id)
     {
@@ -291,20 +291,8 @@ class User
         }
     }
 
-
-
-
-    // Método para debugear
-    public function debugDump(): void
+    function __destruct()
     {
-        echo "<pre>DEBUG User Object:\n";
-        echo "ID: " . $this->id . "\n";
-        echo "Name: " . $this->name . "\n";
-        echo "Email: " . $this->email . "\n";
-        echo "Password Hash: " . ($this->password ? '***HASHED***' : 'NULL') . "\n";
-        echo "Biography: " . $this->biography . "\n";
-        echo "Profile Image: " . $this->profileImage . "\n";
-        echo "Role: " . $this->role . "\n";
-        echo "</pre>";
+        $this->db = null;
     }
 }
