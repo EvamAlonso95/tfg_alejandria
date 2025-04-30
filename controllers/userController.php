@@ -1,6 +1,5 @@
 <?php
 // Iniciamos la sesión para poder usarla en el controlador frontal
-require_once './models/user.php';
 
 class UserController extends BaseController
 {

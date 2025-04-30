@@ -1,5 +1,4 @@
 <?php
-require_once 'role.php';
 class User
 {
     private ?int $id = null;

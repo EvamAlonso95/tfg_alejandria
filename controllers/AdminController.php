@@ -1,7 +1,5 @@
 <?php
 // Iniciamos la sesión para poder usarla en el controlador frontal
-require_once './models/user.php';
-require_once './models/role.php';
 
 class AdminController extends BaseController
 {

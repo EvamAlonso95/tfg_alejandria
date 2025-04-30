@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Registra una función de autocarga para incluir automáticamente archivos de controladores.
  *
@@ -18,8 +19,19 @@
  */
 function controller_autoload($classname)
 {
-    include 'controllers/' . $classname . '.php';
+    $file = 'controllers/' . $classname . '.php';
+    if (file_exists($file)) {
+        include $file;
+    }
 }
 
-// Registra la función de autocarga definida anteriormente
+function model_autoload($classname)
+{
+    $file = 'models/' . $classname . '.php';
+    if (file_exists($file)) {
+        include $file;
+    }
+}
+
+spl_autoload_register('model_autoload');
 spl_autoload_register('controller_autoload');
