@@ -1,6 +1,7 @@
 <?php
 class ApiController
 {
+    //USERS
 
     public function users()
     {
@@ -27,9 +28,9 @@ class ApiController
         }
     }
 
-    //TODO: editUser()
     // validar que sea el admin
-    public function editUser()  {
+    public function editUser()
+    {
 
 
         if (Utils::isAdmin()) {
@@ -58,9 +59,9 @@ class ApiController
         }
     }
 
-    //TODO: deleteUser()
     // validar que sea el admin
-    public function deleteUser()  {
+    public function deleteUser()
+    {
         if (Utils::isAdmin()) {
             if (isset($_POST['idUser'])) {
                 $user = User::createById($_POST['idUser']);
@@ -70,6 +71,86 @@ class ApiController
             } else {
                 echo json_encode(['error' => 'No existe el método solicitado']);
             }
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    //BOOKS  
+
+    public function books()
+    {
+        if (Utils::isAdmin()) {
+            $bookRaw = Book::getAllBooks();
+            $books = [];
+            foreach ($bookRaw as $book) {
+                $authors = $book->getAuthors();
+                $authorsNames = array_map(function ($author) {
+                    return $author->getName();
+                }, $authors);
+                $authorsNames = implode(', ', $authorsNames);
+                $genres = $book->getGenres();
+                $genresNames = array_map(function ($genre) {
+                    return $genre->getName();
+                }, $genres);
+                $genresNames = implode(', ', $genresNames);
+                $books[] = [
+                    'id' => $book->getId(),
+                    'cover' => base_url . $book->getCoverImg(),
+                    'title' => $book->getTitle(),
+                    'synopsis' => $book->getSynopsis(),
+                    'author' => $authorsNames,
+                    'genre' => $genresNames,
+                ];
+            }
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['data' => $books]);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+    public function saveBook()
+    {
+        if (Utils::isAdmin()) {
+            $title = $_POST['title'] ?? null;
+            $synopsis = $_POST['synopsis'] ?? null;
+            $rawAuthors = $_POST['authors'] ?? '';
+            $rawGenres = $_POST['genres'] ?? '';
+            $cover = $_FILES['cover'] ?? null;
+            $authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
+            $genres = array_filter(array_map('trim', explode(',', $rawGenres)));
+
+            if (!$title || !$synopsis || !$authors || !$genres || !$cover) {
+                echo json_encode(['error' => 'Faltan datos para crear el libro.']);
+                return;
+            }
+            $book = new Book();
+            $book->setTitle($title);
+            $book->setSynopsis($synopsis);
+
+            foreach ($genres as $genre) {
+                $book->setGenre($genre);
+            }
+            foreach ($authors as $author) {
+                $book->setAuthor($author);
+            }
+
+
+            $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
+            $uniqueName = uniqid('book_', true) . '.' . $extension;
+
+            $filePath = 'uploads/books/' . $uniqueName;
+            $book->setCoverImg($filePath);
+
+            if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
+                echo json_encode(['error' => 'Error al mover la imagen del libro.']);
+                return;
+            }
+
+            $book->save();
+            echo json_encode(['success' => 'Se ha podido crear el libro.']);
         } else {
             $error = new ErrorController();
             $error->forbidden();
