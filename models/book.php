@@ -127,16 +127,16 @@ class Book
      */
     public static function getAllBooks(): array
     {
-        $temp = new self();
+        $temp = Database::connect();
         $sql = "SELECT id FROM books";
-        $stmt = $temp->db->prepare($sql);
+        $stmt = $temp->prepare($sql);
         $stmt->execute();
         $dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
         $books = [];
         foreach ($dataBooks as $book) {
             array_push($books, self::createById($book->id));
         }
-
+        $temp = null; // Cerrar la conexión a la base de datos
         return $books;
     }
 

@@ -111,14 +111,15 @@ class Author
     }
     public static function getAllAuthors(): array
     {
-        $temp = new Author();
-        $stmt = $temp->db->query("SELECT * FROM authors");
+        $temp = Database::connect();
+        $stmt = $temp->query("SELECT * FROM authors");
         $stmt->execute();
         $dataAuthor = $stmt->fetchAll(PDO::FETCH_OBJ);
         $authors = [];
         foreach ($dataAuthor as $author) {
             array_push($authors, self::createById($author->id));
         }
+        $temp = null; // Cerrar la conexión a la base de datos
         return $authors;
     }
 

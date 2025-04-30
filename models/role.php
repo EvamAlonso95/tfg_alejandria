@@ -16,19 +16,16 @@ class Role
     }
     public static function createById(int $id): self
     {
+        $instance = new self();
 
-        $db = Database::connect();
-
-        $stmt = $db->prepare("SELECT * FROM roles WHERE id = :id");
+        $stmt = $instance->db->prepare("SELECT * FROM roles WHERE id = :id");
         $stmt->execute([':id' => $id]);
 
         $role = $stmt->fetch(PDO::FETCH_OBJ);
 
         if (!$role) {
             throw new RuntimeException("Rol con ID $id no encontrado");
-        }
-
-        $instance = new self();
+        }        
         $instance->id = $role->id;
         $instance->name = $role->name;
 
@@ -38,9 +35,9 @@ class Role
     public static function createByName(string $name): self
     {
 
-        $db = Database::connect();
+        $instance = new self();
 
-        $stmt = $db->prepare("SELECT * FROM roles WHERE name = :name");
+        $stmt = $instance->db->prepare("SELECT * FROM roles WHERE name = :name");
         $stmt->execute([':name' => $name]);
 
         $role = $stmt->fetch(PDO::FETCH_OBJ);
@@ -49,7 +46,6 @@ class Role
             throw new RuntimeException("Role con nombre $name no encontrado");
         }
 
-        $instance = new self();
         $instance->id = $role->id;
         $instance->name = $role->name;
 
