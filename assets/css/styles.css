@@ -92,13 +92,16 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     height: 150px;
 }
 
-.table-responsive, .table-header {
+.table-responsive,
+.table-header {
     text-align: center !important;
-     
+
 }
 
-
-
+/* FIX jquery-ui in modal */
+.ui-autocomplete {
+    z-index: 9999 !important;
+}
 
 
 

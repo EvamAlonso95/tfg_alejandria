@@ -18,6 +18,9 @@
     <!-- JS DataTables -->
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
+    <script src="<?= base_url ?>assets/js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="<?= base_url ?>assets/css/jquery-ui.css">
+
     <title><?= $this->title ?? 'Alejandria' ?></title>
 
 
