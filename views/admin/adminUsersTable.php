@@ -7,10 +7,13 @@
     <div class="row">
         <div class="col-2 offset-10">
             <div class="text-center">
-                <!-- TODO: solo visible si estamos en el panel de administración de libros -->
-                <!-- Boton -->
-                <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalUSer" id="buttonCreate">
-                    Crear</button>
+                
+                 <!-- Boton -->
+                 <?php if (isset($vista) && $vista === 'libros'): ?>
+                    <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalUser" id="buttonCreate">
+                        Crear
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -37,7 +40,7 @@
 
 <!-- Modal -->
 
-<div class="modal fade" id="modalUSer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -165,7 +168,7 @@
             $('#uploadImage').html('<img src="' + rowData.profile_img + '" width="100"/>');
 
             // Mostrar la modal
-            const modal = new bootstrap.Modal(document.getElementById('modalUSer'));
+            const modal = new bootstrap.Modal(document.getElementById('modalUser'));
             modal.show();
         });
 
@@ -229,7 +232,7 @@
                 data: formData, // ❗ NO FormData, simple objeto
                 success: function(response) {
                     document.activeElement.blur();
-                    $('#modalUSer').modal('hide');
+                    $('#modalUser').modal('hide');
                     $('#form')[0].reset();
                     $('#uploadImage').html('');
                     $('#myTable').DataTable().ajax.reload();
@@ -251,7 +254,7 @@
             //         document.activeElement.blur(); // Warning de accesibilidad
 
             //         // Cerrar el modal
-            //         $('#modalUSer').modal('hide');
+            //         $('#modalUser').modal('hide');
 
             //         $('#form')[0].reset();
             //         $('#uploadImage').html('');
