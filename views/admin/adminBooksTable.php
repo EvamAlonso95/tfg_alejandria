@@ -1,6 +1,5 @@
 <?php
 
-/** @var Book[] $book */
 /** @var string $authors */
 /** @var string $genres */
 
@@ -10,12 +9,11 @@
         <div class="col-2 offset-10">
             <div class="text-center">
 
-                <!-- Boton -->
-                <?php if (isset($vista) && $vista === 'libros'): ?>
-                    <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
-                        Crear
-                    </button>
-                <?php endif; ?>
+
+                <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
+                    Crear
+                </button>
+
 
             </div>
         </div>
@@ -100,10 +98,7 @@
     const availableAuthors = <?= $authors ?>;
     const availableGenres = <?= $genres ?>;
     $(document).ready(function() {
-        // Inicializar DataTable solo si estamos en la vista de libros
-        const vistaActual = "<?= $vista ?? 'usuarios' ?>";
-
-        if (vistaActual === 'libros') {
+      
             $('#myTable').DataTable({
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json"
@@ -237,7 +232,7 @@
                 toastEl.removeClass('bg-success bg-danger').addClass(isSuccess ? 'bg-success' : 'bg-danger');
                 new bootstrap.Toast(toastEl).show();
             }
-        }
+        
 
         setupAutocomplete("#authors", availableAuthors);
         setupAutocomplete("#genres", availableGenres);

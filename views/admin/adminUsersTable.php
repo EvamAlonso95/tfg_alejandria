@@ -1,22 +1,4 @@
-<?php
-
-/** @var User[] $users */
-
-?>
 <div class="container">
-    <div class="row">
-        <div class="col-2 offset-10">
-            <div class="text-center">
-                
-                 <!-- Boton -->
-                 <?php if (isset($vista) && $vista === 'libros'): ?>
-                    <button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalUser" id="buttonCreate">
-                        Crear
-                    </button>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
     <div class="table-responsive">
         <table id="myTable" class="table table-striped table-bordered table-admin">
             <thead>
@@ -62,7 +44,7 @@
                         <input type="hidden" name="operation" id="operation">
                         <input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
                     </div>
-                    
+
                 </form>
             </div>
 
@@ -195,14 +177,14 @@
                 "<?= base_url ?>api/editUser" :
                 "<?= base_url ?>api/save";
 
-                console.log(isEdit ? "<?= base_url ?>api/editUser" : "<?= base_url ?>api/save");
+
 
 
 
             $.ajax({
                 url: url,
                 type: 'POST',
-                data: formData, // ❗ NO FormData, simple objeto
+                data: formData,
                 success: function(response) {
                     document.activeElement.blur();
                     $('#modalUser').modal('hide');
@@ -217,7 +199,7 @@
                 }
             });
 
-         
+
         });
 
         // Mostrar toast

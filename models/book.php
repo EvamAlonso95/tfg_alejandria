@@ -5,6 +5,7 @@ class Book
     private ?string $title = null;
     private ?string $synopsis = null;
     private ?string $cover_img = null;
+    
     /** @var Author[] */
     private array $authors = [];
 
