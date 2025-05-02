@@ -79,6 +79,7 @@ class ApiController
 
     //BOOKS  
 
+    // Método para obtener todos los libros
     public function books()
     {
         if (Utils::isAdmin()) {
@@ -111,6 +112,8 @@ class ApiController
             $error->forbidden();
         }
     }
+
+    // Método para guardar un libro
     public function saveBook()
     {
         if (Utils::isAdmin()) {
@@ -151,6 +154,26 @@ class ApiController
 
             $book->save();
             echo json_encode(['success' => 'Se ha podido crear el libro.']);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    // Método para eliminar un libro
+    public function delete()
+    {
+        var_dump($_POST);
+        if (Utils::isAdmin()) {
+            if (isset($_POST['idBook'])) {
+                $book = Book::createById(intval($_POST['idBook']));
+
+                $book->delete();
+                echo json_encode(['success' => 'Se ha podido eliminar el libro.']);
+                return;
+            } else {
+                echo json_encode(['error' => 'No existe el método solicitado']);
+            }
         } else {
             $error = new ErrorController();
             $error->forbidden();

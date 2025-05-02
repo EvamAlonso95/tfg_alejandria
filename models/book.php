@@ -17,16 +17,21 @@ class Book
         $book = new self();
         $book->setId($id);
 
+        // Obtenemos el libro de la base de datos
         $data =  $book->getOneBook();
+        // Obtenemos los géneros y autores del libro
         $dataGenres = $book->getGenresByBook();
         foreach ($dataGenres as $genreId) {
+            // Seteamos el género del libro
             $book->setGenre($genreId->id_genre);
         }
         $book->setTitle($data->title);
         $book->setSynopsis($data->synopsis);
         $book->setCoverImg($data->cover_img);
+        // Obtenemos los autores del libro
         $dataAuthor = $book->getAuthorsByBook();
         foreach ($dataAuthor as $authorId) {
+            // Seteamos el autor del libro
             $book->setAuthor($authorId->id_author);
         }
         return $book;
@@ -81,8 +86,6 @@ class Book
         }
         $this->authors[] = Author::createByName($nameAuthor);
     }
-
-
 
     //GETTERS
     public function getId(): ?int
@@ -140,6 +143,7 @@ class Book
         return $books;
     }
 
+    // Método para obtener un libro por su ID
     public function getOneBook(): object
     {
         $sql = "SELECT 
@@ -174,18 +178,7 @@ class Book
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    // Método para obtener libros por género
-    //TODO: REVISAR
-    /*
-    public function getBooksByGenre(int $id): array
-    {
-        $sql = "SELECT * FROM books WHERE id_genre = :id_genre";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id_genre' => $id]);
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-    }*/
-
-
+    // Método para guardar un libro en la base de datos
     public function save(): bool
     {
 
@@ -223,6 +216,23 @@ class Book
         }
 
         return true;
+    }
+
+    //Método que ejecuta una query para eliminar un libro
+    public function delete():bool{
+        try {
+            //TODO ¿Se podría hace con new self? creo que no hace falta, pero no estoy segura
+            $stmt = $this->db->prepare(
+                "DELETE FROM books WHERE id = :id"
+            );
+            $stmt->execute([':id' => $this->id]);
+            
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error al eliminar libro: " . $e->getMessage());
+            return false;
+        }
+
     }
     function __destruct()
     {

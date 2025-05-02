@@ -74,7 +74,7 @@
                         </div>
                         <br>
                         <div class="modal-footer">
-                            <input type="hidden" name="idUser" id="idUser">
+                            <input type="hidden" name="idBook" id="idBook">
                             <input type="hidden" name="operation" id="operation" value="create">
                             <input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
                         </div>
@@ -151,7 +151,7 @@
                 const table = $('#myTable').DataTable();
                 const rowData = table.row($(this).closest('tr')).data();
 
-                $('#idUser').val(rowData.id);
+                $('#idBook').val(rowData.id);
                 $('#title').val(rowData.title);
                 $('#synopsis').val(rowData.synopsis);
                 $('#author').val(rowData.author);
@@ -173,10 +173,10 @@
 
                 if (confirm("¿Estás seguro de que deseas eliminar este libro?")) {
                     $.ajax({
-                        url: "<?= base_url ?>api/deleteBook",
+                        url: "<?= base_url ?>api/delete",
                         type: 'POST',
                         data: {
-                            id: rowData.id
+                            idBook: rowData.id
                         },
                         success: function() {
                             table.ajax.reload();
@@ -196,7 +196,7 @@
                 const isEdit = $('#operation').val() === 'edit';
                 const url = isEdit ? "<?= base_url ?>api/editBook" : "<?= base_url ?>api/saveBook";
                 const formData = new FormData();
-                formData.append('id', $('#idUser').val());
+                formData.append('id', $('#idBook').val());
                 formData.append('title', $('#title').val());
                 formData.append('synopsis', $('#synopsis').val());
                 formData.append('authors', $('#authors').val());
