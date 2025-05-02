@@ -35,7 +35,6 @@ class ApiController
 
         if (Utils::isAdmin()) {
             if (isset($_POST['idUser'])) {
-                echo "llega al controlador";
                 $user = User::createById($_POST['idUser']);
                 // $user->setName($_POST['name']);
                 $user->setRole(intval($_POST['role']));
@@ -114,7 +113,7 @@ class ApiController
     }
 
     // Método para guardar un libro
-    public function saveBook()
+    public function save()
     {
         if (Utils::isAdmin()) {
             $title = $_POST['title'] ?? null;
@@ -154,6 +153,53 @@ class ApiController
 
             $book->save();
             echo json_encode(['success' => 'Se ha podido crear el libro.']);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    // Método para editar un libro
+    public function edit(){
+        if (Utils::isAdmin()) {
+            var_dump($_POST);
+            if (isset($_POST['idBook'])) {
+    
+                $book = Book::createById($_POST['idBook']);
+                $book->setTitle($_POST['title']);
+                $book->setSynopsis($_POST['synopsis']);
+
+                // TODO Revisar porque no quiero que se mande vacio
+                $rawAuthors = $_POST['authors'];
+                $rawGenres = $_POST['genres'];
+                $authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
+                $genres = array_filter(array_map('trim', explode(',', $rawGenres)));
+
+                foreach ($genres as $genre) {
+                    $book->setGenre($genre);
+                }
+                foreach ($authors as $author) {
+                    $book->setAuthor($author);
+                }
+
+                if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
+                    $cover = $_FILES['cover'];
+                    $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
+                    $uniqueName = uniqid('book_', true) . '.' . $extension;
+                    $filePath = 'uploads/books/' . $uniqueName;
+                    if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
+                        echo json_encode(['error' => 'Error al mover la imagen del libro.']);
+                        return;
+                    }
+                    $book->setCoverImg($filePath);
+                }
+
+                $book->edit();
+                echo 'hola';
+                echo json_encode(['success' => 'Se ha podido editar el libro.']);
+            } else {
+                echo json_encode(['error' => 'No existe el método solicitado']);
+            }
         } else {
             $error = new ErrorController();
             $error->forbidden();

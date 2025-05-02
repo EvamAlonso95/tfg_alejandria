@@ -154,8 +154,8 @@
                 $('#idBook').val(rowData.id);
                 $('#title').val(rowData.title);
                 $('#synopsis').val(rowData.synopsis);
-                $('#author').val(rowData.author);
-                $('#genre').val(rowData.genre);
+                $('#authors').val(rowData.author);
+                $('#genres').val(rowData.genre);
                 $('#uploadImage').html('<img src="' + rowData.cover + '" width="100"/>');
 
                 $('#action').val('Actualizar');
@@ -194,9 +194,9 @@
                 e.preventDefault();
                 // TODO: evitar que al hacer ENTER se envíe el formulario
                 const isEdit = $('#operation').val() === 'edit';
-                const url = isEdit ? "<?= base_url ?>api/editBook" : "<?= base_url ?>api/saveBook";
+                const url = isEdit ? "<?= base_url ?>api/edit" : "<?= base_url ?>api/save";
                 const formData = new FormData();
-                formData.append('id', $('#idBook').val());
+                formData.append('idBook', $('#idBook').val());
                 formData.append('title', $('#title').val());
                 formData.append('synopsis', $('#synopsis').val());
                 formData.append('authors', $('#authors').val());
@@ -251,6 +251,7 @@
         return split(term).pop();
     }
 
+    // Función para configurar el autocompletado
     function setupAutocomplete(inputSelector, availableItems) {
         $(inputSelector)
             .on("keydown", function(event) {

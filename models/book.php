@@ -218,6 +218,60 @@ class Book
         return true;
     }
 
+
+    // TODO Revisar
+    // Método para editar un libro en la base de datos
+    public function edit(): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE books 
+                SET title = :title, synopsis = :synopsis, cover_img = :cover_img 
+                WHERE id = :id"
+        );
+        $stmt->execute([
+            ':id' => $this->id,
+            ':title' => $this->title,
+            ':synopsis' => $this->synopsis,
+            ':cover_img' => $this->cover_img
+        ]);
+
+        // Eliminar autores y géneros existentes
+        $stmt = $this->db->prepare(
+            "DELETE FROM books_published WHERE id_book = :id_book"
+        );
+        $stmt->execute([':id_book' => $this->id]);
+
+        $stmt = $this->db->prepare(
+            "DELETE FROM books_genres WHERE id_book = :id_book"
+        );
+        $stmt->execute([':id_book' => $this->id]);
+
+        // Insertar nuevos autores y géneros
+        foreach ($this->authors as $author) {
+            $stmt = $this->db->prepare(
+                "INSERT INTO books_published (id_book, id_author) 
+                    VALUES (:id_book, :id_author)"
+            );
+            $stmt->execute([
+                ':id_book' => $this->id,
+                ':id_author' => $author->getId()
+            ]);
+        }
+
+        foreach ($this->genres as $genre) {
+            $stmt = $this->db->prepare(
+                "INSERT INTO books_genres (id_book, id_genre) 
+                    VALUES (:id_book, :id_genre)"
+            );
+            $stmt->execute([
+                ':id_book' => $this->id,
+                ':id_genre' => $genre->getId()
+            ]);
+        }
+
+        return true;
+    }
+
     //Método que ejecuta una query para eliminar un libro
     public function delete():bool{
         try {
