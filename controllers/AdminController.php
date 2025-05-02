@@ -24,6 +24,7 @@ class AdminController extends BaseController
         require_once 'views/admin/adminAuthors.php';
     }
 
+ 
    
 
     public function genres()

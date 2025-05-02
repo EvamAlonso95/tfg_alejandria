@@ -339,4 +339,88 @@ class ApiController
             $error->forbidden();
         }
     }
+
+    //GENRES
+    //TODO traer la cantidad de libros que tiene ese género un COUNT BY
+    public function genres()
+    {
+        if (Utils::isAdmin()) {
+            $genreRaw = Genre::getAllGenres();
+            $genres = [];
+            foreach ($genreRaw as $genre) {
+                $genres[] = [
+                    'id' => $genre->getId(),
+                    'genreName' => $genre->getName(),
+                ];
+            }
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['data' => $genres]);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    // Método para guardar un género
+
+    public function saveGenre()
+    {
+        if (Utils::isAdmin()) {
+            $genreName = $_POST['genreName'] ?? null;
+
+            if (!$genreName) {
+                echo json_encode(['error' => 'Faltan datos para crear el género.']);
+                return;
+            }
+
+            $genre = new Genre();
+            $genre->setName($genreName);
+            $exists = $genre->existsByName();
+            if ($exists) {
+                echo json_encode(['error' => 'Ya existe un género con ese nombre.']);
+                return;
+            }
+            $genre->save();
+            echo json_encode(['success' => 'Se ha podido crear el género.']);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    // Método para editar un género
+    public function editGenre()
+    {
+        if (Utils::isAdmin()) {
+            if (isset($_POST['idGenre'])) {
+                $genre = Genre::createById($_POST['idGenre']);
+                $genre->setName($_POST['genreName']);
+                $genre->edit();
+                echo json_encode(['success' => 'Se ha podido editar el género.']);
+            } else {
+                echo json_encode(['error' => 'No existe el método solicitado']);
+            }
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
+
+    //Método para eliminar un género
+    public function deleteGenre()
+    {
+        if (Utils::isAdmin()) {
+            if (isset($_POST['idGenre'])) {
+                $genre = Genre::createById(intval($_POST['idGenre']));
+                $genre->delete();
+                echo json_encode(['success' => 'Se ha podido eliminar el género.']);
+                return;
+            } else {
+                echo json_encode(['error' => 'No existe el método solicitado']);
+            }
+        } else {  
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
 }

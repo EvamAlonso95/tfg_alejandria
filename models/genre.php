@@ -61,7 +61,19 @@ class Genre
         return $this->name;
     }
 
+    // Setters
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     //Método para obtener todos los géneros
+    
     public static function getAllGenres(): array
     {
         $temp = new Genre();
@@ -78,8 +90,42 @@ class Genre
         return $genres;
     }
 
+
+    // Método para guardar un género
+    public function save(): bool
+    {
+        $stmt = $this->db->prepare("INSERT INTO genres (name) VALUES (:name)");
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
     function __destruct()
     {
         $this->db = null;
+    }
+
+    // Método para actualizar un género
+    public function edit(): bool
+    {
+        $stmt = $this->db->prepare("UPDATE genres SET name = :name WHERE id = :id");
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // Método para eliminar
+
+    public function delete(): bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM genres WHERE id = :id");
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function existsByName(): bool
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM genres WHERE name = :name");
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
     }
 }
