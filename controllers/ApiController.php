@@ -225,4 +225,32 @@ class ApiController
             $error->forbidden();
         }
     }
+
+    //AUTHORS
+
+    public function authors()
+    {
+        if (Utils::isAdmin()) {
+            $authorRaw = Author::getAllAuthors();
+            $authors = [];
+            foreach ($authorRaw as $author) {
+                $authors[] = [
+                    'id' => $author->getId(),
+                    'authorName' => $author->getName(),
+                    'biography' => $author->getBiography(),
+                    'profileImage' => base_url . $author->getProfileImage(),
+    
+
+                ];
+                if($author->getUser() != null){
+                    $authors[count($authors)-1]['userName'] = $author->getUser()->getId();
+                }
+            }
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['data' => $authors]);
+        } else {
+            $error = new ErrorController();
+            $error->forbidden();
+        }
+    }
 }

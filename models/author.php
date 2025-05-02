@@ -71,7 +71,7 @@ class Author
         return $this->profileImage;
     }
     //TODO Revisar
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
