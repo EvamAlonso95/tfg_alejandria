@@ -49,21 +49,6 @@
             </div>
             <div class="modal-body">
                 <form id="form">
-
-
-                    <!-- <label for="name">Introduce el nombre</label>
-                    <input type="text" name="name" id="name" class="form-control">
-                    <br> -->
-                    <!--<label for="email">Introduce el correo</label>
-                    <input type="email" name="email" id="email" class="form-control" readonly>
-                    <br>
-                    <label for="biography">Introduce la biografía</label>
-                    <textarea name="biography" id="biography" class="form-control" readonly></textarea>
-                    <br>
-                     <label for="image">Selecciona una imagen</label>
-                    <input type="file" name="image" id="image" class="form-control">
-                    <span id="uploadImage"></span> 
-                    <br> -->
                     <label for="role">Selecciona el rol</label>
                     <select name="role" id="role" class="form-select">
                         <option value="1">Author</option>
@@ -72,6 +57,7 @@
                     </select>
                     <br>
                     <div class="modal-footer">
+                        <!--TODO  Revisar este hidden -->
                         <input type="hidden" name="idUser" id="idUser">
                         <input type="hidden" name="operation" id="operation">
                         <input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
@@ -105,15 +91,9 @@
             columns: [{
                     data: 'id'
                 },
-                // {
-                //     data: 'name'
-                // },
                 {
                     data: 'email'
                 },
-                // {
-                //     data: 'biography'
-                // },
                 {
                     data: 'profile_img',
                     render: function(data, type, row) {
@@ -155,9 +135,6 @@
 
             // Rellenar los campos del modal
             $('#idUser').val(rowData.id);
-            // $('#name').val(rowData.name);
-            // $('#email').val(rowData.email);
-            // $('#biography').val(rowData.biography);
             $('#role').val(rowData.role_id);
 
             // Cambiar el texto del botón
