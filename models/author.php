@@ -106,7 +106,6 @@ class Author
         var_dump($this->id);
         $stmt->execute([':id' => $this->id]);
         $data = $stmt->fetch(PDO::FETCH_OBJ);
-        var_dump($data);
         return $data;
     }
     public static function getAllAuthors(): array
@@ -121,6 +120,47 @@ class Author
         }
         $temp = null; // Cerrar la conexión a la base de datos
         return $authors;
+    }
+
+    //Método para guardar un autor
+
+    public function save(): bool
+    {
+        $sql = "INSERT INTO authors (name, biography, profile_img,id_user) VALUES (:name, :biography, :profile_img, :id_user)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':name', $this->name);
+        $stmt->bindValue(':biography', $this->biography);
+        $stmt->bindValue(':profile_img', $this->profileImage);
+        $stmt->bindValue(':id_user', $this->user ? $this->user->getId() : null); // Si el autor tiene un usuario, se guarda su id, si no, se guarda null
+
+
+        return $stmt->execute();
+    }
+
+    //Método para actualizar un autor
+    public function edit(): bool
+    {
+        $sql = "UPDATE authors SET name = :name, biography = :biography, profile_img = :profile_img , id_user = :id_user WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':name', $this->name);
+        $stmt->bindValue(':biography', $this->biography);
+        $stmt->bindValue(':profile_img', $this->profileImage);
+        $stmt->bindValue(':id', $this->id);
+        $stmt->bindValue(':id_user', $this->user ? $this->user->getId() : null); // Si el autor tiene un usuario, se guarda su id, si no, se guarda null
+        return $stmt->execute();
+    }
+
+    //Método para eliminar un autor
+    public function delete(): bool
+    {
+        $sql = "DELETE FROM authors WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $this->id);
+        if($this->user){
+            $this->user->setRole('reader'); // Cambiar el rol del usuario a 1 (Usuario normal)
+            $this->user->editUser(); // Actualizar el usuario en la base de datos
+        }
+        return $stmt->execute();
     }
 
     function __destruct()

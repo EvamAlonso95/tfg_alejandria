@@ -50,8 +50,9 @@
                     <input required type="file" name="profileImage" id="profileImage" class="form-control">
                     <span id="uploadImage"></span>
                     <br>
+                  
                     <label for="userName">Nombre Usuario</label>
-                    <input required type="text" name="userName" id="userName" class="form-control">
+                    <input  type="text" name="userName" id="userName" class="form-control">
                     <br>
 
                     <div class="modal-footer">
@@ -125,9 +126,10 @@
 
         // Evento para Editar libro
         $('#myTable').on('click', '.btn-edit', function(e) {
+           
             e.preventDefault();
             const table = $('#myTable').DataTable();
-            const rowData = table.row($(this).closest('tr')).data();
+            const rowData = table.row($(this).closest('tr')).data();           
 
             $('#idAuthor').val(rowData.id);
             $('#authorName').val(rowData.authorName);
