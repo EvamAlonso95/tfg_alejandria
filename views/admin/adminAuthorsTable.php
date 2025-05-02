@@ -34,7 +34,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar autor</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -125,12 +125,11 @@
         });
 
         // Evento para Editar libro
-        $('#myTable').on('click', '.btn-edit', function(e) {
-           
+        $('#myTable').on('click', '.btn-edit', function(e) {           
             e.preventDefault();
             const table = $('#myTable').DataTable();
-            const rowData = table.row($(this).closest('tr')).data();           
-
+            const rowData = table.row($(this).closest('tr')).data();    
+            $('#exampleModalLabel').text('Editar Autor'); 
             $('#idAuthor').val(rowData.id);
             $('#authorName').val(rowData.authorName);
             $('#biography').val(rowData.biography);
@@ -203,6 +202,13 @@
             $('#action').val('Crear');
             $('#operation').val('create');
         });
+
+        $('#buttonCreate').on('click', function() {
+            $('#exampleModalLabel').text('Crear Autor');
+          
+        });
+
+        
 
         // Toast reusable
         function showToast(message, isSuccess = true) {
