@@ -182,10 +182,6 @@
         // Enviar formulario por AJAX
         $('#form').on('submit', function(e) {
             e.preventDefault();
-
-            // Recolectar datos
-            // const formData = new FormData(this); // Para incluir la imagen si se selecciona
-            // const idUser = $('#idUser').val();
             const formData = {
                 idUser: $('#idUser').val(),
                 // name: $('#name').val(),
@@ -221,29 +217,7 @@
                 }
             });
 
-            // $.ajax({
-            //     url: url,
-            //     type: 'POST',
-            //     data: formData,
-            //     processData: false,
-            //     contentType: false,
-            //     success: function(response) {
-            //         document.activeElement.blur(); // Warning de accesibilidad
-
-            //         // Cerrar el modal
-            //         $('#modalUser').modal('hide');
-
-            //         $('#form')[0].reset();
-            //         $('#uploadImage').html('');
-            //         $('#myTable').DataTable().ajax.reload();
-            //         // Mostrar toast
-            //         showToast('¡Usuario actualizado correctamente!');
-            //     },
-            //     error: function(xhr, status, error) {
-            //         console.error('Error al guardar:', error);
-            //         showToast('Ocurrió un error al guardar. Intenta de nuevo.', false);
-            //     }
-            // });
+         
         });
 
         // Mostrar toast
