@@ -4,7 +4,7 @@
  * @var Book $book
  * @var Author[] $authors
  * @var Genre[] $genres
- * @var Book[] $similarBooks
+
  */
 var_dump($book);
 ?>
