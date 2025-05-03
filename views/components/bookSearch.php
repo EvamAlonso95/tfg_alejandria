@@ -1,14 +1,26 @@
+<?php
+
+/**  
+ * @var Book $book
+ */
+
+// var_dump($book);
+?>
 <div class="col-12 d-flex border p-2">
-    <div class="me-3">
-        <div class="bg-secondary" style="width: 80px; height: 100px;"></div>
+    <div class="me-3 container-img">
+        <!-- imagen -->
+        <img src="<?= $book->getCoverImg() ?>" alt="Imagen del libro" class="img-fluid">
     </div>
     <div>
         <h6>
-            <a href="<?= base_url ?>book">Título del libro</a>
+            <a href="<?= base_url ?>book"><?= $book->getTitle() ?></a>
         </h6>
-        <p class="mb-1">
-            <a href="<?= base_url ?>author">Autor</a>
-        </p>
+        <?php foreach ($book->getAuthors() as $author): ?>
+            <p class="mb-1">
+                <a href="<?= base_url ?>author?authorId=<?= $author->getId() ?>"><?= $author->getName() ?></a>
+            </p>
+        <?php endforeach; ?>
+
         <a href="#" class="btn btn-outline-primary btn-sm">Añadir</a>
     </div>
 </div>

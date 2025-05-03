@@ -111,6 +111,13 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     border: solid 1px #ddd;
 }
 
+/* Imagen de libros búsqueda */
+
+.container-img{
+    width: 100px;
+    height: 150px;
+}
+
 
 /*CONTENT*/
 /*

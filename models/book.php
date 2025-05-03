@@ -5,7 +5,7 @@ class Book
     private ?string $title = null;
     private ?string $synopsis = null;
     private ?string $cover_img = null;
-    
+
     /** @var Author[] */
     private array $authors = [];
 
@@ -106,7 +106,7 @@ class Book
 
     public function getCoverImg(): ?string
     {
-        return $this->cover_img;
+        return base_url . $this->cover_img;
     }
     //TODO son tablas relacionadas, no se pueden acceder directamente
     /**
@@ -274,20 +274,49 @@ class Book
     }
 
     //Método que ejecuta una query para eliminar un libro
-    public function delete():bool{
+    public function delete(): bool
+    {
         try {
             //TODO ¿Se podría hace con new self? creo que no hace falta, pero no estoy segura
             $stmt = $this->db->prepare(
                 "DELETE FROM books WHERE id = :id"
             );
             $stmt->execute([':id' => $this->id]);
-            
+
             return true;
         } catch (PDOException $e) {
             error_log("Error al eliminar libro: " . $e->getMessage());
             return false;
         }
+    }
 
+    // Método para buscar libros por título o autor
+    /**
+     * @return Book[]
+     */
+    public static function search(string $search): array
+    {
+        $temp = Database::connect();
+        $stmt = $temp->prepare(
+            "SELECT books.id AS book_id
+             FROM books 
+             JOIN books_published ON books.id = books_published.id_book
+             JOIN authors ON books_published.id_author = authors.id
+             WHERE books.title LIKE :search_title OR authors.name LIKE :search_author"
+        );
+
+        $stmt->execute([
+            ':search_title' => '%' . $search . '%',
+            ':search_author' => '%' . $search . '%'
+        ]);
+
+        $dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $books = [];
+        foreach ($dataBooks as $book) {
+            array_push($books, self::createById($book->book_id));
+        }
+        $temp = null; // Cerrar la conexión a la base de datos
+        return $books;
     }
     function __destruct()
     {
