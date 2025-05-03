@@ -6,7 +6,7 @@ $urlHome = base_url;
 $isAdmin = false;
 $isAuthor = false;
 if (!is_null($user)) {
-    $profileImg = base_url . $user->getProfileImage();
+    $profileImg = $user->getProfileImage();
     $roleName = $user->getRole()->getName();
     if ($roleName == 'admin') {
         $isAdmin = true;

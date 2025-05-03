@@ -68,7 +68,7 @@ class Author
     }
     public function getProfileImage(): ?string
     {
-        return $this->profileImage;
+        return base_url . $this->profileImage;
     }
     //TODO Revisar
     public function getUser(): ?User
@@ -108,6 +108,10 @@ class Author
         $data = $stmt->fetch(PDO::FETCH_OBJ);
         return $data;
     }
+
+    /**
+     * @return Author[]
+     */
     public static function getAllAuthors(): array
     {
         $temp = Database::connect();
@@ -156,7 +160,7 @@ class Author
         $sql = "DELETE FROM authors WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $this->id);
-        if($this->user){
+        if ($this->user) {
             $this->user->setRole('reader'); // Cambiar el rol del usuario a 1 (Usuario normal)
             $this->user->editUser(); // Actualizar el usuario en la base de datos
         }

@@ -13,7 +13,7 @@
         <!-- Foto -->
         <div class="col-md-2">
           <div class="border p-3">
-            <img src="<?= base_url . $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid object-fit-cover rounded">
+            <img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid object-fit-cover rounded">
           </div>
         </div>
 

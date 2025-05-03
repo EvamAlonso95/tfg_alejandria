@@ -58,7 +58,7 @@ class User
 
     public function getProfileImage(): ?string
     {
-        return $this->profileImage;
+        return base_url . $this->profileImage;
     }
 
     public function getRole(): Role

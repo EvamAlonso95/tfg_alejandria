@@ -15,7 +15,7 @@ class ApiController
                     'name' => $user->getName(),
                     'biography' => $user->getBiography(),
                     'email' => $user->getEmail(),
-                    'profile_img' => base_url . $user->getProfileImage(),
+                    'profile_img' => $user->getProfileImage(),
                     'role' => $user->getRole()->getName(),
                     'role_id' => $user->getRole()->getId(),
                 ];
@@ -97,7 +97,7 @@ class ApiController
                 $genresNames = implode(', ', $genresNames);
                 $books[] = [
                     'id' => $book->getId(),
-                    'cover' => base_url . $book->getCoverImg(),
+                    'cover' =>  $book->getCoverImg(),
                     'title' => $book->getTitle(),
                     'synopsis' => $book->getSynopsis(),
                     'author' => $authorsNames,
@@ -239,7 +239,7 @@ class ApiController
                     'id' => $author->getId(),
                     'authorName' => $author->getName(),
                     'biography' => $author->getBiography(),
-                    'profileImage' => base_url . $author->getProfileImage(),
+                    'profileImage' => $author->getProfileImage(),
 
                 ];
                 if ($author->getUser() != null) {
@@ -418,7 +418,7 @@ class ApiController
             } else {
                 echo json_encode(['error' => 'No existe el método solicitado']);
             }
-        } else {  
+        } else {
             $error = new ErrorController();
             $error->forbidden();
         }

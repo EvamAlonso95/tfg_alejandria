@@ -14,7 +14,7 @@ require_once 'views/layout/head.php'; ?>
             <div class="row mb-3">
                 <div class="col-md-4 text-center mb-2">
                     <div class="mx-auto mb-2 w-50">
-                        <img src="<?= base_url . $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+                        <img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
                     </div>
                 </div>
                 <div class="col-md-8 d-flex align-items-center">
