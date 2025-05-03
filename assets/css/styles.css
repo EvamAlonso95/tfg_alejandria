@@ -65,7 +65,6 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
 }
 
 .profile-section {
-    img {}
 
     .profile-data {
         margin-bottom: 8px;
@@ -104,9 +103,13 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
 }
 
 
+/* User perfil readings */
 
-
-
+.tab-content.lecturas {
+    padding: 1rem;
+    background-color: #fff;
+    border: solid 1px #ddd;
+}
 
 
 /*CONTENT*/
@@ -207,5 +210,4 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
 .pagination {
     justify-content: center;
 }
-
 */
