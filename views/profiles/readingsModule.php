@@ -1,3 +1,8 @@
+ <?php
+  /** @var BookUser[] $booksReading */
+  /** @var BookUser[] $booksRead */
+  /** @var BookUser[] $booksWantToRead */
+  ?>
  <!-- Sección de pestañas -->
  <ul class="nav nav-tabs " id="tabsLectura" role="tablist">
    <li class="nav-item" role="presentation">
@@ -15,36 +20,31 @@
  <div class="tab-content lecturas" id="tabContentLecturas">
    <div class="tab-pane fade show active" id="leyendo" role="tabpanel">
      <!-- Lista de libros -->
-      <?php
-       //TODO Foreach con los libros de este idUser que coincidan con reading, want to read o finised
-       ?>
-     <div class="book-card">
-       <div class="book-cover">Portada</div>
-       <div class="flex-grow-1 ms-3">Título y detalles del libro</div>
-       <button class="btn btn-secondary">Botón</button>
-     </div>
-     <div class="book-card">
-       <div class="book-cover">Portada</div>
-       <div class="flex-grow-1 ms-3">Título y detalles del libro</div>
-       <button class="btn btn-secondary">Botón</button>
-     </div>
-     <div class="book-card">
-       <div class="book-cover">Portada</div>
-       <div class="flex-grow-1 ms-3">Título y detalles del libro</div>
-       <button class="btn btn-secondary">Botón</button>
-     </div>
+     <?php
+      // TODO: si no hay libros, mostrar un mensaje
+      foreach ($booksReading as $bookUser) :
+        $book = $bookUser->getBook();
+        require 'views/components/bookProfile.php';
 
-     <!-- Paginación -->
-     <nav>
-       <ul class="pagination d-flex justify-content-center">
-         <li class="page-item"><a class="page-link" href="#">1</a></li>
-         <li class="page-item"><a class="page-link" href="#">2</a></li>
-         <li class="page-item"><a class="page-link" href="#">3</a></li>
-       </ul>
-     </nav>
+      endforeach; ?>
    </div>
 
    <!-- Otras pestañas pueden tener contenido similar -->
-   <div class="tab-pane fade" id="quiero" role="tabpanel">Contenido de "Quiero leer"</div>
-   <div class="tab-pane fade" id="finalizadas" role="tabpanel">Contenido de "Finalizadas"</div>
+   <div class="tab-pane fade" id="quiero" role="tabpanel">
+     <?php
+      // TODO: si no hay libros, mostrar un mensaje
+      foreach ($booksWantToRead as $bookUser) :
+        $book = $bookUser->getBook();
+        require 'views/components/bookProfile.php';
+      endforeach; ?>
+   </div>
+   <div class="tab-pane fade" id="finalizadas" role="tabpanel">
+     <?php
+      // TODO: si no hay libros, mostrar un mensaje
+      foreach ($booksRead as $bookUser) :
+        $book = $bookUser->getBook();
+        require 'views/components/bookProfile.php';
+
+      endforeach; ?>
+   </div>
  </div>

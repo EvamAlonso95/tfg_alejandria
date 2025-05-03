@@ -39,6 +39,10 @@ class UserController extends BaseController
         if (isset($_SESSION['identity'])) {
             $user =  User::createById($_SESSION['identity']->id);
             $this->title = 'Perfil de usuario - ' . $user->getName();
+            // Obtener los libros del usuario
+            $booksReading = BookUser::getBooksByUserIdAndStatus($user->getId(),'reading');
+            $booksRead = BookUser::getBooksByUserIdAndStatus($user->getId(),'read');
+            $booksWantToRead = BookUser::getBooksByUserIdAndStatus($user->getId(),'want to read');
             require_once 'views/profiles/userProfile.php';
         } else {
             header('Location:' . base_url);

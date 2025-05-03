@@ -1,7 +1,4 @@
-  <?php
-  /** @var User $user */
-
-  require_once 'views/layout/head.php'; ?>
+  <?php require_once 'views/layout/head.php'; ?>
 
 
   <main class="container my-4">

@@ -277,7 +277,6 @@ class Book
     public function delete(): bool
     {
         try {
-            //TODO ¿Se podría hace con new self? creo que no hace falta, pero no estoy segura
             $stmt = $this->db->prepare(
                 "DELETE FROM books WHERE id = :id"
             );
@@ -318,6 +317,9 @@ class Book
         $temp = null; // Cerrar la conexión a la base de datos
         return $books;
     }
+
+
+
     function __destruct()
     {
         $this->db = null;
