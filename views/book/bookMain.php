@@ -6,7 +6,7 @@
  * @var Genre[] $genres
 
  */
-var_dump($book);
+// var_dump($book);
 ?>
 <main class="py-4">
     <div class="container">
@@ -20,13 +20,26 @@ var_dump($book);
             <!-- Datos del libro -->
             <div class="col-md-8">
                 <h2><?= $book->getTitle() ?></h2>
-                <p><strong>Autores:</strong>
-                    <?= implode(', ', array_map(fn($author) => $author->getName(), $book->getAuthors())) ?>
-                </p>
+                <?php
+                // Autores
+                $authorNames = [];
+                foreach ($book->getAuthors() as $author) {
+                    $authorNames[] = $author->getName();
+                }
+                ?>
 
-                <p><strong>Géneros:</strong>
-                    <?= implode(', ', array_map(fn($genre) => $genre->getName(), $book->getGenres())) ?>
-                </p>
+                <p><strong>Autores:</strong> <a href="<?= base_url ?>author?authorId=<?= $author->getId() ?>"> <?= implode(', ', $authorNames) ?></a></p>
+
+                <?php
+                // Géneros
+                $genreNames = [];
+                foreach ($book->getGenres() as $genre) {
+                    $genreNames[] = $genre->getName();
+                }
+                ?>
+
+                <p><strong>Géneros:</strong> <?= implode(', ', $genreNames) ?></p>
+
 
 
                 <p><strong>Descripción:</strong></p>
