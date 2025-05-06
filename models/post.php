@@ -104,10 +104,12 @@ class Post
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    //TODO Devolverlo
     public static function getAllPosts(): array
     {
         $temp = Database::connect();
-        $sql = "SELECT * FROM posts";
+        $sql = "SELECT * FROM posts ORDER BY date DESC";
         $stmt = $temp->prepare($sql);
         $stmt->execute();
         $dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -121,13 +123,20 @@ class Post
     // Método para crear un nuevo post
     public function createPost(): bool
     {
-        $sql = "INSERT INTO posts (title, content, post_img, date, id_author) VALUES (:title, :content, :post_img, :date, :id_author)";
+        $sql = "INSERT INTO posts (title, content, post_img, date, id_author) VALUES (:title, :content, :post_img, now(), :id_author)";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':content', $this->content);
         $stmt->bindParam(':post_img', $this->post_img);
-        $stmt->bindParam(':date', $this->date);
         $stmt->bindParam(':id_author', $this->user->getId());
+        return $stmt->execute();
+    }
+
+    // Método para eliminar un post
+    public function deletePost(): bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id");
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         return $stmt->execute();
     }
 }

@@ -10,30 +10,35 @@ require_once 'views/layout/head.php'; ?>
             <?php require_once 'views/components/publicationLayout.php'; ?>
         </div>
         <!-- Formulario de publicación -->
-        <div class="col-md-4 mb-4" >
+        <div class="col-md-4 mb-4">
             <h5>Publica:</h5>
-            <div class="border p-3 bg-light h-100">
-                <!-- Imagen -->
-                <div class="mb-3 text-center">
-                    <label class="form-label d-block">IMG</label>
-                    <input type="file" class="form-control">
-                </div>
+            <form  action="<?= base_url ?>post/save" method="post" enctype="multipart/form-data">
 
-                <!-- Título -->
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Título">
-                </div>
 
-                <!-- Texto -->
-                <div class="mb-3">
-                    <textarea class="form-control" rows="4" placeholder="Texto"></textarea>
-                </div>
+                <div class="border p-3 bg-light h-100">
+                    <!-- Imagen -->
+                    <div class="mb-3 text-center">
+                        <label class="form-label d-block">Imagen del post</label>
+                        <input type="file" class="form-control" name="cover_img">
+                    </div>
 
-                <!-- Botón Publicar -->
-                <div class="d-grid">
-                    <button class="btn btn-earth">Publicar</button>
+                    <!-- Título -->
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Título" name="title" required>
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="4" placeholder="Texto" name="content"></textarea>
+                    </div>
+
+                    <!-- Botón Publicar -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-earth">Publicar</button>
+
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </main>
