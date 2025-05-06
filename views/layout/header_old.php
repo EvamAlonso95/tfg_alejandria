@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<?php /*<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
         <div class="d-flex align-items-center">
             <img src="<?= base_url ?>/assets/img/logo_prueba.png"
@@ -98,3 +98,5 @@
                         <li class="nav-item d-block d-lg-none">
                             <a class="nav-link" href="<?= base_url ?>user/register">Registrarse</a>
                         </li>
+
+                        ?> */ ?>

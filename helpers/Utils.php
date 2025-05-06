@@ -42,6 +42,14 @@ class Utils
         }
     }
     //TODO: require author;
+    public static function isAuthor()
+    {
+        if (isset($_SESSION['identity']) && $_SESSION['identity']->id_role == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     //Una funcion que verifique
 
     // Redirigir

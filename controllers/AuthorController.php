@@ -7,4 +7,6 @@ class AuthorController extends BaseController
         $author = Author::createById($_GET['authorId']);
         require_once 'views/author/authorInfo.php';
     }
+
+    
 }

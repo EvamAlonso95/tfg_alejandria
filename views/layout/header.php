@@ -47,7 +47,7 @@ if (!is_null($user)) {
                     <?php endif; ?>
                     <?php if ($isAuthor): ?>
                         <li class="nav-item d-md-none">
-                            <a class="nav-link" href="#">Publicaciones</a>
+                            <a class="nav-link" href="<?= base_url ?>post">Publicaciones</a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item d-md-none">
@@ -82,7 +82,7 @@ if (!is_null($user)) {
                             <?php endif; ?>
                             <?php if ($isAuthor): ?>
                                 <li>
-                                    <a class="dropdown-item" href="#">Publicaciones</a>
+                                    <a class="dropdown-item" href="<?= base_url ?>post">Publicaciones</a>
                                 </li>
                             <?php endif; ?>
 

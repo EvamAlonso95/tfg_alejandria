@@ -6,6 +6,7 @@ class Author
     private ?string $biography = null;
     private ?string $profileImage = null;
     // el id del usuario si lo tuviera
+     /** @var User */
     private ?User $user = null;
     private ?PDO $db;
 
