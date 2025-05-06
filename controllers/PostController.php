@@ -9,6 +9,18 @@ class PostController extends BaseController
         require_once 'views/publication/publication.php';
         //TODO aquí controlo la vsta del post, no en AUTOR
     }
+
+    public function info()
+    {
+        if (isset($_GET['postId'])) {
+            $post = Post::createById($_GET['postId']);
+            $this->title = 'Post: ' . $post->getTitle();
+            require_once 'views/publication/postInfo.php';
+        } else {
+            header('Location: ' . base_url . 'post');
+        }
+    }
+    
     public function save()
     {
         //TODO validar que solo los autores puedan crear publicaciones
@@ -60,6 +72,7 @@ class PostController extends BaseController
 
     public function delete()
     {
+        //TODO validar que solo los autores puedan eliminar publicaciones
         if (isset($_POST['post_id'])) {
             $post = new Post();
             $post->setId($_POST['post_id']);

@@ -81,7 +81,7 @@ class Post
     }
     public function getCoverImg(): ?string
     {
-        return $this->post_img;
+        return base_url . $this->post_img;
     }
     public function getCreatedAt(): ?string
     {
