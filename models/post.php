@@ -135,7 +135,8 @@ class Post
     // Método para eliminar un post
     public function deletePost(): bool
     {
-        $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id");
+        $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id AND id_author = :id_author");
+        $stmt->bindParam(':id_author', $this->user->getId(), PDO::PARAM_INT);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         return $stmt->execute();
     }

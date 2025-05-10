@@ -1,5 +1,7 @@
 <?php
 require_once 'views/layout/head.php'; ?>
+
+
 <!-- Main content -->
 <main class="container py-4 h-auto">
     <div class="row">
@@ -45,3 +47,4 @@ require_once 'views/layout/head.php'; ?>
 
 
 <?php require_once 'views/layout/footer.php'; ?>
+

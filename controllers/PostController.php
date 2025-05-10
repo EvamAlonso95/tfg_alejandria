@@ -20,12 +20,12 @@ class PostController extends BaseController
             header('Location: ' . base_url . 'post');
         }
     }
-    
+
     public function save()
     {
         //TODO validar que solo los autores puedan crear publicaciones
         if (isset($_POST)) {
-            
+
 
 
             $title = $_POST['title'] ?? null;
@@ -76,8 +76,11 @@ class PostController extends BaseController
         if (isset($_POST['post_id'])) {
             $post = new Post();
             $post->setId($_POST['post_id']);
-           $post->deletePost();
+            $post->setUser(User::createById($_SESSION['identity']->id));
+            $post->deletePost();
+          
         }
-        header('Location: ' . base_url . 'post');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 }
