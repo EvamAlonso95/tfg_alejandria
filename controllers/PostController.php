@@ -72,23 +72,37 @@ class PostController extends BaseController
 
     public function delete()
     {
-        //TODO validar que solo los autores puedan eliminar publicaciones
-        if (isset($_POST['post_id'])) {
-            $post = new Post();
-            $post->setId($_POST['post_id']);
-            $post->setUser(User::createById($_SESSION['identity']->id));
-            $post->deletePost();
-            $_SESSION['toast'] = [
-                'message' => 'Publicación eliminada con éxito',
-                'isSuccess' => true
-            ];          
-        }else {
-            $_SESSION['toast'] = [
-                'message' => 'Error al eliminar la publicación',
-                'isSuccess' => false
-            ];
+        if (Utils::isAuthor()) {
+            if (isset($_POST['post_id'])) {
+                $post = new Post();
+                $post->setId($_POST['post_id']);
+                $post->setUser(User::createById($_SESSION['identity']->id));
+                $post->deletePost();
+                $_SESSION['toast'] = [
+                    'message' => 'Publicación eliminada con éxito',
+                    'isSuccess' => true
+                ];
+            } else {
+                $_SESSION['toast'] = [
+                    'message' => 'Error al eliminar la publicación',
+                    'isSuccess' => false
+                ];
+            }
         }
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        // Redirección inteligente basada en REFERER
+        $referer = $_SERVER['HTTP_REFERER'] ?? null;
+
+        if ($referer && strpos($referer, 'post/info?postId=') !== false) {
+            // Si el referer es la página del post eliminado, redirigir al listado
+            header('Location: ' . base_url . 'post');
+        } else if ($referer) {
+            // Si venía de otra página, regresar ahí
+            header('Location: ' . $referer);
+        } else {
+            // Si no hay referer, también redirigir al listado
+            header('Location: ' . base_url . 'post');
+        }
+
         exit;
     }
 }

@@ -20,7 +20,7 @@ class Utils
         }
     }
 
-    //TODO: MEterselo a todas las páginas que correspondan
+  
     public static function requireLogin()
     {
         if (isset($_SESSION['identity'])) {
@@ -44,7 +44,7 @@ class Utils
     //TODO: require author;
     public static function isAuthor()
     {
-        if (isset($_SESSION['identity']) && $_SESSION['identity']->id_role == 2) {
+        if (isset($_SESSION['identity']) && $_SESSION['identity']->id_role == 1) {
             return true;
         } else {
             return false;
@@ -106,4 +106,6 @@ class Utils
 
         return $frases[array_rand($frases)];
     }
+
+    
 }
