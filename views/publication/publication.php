@@ -14,7 +14,7 @@ require_once 'views/layout/head.php'; ?>
         <!-- Formulario de publicación -->
         <div class="col-md-4 mb-4">
             <h5>Publica:</h5>
-            <form  action="<?= base_url ?>post/save" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url ?>post/save" method="post" enctype="multipart/form-data">
 
 
                 <div class="border p-3 bg-light h-100">
@@ -44,7 +44,18 @@ require_once 'views/layout/head.php'; ?>
         </div>
     </div>
 </main>
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+    <div id="toastNotification" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toastBody">
+                <!-- Aquí va el mensaje -->
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+        </div>
+    </div>
+</div>
 
 
-<?php require_once 'views/layout/footer.php'; ?>
-
+<?php
+ require_once 'views/layout/footer.php'; 
+ require_once 'views/components/toastDeletePost.php'; 

@@ -78,7 +78,15 @@ class PostController extends BaseController
             $post->setId($_POST['post_id']);
             $post->setUser(User::createById($_SESSION['identity']->id));
             $post->deletePost();
-          
+            $_SESSION['toast'] = [
+                'message' => 'Publicación eliminada con éxito',
+                'isSuccess' => true
+            ];          
+        }else {
+            $_SESSION['toast'] = [
+                'message' => 'Error al eliminar la publicación',
+                'isSuccess' => false
+            ];
         }
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
