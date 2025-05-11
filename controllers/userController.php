@@ -227,4 +227,17 @@ class UserController extends BaseController
         }
         header("Location:" . base_url);
     }
+
+    //Método para cambiar el libro de estado en mi perfil
+    public function changeBookStatus()
+    {
+        if (isset($_GET['bookId']) && isset($_GET['status'])) {
+            $bookUser = new BookUser();
+            $bookUser->setBook(Book::createById($_GET['bookId']));
+            $bookUser->setUser(User::createById($_SESSION['identity']->id));
+            $bookUser->setStatus($_GET['status']);
+            $bookUser->updateStatus();
+        }
+        header('Location: ' . base_url . 'user/profile');
+    }
 }

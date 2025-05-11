@@ -1,7 +1,10 @@
  <?php
     /**  
      * @var Book[] $books
+     * @var User $user
      */
+    var_dump($user);
+    var_dump($books);
     ?>
  <section class="py-3 border-bottom">
      <div class="container">

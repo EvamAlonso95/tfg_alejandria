@@ -13,7 +13,7 @@
     </div>
     <div>
         <h6>
-            <a href="<?= base_url ?>book?bookId=<?=$book->getId()?>"><?= $book->getTitle() ?></a>
+            <a href="<?= base_url ?>book?bookId=<?= $book->getId() ?>"><?= $book->getTitle() ?></a>
         </h6>
         <?php foreach ($book->getAuthors() as $author): ?>
             <p class="mb-1">
@@ -21,6 +21,6 @@
             </p>
         <?php endforeach; ?>
 
-        <a href="#" class="btn btn-outline-primary btn-sm">Añadir</a>
+        <a href="<?= base_url ?>search/saveBookUser?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>" class="btn btn-outline-primary btn-sm">Añadir</a>
     </div>
 </div>
