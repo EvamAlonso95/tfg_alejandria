@@ -6,7 +6,7 @@ class Author
     private ?string $biography = null;
     private ?string $profileImage = null;
     // el id del usuario si lo tuviera
-     /** @var User */
+    /** @var User */
     private ?User $user = null;
     private ?PDO $db;
 
@@ -49,7 +49,7 @@ class Author
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -115,7 +115,7 @@ class Author
      */
     public static function getAllAuthors(): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $stmt = $temp->query("SELECT * FROM authors");
         $stmt->execute();
         $dataAuthor = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -171,5 +171,14 @@ class Author
     function __destruct()
     {
         $this->db = null;
+    }
+
+    static function getTotal(): int
+    {
+        $temp = Database::getInstance();
+        $sql = "SELECT COUNT(*) FROM authors";
+        $stmt = $temp->prepare($sql);
+        $stmt->execute();
+        return (int)$stmt->fetchColumn();
     }
 }

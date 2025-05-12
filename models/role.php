@@ -9,7 +9,7 @@ class Role
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -25,7 +25,7 @@ class Role
 
         if (!$role) {
             throw new RuntimeException("Rol con ID $id no encontrado");
-        }        
+        }
         $instance->id = $role->id;
         $instance->name = $role->name;
 

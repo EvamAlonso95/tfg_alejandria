@@ -19,6 +19,9 @@ require_once 'config/db.php';
 
 // Funciones auxiliares (helpers)
 require_once 'helpers/Utils.php';
+require_once 'qdrant/QdrantClient.php';
+require_once 'qdrant/QdrantLogic.php';
+
 
 
 // Inicia la sesión para poder manejar información persistente entre peticiones

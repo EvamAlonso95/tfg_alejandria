@@ -32,7 +32,7 @@ class Post
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -108,7 +108,7 @@ class Post
     //TODO Devolverlo
     public static function getAllPosts(): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $sql = "SELECT * FROM posts ORDER BY date DESC";
         $stmt = $temp->prepare($sql);
         $stmt->execute();

@@ -29,7 +29,7 @@ class User
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }

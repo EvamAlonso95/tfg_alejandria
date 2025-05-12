@@ -30,7 +30,7 @@
         </button>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?= base_url ?>user/changeBookStatus?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>&status=reading">Leyendo</a></li>
-            <li><a class="dropdown-item" href="<?= base_url ?>user/changeBookStatus?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>&status='want to read'">Quiero leer</a></li>
+            <li><a class="dropdown-item" href="<?= base_url ?>user/changeBookStatus?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>&status=want%20to%20read'">Quiero leer</a></li>
             <li><a class="dropdown-item" href="<?= base_url ?>user/changeBookStatus?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>&status=read">Finalizado</a></li>
         </ul>
     </div>

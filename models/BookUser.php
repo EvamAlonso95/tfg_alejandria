@@ -11,7 +11,7 @@ class BookUser
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -81,7 +81,7 @@ class BookUser
 
     public static function getBooksByUserId(int $userId): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $stmt = $temp->prepare(
             "SELECT 
                  books.id AS book_id,
@@ -104,7 +104,7 @@ class BookUser
 
     public static function getBooksByUserIdAndStatus(int $userId, string $status): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $stmt = $temp->prepare(
             "SELECT 
                  books.id AS book_id
@@ -127,7 +127,7 @@ class BookUser
     //TODO: Revisar los parámetros de la función
     public function saveBookUser(): bool
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
 
         // Verificar si ya existe la relación libro-usuario
         $checkStmt = $temp->prepare("

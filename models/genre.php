@@ -9,7 +9,7 @@ class Genre
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -44,7 +44,7 @@ class Genre
         if (!$genre) {
             throw new RuntimeException("Género con nombre $name no encontrado");
         }
-        
+
         $instance->id = $genre->id;
         $instance->name = $genre->name;
 
@@ -73,7 +73,7 @@ class Genre
     }
 
     //Método para obtener todos los géneros
-    
+
     public static function getAllGenres(): array
     {
         $temp = new Genre();
@@ -127,5 +127,14 @@ class Genre
         $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
+    }
+
+    static function getTotal(): int
+    {
+        $temp = Database::getInstance();
+        $sql = "SELECT COUNT(*) FROM genres";
+        $stmt = $temp->prepare($sql);
+        $stmt->execute();
+        return (int)$stmt->fetchColumn();
     }
 }

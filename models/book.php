@@ -41,7 +41,7 @@ class Book
     public function __construct()
     {
         try {
-            $this->db = Database::connect();
+            $this->db = Database::getInstance();
         } catch (PDOException $e) {
             throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
         }
@@ -131,7 +131,7 @@ class Book
      */
     public static function getAllBooks(): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $sql = "SELECT id FROM books";
         $stmt = $temp->prepare($sql);
         $stmt->execute();
@@ -295,7 +295,7 @@ class Book
      */
     public static function search(string $search): array
     {
-        $temp = Database::connect();
+        $temp = Database::getInstance();
         $stmt = $temp->prepare(
             "SELECT books.id AS book_id
              FROM books 

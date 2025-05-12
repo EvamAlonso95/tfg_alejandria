@@ -6,11 +6,11 @@ class AdminController extends BaseController
     public function index()
     {
         if (isset($_SESSION['identity'])) {
-           //TODO añadir isAdmin() para comprobar que es admin
+            //TODO añadir isAdmin() para comprobar que es admin
             $this->title = 'Panel de administración';
             // TODO: añadir if según la vista que toque
             $users = User::getAllUsers();
-            
+
 
             require_once 'views/admin/adminUsers.php';
         } else {
@@ -24,8 +24,8 @@ class AdminController extends BaseController
         require_once 'views/admin/adminAuthors.php';
     }
 
- 
-   
+
+
 
     public function genres()
     {
@@ -38,20 +38,27 @@ class AdminController extends BaseController
     {
         $this->title = 'Panel de administración - Libros';
         $authorsData = Author::getAllAuthors();
-            $authors = [];
-            foreach ($authorsData as $author) {
-                $authors[] = $author->getName();
-            }
-            $authors = json_encode($authors);
+        $authors = [];
+        foreach ($authorsData as $author) {
+            $authors[] = $author->getName();
+        }
+        $authors = json_encode($authors);
 
-            $genresRaw = Genre::getAllGenres();
-            $genres = [];
-            foreach ($genresRaw as $genre) {
-                $genres[] = $genre->getName();
-            }
-            $genres = json_encode($genres);
+        $genresRaw = Genre::getAllGenres();
+        $genres = [];
+        foreach ($genresRaw as $genre) {
+            $genres[] = $genre->getName();
+        }
+        $genres = json_encode($genres);
         require_once 'views/admin/adminBooks.php';
     }
 
-   
+
+    public function qdrant()
+    {
+        $qdrant = new QdrantLogic();
+        $qdrant->restart();
+
+        header('Location:' . base_url . 'admin/index');
+    }
 }
