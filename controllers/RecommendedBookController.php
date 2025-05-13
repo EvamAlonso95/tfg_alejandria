@@ -1,19 +1,14 @@
 <?php
-
-class DashboardController extends BaseController
+class RecommendedBookController extends BaseController
 {
 
     public function index()
     {
         if (isset($_SESSION['identity'])) {
-            $posts = Post::getAllPosts();
-            require_once 'views/dashboard.php';
+
+            require_once 'views/recommendedBook/recommended.php';
         } else {
             header('Location:' . base_url);
         }
-
-        
     }
-
-    
 }

@@ -16,7 +16,7 @@
     <img src="<?= base_url ?>/assets/img/default_cover.jpg" class="card-img-top" alt="Portada Libro recomendado">
     <div class="card-body">
 
-      <a href="#" class="btn btn-earth btn-sm">Descubre más lecturas</a>
+      <a href="<?=base_url?>recommendedBook" class="btn btn-earth btn-sm">Descubre más lecturas</a>
     </div>
   </div>
 
