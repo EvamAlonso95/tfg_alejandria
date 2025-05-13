@@ -1,6 +1,13 @@
 <?php
 class QdrantLogic
 {
+    private QdrantClient $qdrantClient;
+
+    public function __construct()
+    {
+        $this->qdrantClient = new QdrantClient();
+    }
+
 
     function getDictionary(): array
     {
@@ -20,11 +27,16 @@ class QdrantLogic
 
     function restart()
     {
-        $qdrant = new QdrantClient();
-        $qdrant->deleteCollection('books');
+
+        $this->qdrantClient->deleteCollection('books');
         $dictionary = $this->getDictionary();
-        $qdrant->createCollection('books', count($dictionary));
-        $qdrant->uploadVectors('books', $this->createVectors(Book::getAllBooks(), $dictionary));
+        $this->qdrantClient->createCollection('books', count($dictionary));
+        $this->qdrantClient->uploadVectors('books', $this->createVectors(Book::getAllBooks(), $dictionary));
+    }
+
+    public function getQdrantClient()
+    {
+        return $this->qdrantClient;
     }
 
     /**
@@ -93,7 +105,7 @@ class QdrantLogic
     }
     function getUserVector($userId)
     {
-       // TODO: Implementar
+        // TODO: Implementar
         return null;
     }
 }

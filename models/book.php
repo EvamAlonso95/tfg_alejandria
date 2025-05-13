@@ -193,6 +193,7 @@ class Book
             ':cover_img' => $this->cover_img
         ]);
         $bookId = $this->db->lastInsertId();
+        $this->setId($bookId);
 
         foreach ($this->authors as $author) {
             $stmt = $this->db->prepare(
@@ -216,6 +217,7 @@ class Book
             ]);
         }
 
+      
         return true;
     }
 

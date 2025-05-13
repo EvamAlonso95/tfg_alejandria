@@ -21,6 +21,6 @@
             </p>
         <?php endforeach; ?>
 
-        <a href="<?= base_url ?>search/saveBookUser?bookId=<?= $book->getId() ?>&userId=<?= $user->getId() ?>" class="btn btn-outline-primary btn-sm">Añadir</a>
+        
     </div>
 </div>

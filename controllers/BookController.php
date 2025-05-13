@@ -21,6 +21,8 @@ class BookController extends BaseController
         }
 
         $bookInfo = Book::createById($_GET['bookId']);
+        
+        $bookUser = BookUser::createById($_SESSION['identity']->id);
         // var_dump($recommendedBooks);
         require_once 'views/book/bookInfo.php';
     }

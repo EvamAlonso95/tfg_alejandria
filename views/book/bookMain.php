@@ -5,8 +5,12 @@
  * @var Book $bookInfo
  * @var Author[] $authors
  * @var Genre[] $genres
+ * @var BookUser $bookUser
+ * @var BookUser @book
+ * 
 
  */
+var_dump($user);
 // var_dump($book);
 // var_dump($bookInfo);
 // var_dump($recommendedBooks);
@@ -48,6 +52,32 @@
 
                 <p><strong>Descripción:</strong></p>
                 <p><?= $bookInfo->getSynopsis() ?></p>
+                <?php
+                // Comprobar si el usuario tiene libros asignados
+                $currentStatus = null;
+                $userBooks = false;
+
+                // Obtener todos los libros del usuario
+                $books = $bookUser->getBooksByUserId($user->getId());
+
+                if ($books && count($books) > 0) {
+                    foreach ($books as $bookEntry) {
+                        if ($bookEntry->getBook()->getId() === $bookInfo->getId()) {
+                            $userBooks = true;
+                            $currentStatus = $bookEntry->getStatus();
+                            break;
+                        }
+                    }
+                }
+                ?>
+
+                <select class="form-select form-select-sm mt-2" onchange="updateBookStatus(this)">
+                    <option disabled <?= !$userBooks ? 'selected' : '' ?>>Añadir a tu biblioteca</option>
+                    <option value="want to read" <?= $currentStatus === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
+                    <option value="reading" <?= $currentStatus === 'reading' ? 'selected' : '' ?>>Leyendo</option>
+                    <option value="read" <?= $currentStatus === 'read' ? 'selected' : '' ?>>Finalizado</option>
+                </select>
+
             </div>
         </div>
 

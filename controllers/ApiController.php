@@ -152,6 +152,12 @@ class ApiController
             }
 
             $book->save();
+
+            //TODO registrar libro en qdrant
+            $qdrant = new QdrantLogic();
+            $bookVector = $qdrant->createVectors([$book], $qdrant->getDictionary());
+            $qdrant->getQdrantClient()->uploadVectors('books', $bookVector);
+
             echo json_encode(['success' => 'Se ha podido crear el libro.']);
         } else {
             $error = new ErrorController();
@@ -196,7 +202,6 @@ class ApiController
                 }
 
                 $book->edit();
-                echo 'hola';
                 echo json_encode(['success' => 'Se ha podido editar el libro.']);
             } else {
                 echo json_encode(['error' => 'No existe el método solicitado']);
@@ -207,14 +212,14 @@ class ApiController
         }
     }
 
+
     // Método para eliminar un libro
     public function delete()
     {
-        var_dump($_POST);
         if (Utils::isAdmin()) {
             if (isset($_POST['idBook'])) {
                 $book = Book::createById(intval($_POST['idBook']));
-
+                //TODO borrar del qdran
                 $book->delete();
                 echo json_encode(['success' => 'Se ha podido eliminar el libro.']);
                 return;
@@ -423,7 +428,4 @@ class ApiController
             $error->forbidden();
         }
     }
-
-   
-
 }
