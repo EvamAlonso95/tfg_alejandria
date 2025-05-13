@@ -3,8 +3,8 @@
      * @var Book[] $books
      * @var User $user
      */
-    var_dump($user);
-    var_dump($books);
+    // var_dump($user);
+    // var_dump($books);
     ?>
  <section class="py-3 border-bottom">
      <div class="container">
@@ -33,7 +33,7 @@
                          <?php
                             if (isset($books) && count($books) > 0) {
                                 foreach ($books as $book):
-                                    require_once 'views/components/bookSearch.php';
+                                    require 'views/components/bookSearch.php';
                                 endforeach;
                             } else {
                                 echo '<p class="text-center">No se encontraron resultados.</p>';
