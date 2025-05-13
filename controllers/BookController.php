@@ -19,7 +19,7 @@ class BookController extends BaseController
         foreach ($recommended as $book) {
             $recommendedBooks[] = Book::createById($book['id']);
         }
-        var_dump($recommendedBooks);
+        // var_dump($recommendedBooks);
         require_once 'views/book/bookInfo.php';
     }
 }

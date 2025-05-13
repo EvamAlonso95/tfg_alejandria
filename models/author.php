@@ -127,6 +127,34 @@ class Author
         return $authors;
     }
 
+    //Método para conseguir los libros de un autor
+    public function getAllBooksByAuthorID(): array
+    {
+        $db = Database::getInstance();
+
+        $stmt = $db->prepare(
+            "SELECT 
+             book.id AS book_id
+         FROM books_published bp
+         JOIN books AS book ON bp.id_book = book.id
+         WHERE bp.id_author = :id_author"
+        );
+
+        $stmt->execute([':id_author' => $this->getId()]);
+        $dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $books = [];
+        foreach ($dataBooks as $book) {
+            array_push($books, BookUser::createById($book->book_id));
+        }
+
+        $db = null; // Cerrar conexión si es necesario
+        return $books;
+    }
+
+
+
+
     //Método para guardar un autor
 
     public function save(): bool

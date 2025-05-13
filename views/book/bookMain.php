@@ -6,7 +6,9 @@
  * @var Genre[] $genres
 
  */
-// var_dump($book);
+ var_dump($book);
+ var_dump($recommendedBooks);
+
 ?>
 <main class="py-4">
     <div class="container">
