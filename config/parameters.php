@@ -13,18 +13,18 @@
  * Se utiliza como raíz para generar rutas absolutas dentro de la aplicación.
  * Asegúrate de cambiar este valor cuando subas el proyecto a un servidor diferente.
  */
-define("base_url", "http://localhost/alejandria/");
+define("BASE_URL", "http://localhost/alejandria/");
 
 /**
  * Controlador por defecto
  *
  * Controlador que se cargará si no se especifica ninguno a través de la URL.
  */
-define("controller_default", "landingController");
+define("CONTROLLER_DEFAULT", "LandingController");
 
 /**
  * Acción por defecto
  *
  * Método dentro del controlador por defecto que se ejecutará si no se especifica ninguno en la URL.
  */
-define("action_default", "index");
+define("ACTION_DEFAULT", "index");
