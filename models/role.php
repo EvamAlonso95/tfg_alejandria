@@ -2,76 +2,64 @@
 
 class Role
 {
-    private int $id;
-    private string $name;
-    private ?PDO $db;
+	private int $id;
+	private string $name;
 
-    public function __construct()
-    {
-        try {
-            $this->db = Database::getInstance();
-        } catch (PDOException $e) {
-            throw new RuntimeException("Error de conexión a la base de datos: " . $e->getMessage());
-        }
-    }
-    public static function createById(int $id): self
-    {
-        $instance = new self();
+	public function __construct() {}
+	public static function createById(int $id): self
+	{
+		$instance = new self();
 
-        $stmt = $instance->db->prepare("SELECT * FROM roles WHERE id = :id");
-        $stmt->execute([':id' => $id]);
+		$stmt = Database::getInstance()->prepare("SELECT * FROM roles WHERE id = :id");
+		$stmt->execute([':id' => $id]);
 
-        $role = $stmt->fetch(PDO::FETCH_OBJ);
+		$role = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if (!$role) {
-            throw new RuntimeException("Rol con ID $id no encontrado");
-        }
-        $instance->id = $role->id;
-        $instance->name = $role->name;
+		if (!$role) {
+			throw new RuntimeException("Rol con ID $id no encontrado");
+		}
+		$instance->id = $role->id;
+		$instance->name = $role->name;
 
-        return $instance;
-    }
+		return $instance;
+	}
 
-    public static function createByName(string $name): self
-    {
+	public static function createByName(string $name): self
+	{
 
-        $instance = new self();
+		$instance = new self();
 
-        $stmt = $instance->db->prepare("SELECT * FROM roles WHERE name = :name");
-        $stmt->execute([':name' => $name]);
+		$stmt = Database::getInstance()->prepare("SELECT * FROM roles WHERE name = :name");
+		$stmt->execute([':name' => $name]);
 
-        $role = $stmt->fetch(PDO::FETCH_OBJ);
+		$role = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if (!$role) {
-            throw new RuntimeException("Role con nombre $name no encontrado");
-        }
+		if (!$role) {
+			throw new RuntimeException("Role con nombre $name no encontrado");
+		}
 
-        $instance->id = $role->id;
-        $instance->name = $role->name;
+		$instance->id = $role->id;
+		$instance->name = $role->name;
 
-        return $instance;
-    }
+		return $instance;
+	}
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+	public function getName(): string
+	{
+		return $this->name;
+	}
 
-    // Método para obtener todos los roles
-    public function getRoles(): array
-    {
-        $sql = "SELECT * FROM roles";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    function __destruct()
-    {
-        $this->db = null;
-    }
+	// Método para obtener todos los roles
+	public function getRoles(): array
+	{
+		$sql = "SELECT * FROM roles";
+		$stmt = Database::getInstance()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
