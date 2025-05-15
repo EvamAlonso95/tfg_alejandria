@@ -1,431 +1,390 @@
 <?php
-class ApiController
+class ApiController extends BaseController
 {
-    //USERS
+	private $error;
 
-    public function users()
-    {
-        if (Utils::isAdmin()) {
+	public function __construct()
+	{
+		$this->error = new ErrorController();
+	}
 
-            $userRaw = User::getAllUsers();
-            $users = [];
-            foreach ($userRaw as $user) {
-                $users[] = [
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'biography' => $user->getBiography(),
-                    'email' => $user->getEmail(),
-                    'profile_img' => $user->getProfileImage(),
-                    'role' => $user->getRole()->getName(),
-                    'role_id' => $user->getRole()->getId(),
-                ];
-            }
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['data' => $users]);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	protected function _checkAdmin()
+	{
+		header('Content-Type: application/json; charset=utf-8');
+		if (!Utils::isAdmin()) {
+			$this->error->apiForbidden();
+		}
+	}
 
-    // validar que sea el admin
-    public function editUser()
-    {
+	private function restartQdrantLogic()
+	{
+		$qdrant = new QdrantLogic();
+		$qdrant->restart();
+	}
 
+	public function users()
+	{
+		$this->_checkAdmin();
+		$userRaw = User::getAllUsers();
+		$users = [];
+		foreach ($userRaw as $user) {
+			$users[] = [
+				'id' => $user->getId(),
+				'name' => $user->getName(),
+				'biography' => $user->getBiography(),
+				'email' => $user->getEmail(),
+				'profile_img' => $user->getProfileImage(),
+				'role' => $user->getRole()->getName(),
+				'role_id' => $user->getRole()->getId(),
+			];
+		}
+		echo json_encode(['data' => $users]);
+		return;
+	}
 
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idUser'])) {
-                $user = User::createById($_POST['idUser']);
-                // $user->setName($_POST['name']);
-                $user->setRole(intval($_POST['role']));
+	// validar que sea el admin
+	public function editUser()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idUser']) || empty($_POST['role'])) {
+			$this->error->apiError('Faltan datos para editar el usuario');
+		}
 
-                // Para no romper el método de User de edición, pues espera mas campos
-                $user->setName($user->getName());
-                $user->setEmail($user->getEmail());
-                $user->setBiography($user->getBiography());
-                $user->setProfileImage($user->getProfileImage());
+		$user = User::createById($_POST['idUser']);
+		// $user->setName($_POST['name']);
+		$user->setRole(intval($_POST['role']));
 
+		// Para no romper el método de User de edición, pues espera mas campos
+		$user->setName($user->getName());
+		$user->setEmail($user->getEmail());
+		$user->setBiography($user->getBiography());
+		$user->setProfileImage($user->getProfileImage());
 
-                $user->editUser();
-                echo json_encode(['success' => 'Se ha podido editar el usuario.']);
-                return;
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$user->editUser();
 
-    // validar que sea el admin
-    public function deleteUser()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idUser'])) {
-                $user = User::createById($_POST['idUser']);
-                $user->deleteUser();
-                echo json_encode(['success' => 'Se ha podido eliminar el usuario.']);
-                return;
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		echo json_encode(['success' => 'Se ha podido editar el usuario.']);
+		return;
+	}
 
-    //BOOKS  
+	// validar que sea el admin
+	public function deleteUser()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idUser'])) {
+			$this->error->apiError('Faltan datos para eliminar el usuario');
+		}
 
-    // Método para obtener todos los libros
-    public function books()
-    {
-        if (Utils::isAdmin()) {
-            $bookRaw = Book::getAllBooks();
-            $books = [];
-            foreach ($bookRaw as $book) {
-                $authors = $book->getAuthors();
-                $authorsNames = array_map(function ($author) {
-                    return $author->getName();
-                }, $authors);
-                $authorsNames = implode(', ', $authorsNames);
-                $genres = $book->getGenres();
-                $genresNames = array_map(function ($genre) {
-                    return $genre->getName();
-                }, $genres);
-                $genresNames = implode(', ', $genresNames);
-                $books[] = [
-                    'id' => $book->getId(),
-                    'cover' =>  $book->getCoverImg(),
-                    'title' => $book->getTitle(),
-                    'synopsis' => $book->getSynopsis(),
-                    'author' => $authorsNames,
-                    'genre' => $genresNames,
-                ];
-            }
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['data' => $books]);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$user = User::createById($_POST['idUser']);
+		$user->deleteUser();
+		echo json_encode(['success' => 'Se ha podido eliminar el usuario.']);
+		return;
+	}
 
-    // Método para guardar un libro
-    public function save()
-    {
-        if (Utils::isAdmin()) {
-            $title = $_POST['title'] ?? null;
-            $synopsis = $_POST['synopsis'] ?? null;
-            $rawAuthors = $_POST['authors'] ?? '';
-            $rawGenres = $_POST['genres'] ?? '';
-            $cover = $_FILES['cover'] ?? null;
-            $authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
-            $genres = array_filter(array_map('trim', explode(',', $rawGenres)));
+	//BOOKS  
 
-            if (!$title || !$synopsis || !$authors || !$genres || !$cover) {
-                echo json_encode(['error' => 'Faltan datos para crear el libro.']);
-                return;
-            }
-            $book = new Book();
-            $book->setTitle($title);
-            $book->setSynopsis($synopsis);
+	// Método para obtener todos los libros
+	public function books()
+	{
+		$this->_checkAdmin();
+		$bookRaw = Book::getAllBooks();
+		$books = [];
+		foreach ($bookRaw as $book) {
+			$authors = $book->getAuthors();
+			$authorsNames = array_map(function ($author) {
+				return $author->getName();
+			}, $authors);
+			$authorsNames = implode(', ', $authorsNames);
+			$genres = $book->getGenres();
+			$genresNames = array_map(function ($genre) {
+				return $genre->getName();
+			}, $genres);
+			$genresNames = implode(', ', $genresNames);
+			$books[] = [
+				'id' => $book->getId(),
+				'cover' =>  $book->getCoverImg(),
+				'title' => $book->getTitle(),
+				'synopsis' => $book->getSynopsis(),
+				'author' => $authorsNames,
+				'genre' => $genresNames,
+			];
+		}
+		echo json_encode(['data' => $books]);
+		return;
+	}
 
-            foreach ($genres as $genre) {
-                $book->setGenre($genre);
-            }
-            foreach ($authors as $author) {
-                $book->setAuthor($author);
-            }
+	// Método para guardar un libro
+	public function saveBook()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['title']) || empty($_POST['synopsis']) || empty($_POST['authors']) || empty($_POST['genres']) || empty($_FILES['cover'])) {
+			$this->error->apiError('Faltan datos para guardar el libro');
+		}
 
+		$rawAuthors = $_POST['authors'];
+		$rawGenres = $_POST['genres'];
+		$cover = $_FILES['cover'];
+		$authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
+		$genres = array_filter(array_map('trim', explode(',', $rawGenres)));
 
-            $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
-            $uniqueName = uniqid('book_', true) . '.' . $extension;
+		$book = new Book();
+		$book->setTitle($_POST['title']);
+		$book->setSynopsis($_POST['synopsis']);
 
-            $filePath = 'uploads/books/' . $uniqueName;
-            $book->setCoverImg($filePath);
+		foreach ($genres as $genre) {
+			$book->setGenre($genre);
+		}
+		foreach ($authors as $author) {
+			$book->setAuthor($author);
+		}
 
-            if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
-                echo json_encode(['error' => 'Error al mover la imagen del libro.']);
-                return;
-            }
+		$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
+		$uniqueName = uniqid('book_', true) . '.' . $extension;
 
-            $book->save();
+		$filePath = 'uploads/books/' . $uniqueName;
+		$book->setCoverImg($filePath);
 
-            //TODO registrar libro en qdrant
-            $qdrant = new QdrantLogic();
-            $bookVector = $qdrant->createVectors([$book], $qdrant->getDictionary());
-            $qdrant->getQdrantClient()->uploadVectors('books', $bookVector);
+		if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
+			$this->error->apiError('Error al mover la imagen del libro.');
+		}
 
-            echo json_encode(['success' => 'Se ha podido crear el libro.']);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$book->save();
 
-    // Método para editar un libro
-    public function edit()
-    {
-        if (Utils::isAdmin()) {
-            var_dump($_POST);
-            if (isset($_POST['idBook'])) {
+		$qdrant = new QdrantLogic();
+		$bookVector = $qdrant->createVectors([$book], $qdrant->getDictionary());
+		$qdrant->getQdrantClient()->uploadVectors('books', $bookVector);
 
-                $book = Book::createById($_POST['idBook']);
-                $book->setTitle($_POST['title']);
-                $book->setSynopsis($_POST['synopsis']);
+		echo json_encode(['success' => 'Se ha podido crear el libro.']);
+		return;
+	}
 
-                // TODO Revisar porque no quiero que se mande vacio
-                $rawAuthors = $_POST['authors'];
-                $rawGenres = $_POST['genres'];
-                $authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
-                $genres = array_filter(array_map('trim', explode(',', $rawGenres)));
+	// Método para editar un libro
+	public function editBook()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idBook']) || empty($_POST['title']) || empty($_POST['synopsis']) || empty($_POST['authors']) || empty($_POST['genres'])) {
+			$this->error->apiError('Faltan datos para editar el libro');
+		}
 
-                foreach ($genres as $genre) {
-                    $book->setGenre($genre);
-                }
-                foreach ($authors as $author) {
-                    $book->setAuthor($author);
-                }
+		$book = Book::createById($_POST['idBook']);
+		$book->setTitle($_POST['title']);
+		$book->setSynopsis($_POST['synopsis']);
 
-                if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
-                    $cover = $_FILES['cover'];
-                    $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
-                    $uniqueName = uniqid('book_', true) . '.' . $extension;
-                    $filePath = 'uploads/books/' . $uniqueName;
-                    if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
-                        echo json_encode(['error' => 'Error al mover la imagen del libro.']);
-                        return;
-                    }
-                    $book->setCoverImg($filePath);
-                }
+		$rawAuthors = $_POST['authors'];
+		$rawGenres = $_POST['genres'];
 
-                $book->edit();
-                echo json_encode(['success' => 'Se ha podido editar el libro.']);
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
+		$genres = array_filter(array_map('trim', explode(',', $rawGenres)));
 
+		foreach ($genres as $genre) {
+			$book->setGenre($genre);
+		}
+		foreach ($authors as $author) {
+			$book->setAuthor($author);
+		}
 
-    // Método para eliminar un libro
-    public function delete()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idBook'])) {
-                $book = Book::createById(intval($_POST['idBook']));
-                //TODO borrar del qdran
-                $book->delete();
-                echo json_encode(['success' => 'Se ha podido eliminar el libro.']);
-                return;
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
+			$cover = $_FILES['cover'];
+			$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
+			$uniqueName = uniqid('book_', true) . '.' . $extension;
+			$filePath = 'uploads/books/' . $uniqueName;
 
-    //AUTHORS
+			if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
+				$this->error->apiError('Error al mover la imagen del libro.');
+			}
+			$book->setCoverImg($filePath);
+		}
+		$book->edit();
 
-    public function authors()
-    {
-        if (Utils::isAdmin()) {
-            $authorRaw = Author::getAllAuthors();
-            $authors = [];
-            foreach ($authorRaw as $author) {
-                $authors[] = [
-                    'id' => $author->getId(),
-                    'authorName' => $author->getName(),
-                    'biography' => $author->getBiography(),
-                    'profileImage' => $author->getProfileImage(),
+		// Eliminamos el point de qdrant y lo volvemos a subir con la nueva informacion
+		$qdrant = new QdrantLogic();
+		$qdrant->getQdrantClient()->deletePoints('books', [$book->getId()]);
+		$bookVector = $qdrant->createVectors([$book], $qdrant->getDictionary());
+		$qdrant->getQdrantClient()->uploadVectors('books', $bookVector);
+		echo json_encode(['success' => 'Se ha podido editar el libro.']);
+		return;
+	}
 
-                ];
-                if ($author->getUser() != null) {
-                    $authors[count($authors) - 1]['userName'] = $author->getUser()->getId();
-                }
-            }
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['data' => $authors]);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	// Método para eliminar un libro
+	public function deleteBook()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idBook'])) {
+			$this->error->apiError('Faltan datos para eliminar el libro');
+		}
 
-    // Método para guardar un autor
-    public function saveAuthor()
-    {
-        if (Utils::isAdmin()) {
-            $authorName = $_POST['authorName'] ?? null;
-            $biography = $_POST['biography'] ?? null;
-            $profileImage = $_FILES['profileImage'] ?? null;
+		$book = Book::createById(intval($_POST['idBook']));
+		$book->delete();
+		$qdrant = new QdrantLogic();
+		$qdrant->getQdrantClient()->deletePoints('books', [$book->getId()]);
+		echo json_encode(['success' => 'Se ha podido eliminar el libro.']);
+		return;
+	}
 
-            if (!$authorName || !$biography || !$profileImage) {
-                echo json_encode(['error' => 'Faltan datos para crear el autor.']);
-                return;
-            }
-            $author = new Author();
-            $author->setName($authorName);
-            $author->setBiography($biography);
+	//AUTHORS
 
-            $extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
-            $uniqueName = uniqid('author_', true) . '.' . $extension;
+	public function authors()
+	{
+		$this->_checkAdmin();
+		$authorRaw = Author::getAllAuthors();
+		$authors = [];
+		foreach ($authorRaw as $author) {
+			$authors[] = [
+				'id' => $author->getId(),
+				'authorName' => $author->getName(),
+				'biography' => $author->getBiography(),
+				'profileImage' => $author->getProfileImage(),
 
-            $filePath = 'uploads/authors/' . $uniqueName;
-            $author->setProfileImage($filePath);
+			];
+			if ($author->getUser() != null) {
+				$authors[count($authors) - 1]['userName'] = $author->getUser()->getId();
+			}
+		}
+		echo json_encode(['data' => $authors]);
+		return;
+	}
 
-            if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
-                echo json_encode(['error' => 'Error al mover la imagen del autor.']);
-                return;
-            }
+	// Método para guardar un autor
+	public function saveAuthor()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['authorName']) || empty($_POST['biography']) || empty($_FILES['profileImage'])) {
+			$this->error->apiError('Faltan datos para guardar el autor');
+		}
+		$profileImage = $_FILES['profileImage'];
+		$author = new Author();
+		$author->setName($_POST['authorName']);
+		$author->setBiography($_POST['biography']);
 
+		$extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
+		$uniqueName = uniqid('author_', true) . '.' . $extension;
 
-            $author->save();
-            echo json_encode(['success' => 'Se ha podido crear el autor.']);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$filePath = 'uploads/authors/' . $uniqueName;
+		$author->setProfileImage($filePath);
 
-    // Método para editar un autor
-    public function editAuthor()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idAuthor'])) {
-                $author = Author::createById($_POST['idAuthor']);
-                $author->setName($_POST['authorName']);
-                $author->setBiography($_POST['biography']);
+		if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
+			$this->error->apiError('Error al mover la imagen del autor.');
+		}
 
-                if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
-                    $profileImage = $_FILES['profileImage'];
-                    $extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
-                    $uniqueName = uniqid('author_', true) . '.' . $extension;
-                    $filePath = 'uploads/authors/' . $uniqueName;
-                    if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
-                        echo json_encode(['error' => 'Error al mover la imagen del autor.']);
-                        return;
-                    }
-                    $author->setProfileImage($filePath);
-                }
+		$author->save();
+		$this->restartQdrantLogic();
+		echo json_encode(['success' => 'Se ha podido crear el autor.']);
+		return;
+	}
 
-                $author->edit();
-                echo json_encode(['success' => 'Se ha podido editar el autor.']);
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	// Método para editar un autor
+	public function editAuthor()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idAuthor']) || empty($_POST['authorName']) || empty($_POST['biography'])) {
+			$this->error->apiError('Faltan datos para editar el autor');
+		}
 
-    // Método para eliminar un autor
-    public function deleteAuthor()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idAuthor'])) {
-                $author = Author::createById(intval($_POST['idAuthor']));
-                $author->delete();
-                echo json_encode(['success' => 'Se ha podido eliminar el autor.']);
-                return;
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		$author = Author::createById($_POST['idAuthor']);
+		$author->setName($_POST['authorName']);
+		$author->setBiography($_POST['biography']);
 
-    //GENRES
-    //TODO traer la cantidad de libros que tiene ese género un COUNT BY
-    public function genres()
-    {
-        if (Utils::isAdmin()) {
-            $genreRaw = Genre::getAllGenres();
-            $genres = [];
-            foreach ($genreRaw as $genre) {
-                $genres[] = [
-                    'id' => $genre->getId(),
-                    'genreName' => $genre->getName(),
-                ];
-            }
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['data' => $genres]);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+		if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
+			$profileImage = $_FILES['profileImage'];
+			$extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
+			$uniqueName = uniqid('author_', true) . '.' . $extension;
+			$filePath = 'uploads/authors/' . $uniqueName;
+			if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
+				$this->error->apiError('Error al mover la imagen del autor.');
+			}
+			$author->setProfileImage($filePath);
+		}
 
-    // Método para guardar un género
+		$author->edit();
+		echo json_encode(['success' => 'Se ha podido editar el autor.']);
+		return;
+	}
 
-    public function saveGenre()
-    {
-        if (Utils::isAdmin()) {
-            $genreName = $_POST['genreName'] ?? null;
+	// Método para eliminar un autor
+	public function deleteAuthor()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idAuthor'])) {
+			$this->error->apiNotFound();
+		}
 
-            if (!$genreName) {
-                echo json_encode(['error' => 'Faltan datos para crear el género.']);
-                return;
-            }
+		$author = Author::createById(intval($_POST['idAuthor']));
+		$author->delete();
+		$this->restartQdrantLogic();
+		echo json_encode(['success' => 'Se ha podido eliminar el autor.']);
+		return;
+	}
 
-            $genre = new Genre();
-            $genre->setName($genreName);
-            $exists = $genre->existsByName();
-            if ($exists) {
-                echo json_encode(['error' => 'Ya existe un género con ese nombre.']);
-                return;
-            }
-            $genre->save();
-            echo json_encode(['success' => 'Se ha podido crear el género.']);
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	//GENRES
+	public function genres()
+	{
+		$this->_checkAdmin();
+		$genreRaw = Genre::getAllGenres();
+		$genres = [];
+		foreach ($genreRaw as $genre) {
+			$genres[] = [
+				'id' => $genre->getId(),
+				'genreName' => $genre->getName(),
+			];
+		}
+		echo json_encode(['data' => $genres]);
+	}
 
-    // Método para editar un género
-    public function editGenre()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idGenre'])) {
-                $genre = Genre::createById($_POST['idGenre']);
-                $genre->setName($_POST['genreName']);
-                $genre->edit();
-                echo json_encode(['success' => 'Se ha podido editar el género.']);
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	// Método para guardar un género
 
-    //Método para eliminar un género
-    public function deleteGenre()
-    {
-        if (Utils::isAdmin()) {
-            if (isset($_POST['idGenre'])) {
-                $genre = Genre::createById(intval($_POST['idGenre']));
-                $genre->delete();
-                echo json_encode(['success' => 'Se ha podido eliminar el género.']);
-                return;
-            } else {
-                echo json_encode(['error' => 'No existe el método solicitado']);
-            }
-        } else {
-            $error = new ErrorController();
-            $error->forbidden();
-        }
-    }
+	public function saveGenre()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['genreName'])) {
+			$this->error->apiError('Faltan datos para guardar el género');
+		}
+
+		$genre = new Genre();
+		$genre->setName($_POST['genreName']);
+		$exists = $genre->existsByName();
+		if ($exists) {
+			$this->error->apiError('Ya existe un género con ese nombre.');
+		}
+		$genre->save();
+		$this->restartQdrantLogic();
+		echo json_encode(['success' => 'Se ha podido crear el género.']);
+		return;
+	}
+
+	// Método para editar un género
+	public function editGenre()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idGenre']) || empty($_POST['genreName'])) {
+			$this->error->apiError('Faltan datos para editar el género');
+		}
+
+		$genre = Genre::createById($_POST['idGenre']);
+		$genre->setName($_POST['genreName']);
+		$genre->edit();
+		echo json_encode(['success' => 'Se ha podido editar el género.']);
+		return;
+	}
+
+	//Método para eliminar un género
+	public function deleteGenre()
+	{
+		$this->_checkAdmin();
+		if (empty($_POST['idGenre'])) {
+			$this->error->apiError('Faltan datos para eliminar el género');
+		}
+
+		$genre = Genre::createById(intval($_POST['idGenre']));
+		$genre->delete();
+		$this->restartQdrantLogic();
+		echo json_encode(['success' => 'Se ha podido eliminar el género.']);
+		return;
+	}
+
+	public function restartQdrant()
+	{
+		$this->_checkAdmin();
+		$this->restartQdrantLogic();
+		echo json_encode(['success' => 'Se ha podido reiniciar Qdrant.']);
+		return;
+	}
 }

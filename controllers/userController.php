@@ -1,243 +1,226 @@
 <?php
-// Iniciamos la sesión para poder usarla en el controlador frontal
 
 class UserController extends BaseController
 {
 
-    public function index()
-    {
-        echo 'Hola soy un usuario';
-    }
+	public function index()
+	{
+		$this->_checkLogged();
+		Utils::redirect('user/profile');
+	}
 
-    public function register()
-    {
+	public function register()
+	{
+		if (Utils::isLogged()) {
+			Utils::redirect();
+		}
+		$this->showFooter = false;
+		$this->showUserMenu = false;
+		$this->title = 'Registro de usuario';
+		require_once 'views/landing/register.php';
+	}
 
-        if (isset($_SESSION['identity'])) {
-            require_once 'views/dashboard.php';
-        } else {
-            $this->showFooter = false;
-            $this->showUserMenu = false;
-            $this->title = 'Registro de usuario';
-            require_once 'views/landing/register.php';
-        }
-    }
+	public function login()
+	{
+		if (Utils::isLogged()) {
+			Utils::redirect();
+		}
+		$this->showFooter = false;
+		$this->showUserMenu = false;
+		$this->title = 'Iniciar sesión';
+		require_once 'views/landing/login.php';
+	}
 
-    public function login()
-    {
-        if (isset($_SESSION['identity'])) {
-            require_once 'views/dashboard.php';
-        } else {
-            $this->showFooter = false;
-            $this->showUserMenu = false;
-            $this->title = 'Iniciar sesión';
-            require_once 'views/landing/login.php';
-        }
-    }
+	public function profile()
+	{
+		$this->_checkLogged();
+		$user =  User::createById($_SESSION['identity']->id);
+		$this->title = 'Perfil de usuario - ' . $user->getName();
+		// Obtener los libros del usuario
+		$booksReading = BookUser::getBooksByUserIdAndStatus($user->getId(), 'reading');
+		$booksRead = BookUser::getBooksByUserIdAndStatus($user->getId(), 'read');
+		$booksWantToRead = BookUser::getBooksByUserIdAndStatus($user->getId(), 'want to read');
+		require_once 'views/profiles/userProfile.php';
+	}
 
-    public function profile()
-    {
-        if (isset($_SESSION['identity'])) {
-            $user =  User::createById($_SESSION['identity']->id);
-            $this->title = 'Perfil de usuario - ' . $user->getName();
-            // Obtener los libros del usuario
-            $booksReading = BookUser::getBooksByUserIdAndStatus($user->getId(),'reading');
-            $booksRead = BookUser::getBooksByUserIdAndStatus($user->getId(),'read');
-            $booksWantToRead = BookUser::getBooksByUserIdAndStatus($user->getId(),'want to read');
-            require_once 'views/profiles/userProfile.php';
-        } else {
-            header('Location:' . base_url);
-        }
-    }
+	// Método para ir a la vista editar guardando el id
+	public function edit()
+	{
 
-    // Método para ir a la vista editar guardando el id
-    public function edit()
-    {
-
-        if (isset($_SESSION['identity'])) {
-            $user =  User::createById($_SESSION['identity']->id);
-            $this->title = 'Editar perfil - ' . $user->getName();
-            require_once 'views/profiles/editProfile.php';
-        } else {
-            header('Location:' . base_url);
-        }
-    }
+		$this->_checkLogged();
+		$user =  User::createById($_SESSION['identity']->id);
+		$this->title = 'Editar perfil - ' . $user->getName();
+		require_once 'views/profiles/editProfile.php';
+	}
 
 
-    // Método para guardar el usuario
-    public function save()
-    {
-        if (isset($_POST)) {
+	// Método para guardar el usuario
+	public function save()
+	{
+		if (isset($_POST)) {
 
-            // Si existe el post, será el valor de la variable, sino será false
-            $name = isset($_POST['username']) ? $_POST['username'] : false;
-            $email = isset($_POST['email']) ? $_POST['email'] : false;
-            $password = isset($_POST['password']) ? $_POST['password'] : false;
-            $confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : false;
-            $role = isset($_POST['role']) ? $_POST['role'] : false;
+			// Si existe el post, será el valor de la variable, sino será false
+			$name = isset($_POST['username']) ? $_POST['username'] : false;
+			$email = isset($_POST['email']) ? $_POST['email'] : false;
+			$password = isset($_POST['password']) ? $_POST['password'] : false;
+			$confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : false;
+			$role = isset($_POST['role']) ? $_POST['role'] : false;
 
-            if ($password != $confirmPassword) {
-                $_SESSION['error_password'] = "Error, las contraseñas no coinciden";
-                header("Location:" . base_url . 'user/register');
-                exit();
-            }
+			if ($password != $confirmPassword) {
+				$_SESSION['error_password'] = "Error, las contraseñas no coinciden";
+				Utils::redirect('user/register');
+			}
 
-            // Cada valor se le pasa al setter FALTARÍA LA VALIDACIÓN DEL PROYECTO ANTERIOR
-            if ($name  && $email && $password && $role) {
-                $user = new User();
-                $user->setName($name);
-                $user->setEmail($email);
-                $user->setPassword($password);
-                $user->setRole($role);
-                $user->setProfileImage('uploads/images/default.jpg'); // Imagen por defecto
-                $user->setBiography('');
+			// Cada valor se le pasa al setter FALTARÍA LA VALIDACIÓN DEL PROYECTO ANTERIOR
+			if ($name  && $email && $password && $role) {
+				$user = new User();
+				$user->setName($name);
+				$user->setEmail($email);
+				$user->setPassword($password);
+				$user->setRole($role);
+				$user->setProfileImage('uploads/images/default.jpg'); // Imagen por defecto
+				$user->setBiography('');
 
-                $save = $user->save();
-                // var_dump($usuario);
+				$save = $user->save();
+				// var_dump($usuario);
 
 
-                if ($save) {
-                    $_SESSION['register'] = "complete";
-                    // Cookie o por GET
-                    $_SESSION['email'] = $user->getEmail();
-                    header("Location:" . base_url . 'user/login');
-                    exit();
-                } else {
-                    $_SESSION['register'] = "failed";
-                }
-            } else {
-                $_SESSION['register'] = "failed";
-            }
-        } else {
-            $_SESSION['register'] = "failed";
-            // Control de errores 
-        }
-        header("Location:" . base_url . 'user/register');
-    }
+				if ($save) {
+					$_SESSION['register'] = "complete";
+					// Cookie o por GET
+					$_SESSION['email'] = $user->getEmail();
+					Utils::redirect('user/login');
+				} else {
+					$_SESSION['register'] = "failed";
+				}
+			} else {
+				$_SESSION['register'] = "failed";
+			}
+		} else {
+			$_SESSION['register'] = "failed";
+			// Control de errores 
+		}
+		Utils::redirect('user/register');
+	}
 
-    // Método para logear al usuario
-    public function loginUser()
-    {
-        // Verificar si hay datos POST
-        if (!isset($_POST['email']) || !isset($_POST['password'])) {
-            $_SESSION['error_login'] = 'Credenciales no proporcionadas';
-            header("Location:" . base_url . 'user/login');
-            exit();
-        }
+	// Método para logear al usuario
+	public function loginUser()
+	{
 
-        // Crear objeto usuario y setear credenciales
-        $user = new User();
-        $user->setEmail(trim($_POST['email']));
-        $user->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
+		// Verificar si hay datos POST
+		if (empty($_POST['email']) || empty($_POST['password'])) {
+			$_SESSION['error_login'] = 'Credenciales no proporcionadas';
+			Utils::redirect('user/login');
+		}
 
-        // Intentar login
-        $identity = $user->login();
+		// Crear objeto usuario y setear credenciales
+		$user = new User();
+		$user->setEmail(trim($_POST['email']));
+		$user->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
 
-        // Si el login falla
-        if (!$identity || !is_object($identity)) {
-            $_SESSION['error_login'] = 'Credenciales incorrectas';
-            header("Location:" . base_url . 'user/login');
-            exit();
-        }
+		// Intentar login
+		$identity = $user->login();
 
-        // Limpiar sesiones anteriores
-        unset($_SESSION['admin'], $_SESSION['author'], $_SESSION['reader'], $_SESSION['role'], $_SESSION['error_login']);
+		// Si el login falla
+		if (!$identity || !is_object($identity)) {
+			$_SESSION['error_login'] = 'Credenciales incorrectas';
+			Utils::redirect('user/login');
+		}
 
-        // Guardar identidad del usuario
-        $_SESSION['identity'] = $identity;
+		// Limpiar sesiones anteriores
+		unset($_SESSION['admin'], $_SESSION['author'], $_SESSION['reader'], $_SESSION['role'], $_SESSION['error_login']);
 
-        $role = new Role();
-        // Obtener roles del usuario (asumo que getRoles() devuelve los roles del usuario logueado)
-        $roles = $role->getRoles($identity->id); // Pasar el ID del usuario logueado
+		// Guardar identidad del usuario
+		$_SESSION['identity'] = $identity;
 
-        $user_id_role = $identity->id_role;
+		$role = new Role();
+		// Obtener roles del usuario (asumo que getRoles() devuelve los roles del usuario logueado)
+		$roles = $role->getRoles($identity->id); // Pasar el ID del usuario logueado
 
-        // var_dump($roles);
-        // var_dump($user_id_role);
+		$user_id_role = $identity->id_role;
 
-        foreach ($roles as $rol) {
-            if (isset($rol['id']) && $rol['id'] == $user_id_role) {
-                switch (strtolower($rol['name'])) {
-                    case 'admin':
-                        $_SESSION['admin'] = true;
-                        $_SESSION['role'] = 'admin';
-                        break;
-                    case 'author':
-                        $_SESSION['author'] = true;
-                        $_SESSION['role'] = 'author';
-                        break;
-                    case 'reader':
-                        $_SESSION['reader'] = true;
-                        $_SESSION['role'] = 'reader';
-                        break;
-                }
-            }
-        }
+		foreach ($roles as $rol) {
+			if (isset($rol['id']) && $rol['id'] == $user_id_role) {
+				switch (strtolower($rol['name'])) {
+					case 'admin':
+						$_SESSION['admin'] = true;
+						$_SESSION['role'] = 'admin';
+						break;
+					case 'author':
+						$_SESSION['author'] = true;
+						$_SESSION['role'] = 'author';
+						break;
+					case 'reader':
+						$_SESSION['reader'] = true;
+						$_SESSION['role'] = 'reader';
+						break;
+				}
+			}
+		}
 
-        // Redirigir al dashboard
-        header("Location:" . base_url . 'dashboard');
-        exit();
-    }
+		// Redirigir al dashboard
+		Utils::redirect();
+	}
 
-    // Método para editar el usuario
-    public function editUser()
-    {
-        
+	// Método para editar el usuario
+	public function editUser()
+	{
+		$this->_checkLogged();
+		if (empty($_POST)) {
+			Utils::redirect('user/edit');
+		}
 
-        if (isset($_POST)) {
-            $user = new User();
-            $user->setId($_SESSION['identity']->id);
-            $user->setName($_POST['name']);
-            $user->setEmail($_POST['email']);
-            $user->setBiography($_POST['biography']);
+		$user = new User();
+		$user->setId($_SESSION['identity']->id);
+		$user->setName($_POST['name']);
+		$user->setEmail($_POST['email']);
+		$user->setBiography($_POST['biography']);
 
-            // Comprobar si se ha subido una imagen
-            if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] == 0) {
-                $file = $_FILES['profileImg'];
-                $fileName = $file['name'];
-                $filePath = 'uploads/images/' . $fileName;
-                move_uploaded_file($file['tmp_name'], $filePath);
-                $user->setProfileImage($filePath);
-            }
+		// Comprobar si se ha subido una imagen
+		if (isset($_FILES['profileImg']) && $_FILES['profileImg']['error'] == 0) {
+			$file = $_FILES['profileImg'];
+			$fileName = $file['name'];
+			$filePath = 'uploads/images/' . $fileName;
+			move_uploaded_file($file['tmp_name'], $filePath);
+			$user->setProfileImage($filePath);
+		}
 
-            // Guardar los cambios
-            $user->editUser();
+		// Guardar los cambios
+		$user->editUser();
 
-            // Actualizar la sesión con los nuevos datos
-            $_SESSION['identity']->name = $_POST['name'];
-            $_SESSION['identity']->email = $_POST['email'];
-            $_SESSION['identity']->biography = $_POST['biography'];
-            if (isset($filePath)) {
-                $_SESSION['identity']->profile_img = $filePath;
-            }
+		// Actualizar la sesión con los nuevos datos
+		$_SESSION['identity']->name = $_POST['name'];
+		$_SESSION['identity']->email = $_POST['email'];
+		$_SESSION['identity']->biography = $_POST['biography'];
+		if (isset($filePath)) {
+			$_SESSION['identity']->profile_img = $filePath;
+		}
 
-            header("Location:" . base_url . 'user/profile');
-        } else {
-            header("Location:" . base_url . 'user/edit');
-        }
-    }
-    // Método para cerrar sesión
+		Utils::redirect('user/profile');
+	}
 
-    public function logout()
-    {
-        if (isset($_SESSION['identity'])) {
-            unset($_SESSION['identity']);
-        }
-        if (isset($_SESSION['admin'])) {
-            unset($_SESSION['admin']);
-        }
-        header("Location:" . base_url);
-    }
+	// Método para cerrar sesión
+	public function logout()
+	{
+		if (isset($_SESSION['identity'])) {
+			unset($_SESSION['identity']);
+		}
+		if (isset($_SESSION['admin'])) {
+			unset($_SESSION['admin']);
+		}
+		Utils::redirect();
+	}
 
-    //Método para cambiar el libro de estado en mi perfil
-    public function changeBookStatus()
-    {
-        if (isset($_GET['bookId']) && isset($_GET['status'])) {
-            $bookUser = new BookUser();
-            $bookUser->setBook(Book::createById($_GET['bookId']));
-            $bookUser->setUser(User::createById($_SESSION['identity']->id));
-            $bookUser->setStatus($_GET['status']);
-            $bookUser->updateStatus();
-        }
-        header('Location: ' . base_url . 'user/profile');
-    }
+	//Método para cambiar el libro de estado en mi perfil
+	public function changeBookStatus()
+	{
+		if (isset($_GET['bookId']) && isset($_GET['status'])) {
+			$bookUser = new BookUser();
+			$bookUser->setBook(Book::createById($_GET['bookId']));
+			$bookUser->setUser(User::createById($_SESSION['identity']->id));
+			$bookUser->setStatus($_GET['status']);
+			$bookUser->updateStatus();
+		}
+		Utils::redirect('user/profile');
+	}
 }

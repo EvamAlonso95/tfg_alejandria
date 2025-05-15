@@ -1,108 +1,104 @@
 <?php
 class PostController extends BaseController
 {
-    public function index()
-    {
-        $posts = Post::getAllPosts();
-        // var_dump($posts);
-        $this->title = 'Publicaciones';
-        require_once 'views/publication/publication.php';
-        //TODO aquí controlo la vsta del post, no en AUTOR
-    }
 
-    public function info()
-    {
-        if (isset($_GET['postId'])) {
-            $post = Post::createById($_GET['postId']);
-            $this->title = 'Post: ' . $post->getTitle();
-            require_once 'views/publication/postInfo.php';
-        } else {
-            header('Location: ' . base_url . 'post');
-        }
-    }
+	/**
+	 * @param Post $post
+	 */
+	private function _checkIsAuthorPost($post)
+	{
+		if (!Utils::isAuthor() || $post->getAuhtor()->getId() !== $_SESSION['identity']->id) {
+			Utils::redirect('post');
+		}
+	}
 
-    public function save()
-    {
-        //TODO validar que solo los autores puedan crear publicaciones
-        if (isset($_POST)) {
+	public function index()
+	{
+		$this->_checkLogged();
+		$this->_checkAuthor();
+		$posts = Post::getAllPostsByAuthor($_SESSION['identity']->id);
+		// var_dump($posts);
+		$this->title = 'Publicaciones';
+		require_once 'views/publication/publication.php';
+	}
+
+	public function info()
+	{
+		$this->_checkLogged();
+		if (!isset($_GET['postId'])) {
+			Utils::redirect('post');
+		}
+
+		$post = Post::createById($_GET['postId']);
+		$this->title = 'Post: ' . $post->getTitle();
+		require_once 'views/publication/postInfo.php';
+	}
+
+	public function save()
+	{
+		$this->_checkLogged();
+		$this->_checkAuthor();
+		if (!isset($_POST)) {
+			Utils::redirect('post/create');
+		}
+		if (empty($_POST['title']) || empty($_POST['content']) || empty($_FILES['cover_img'])) {
+			$_SESSION['post'] = 'error';
+			Utils::redirect('post/create');
+		}
+		$title = $_POST['title'];
+		$content = $_POST['content'];
+		$post_img = $_FILES['cover_img'];
+
+		$post = new Post();
+		$post->setTitle($title);
+		$post->setContent($content);
+
+		// Procesar imagen
+		$extension = pathinfo($post_img['name'], PATHINFO_EXTENSION);
+		$uniqueName = uniqid('post_', true) . '.' . $extension;
+		$uploadDir = 'uploads/post/';
+		$filePath = $uploadDir . $uniqueName;
+
+		if (!is_dir($uploadDir)) {
+			mkdir($uploadDir, 0755, true);
+		}
+
+		if (!move_uploaded_file($post_img['tmp_name'], $filePath)) {
+			echo json_encode(['error' => 'Error al mover la imagen del post.']);
+			exit;
+		}
+
+		$post->setCoverImg($filePath);
+		$post->setDate(date('Y-m-d H:i:s'));
 
 
+		$post->setUser(User::createById($_SESSION['identity']->id));
 
-            $title = $_POST['title'] ?? null;
-            $content = $_POST['content'] ?? null;
-            $post_img = $_FILES['cover_img'] ?? null;
+		// Guardar en la base de datos
+		$post->createPost();
+		Utils::redirect('post');
+	}
 
-            if (!$title || !$content || !$post_img || $post_img['error'] !== UPLOAD_ERR_OK) {
-                $_SESSION['post'] = 'error';
-                header('Location: ' . base_url . 'post/create');
-                exit;
-            }
+	public function delete()
+	{
+		$_SESSION['toast'] = [
+			'message' => 'Error al eliminar la publicación',
+			'isSuccess' => false
+		];
+		$this->_checkLogged();
+		$this->_checkAuthor();
+		if (!isset($_POST['post_id'])) {
+			Utils::redirect('post');
+		}
 
-            $post = new Post();
-            $post->setTitle($title);
-            $post->setContent($content);
+		$post = Post::createById($_POST['post_id']);
+		$this->_checkIsAuthorPost($post);
+		$post->deletePost();
+		$_SESSION['toast'] = [
+			'message' => 'Publicación eliminada con éxito',
+			'isSuccess' => true
+		];
 
-            // Procesar imagen
-            $extension = pathinfo($post_img['name'], PATHINFO_EXTENSION);
-            $uniqueName = uniqid('post_', true) . '.' . $extension;
-            $uploadDir = 'uploads/post/';
-            $filePath = $uploadDir . $uniqueName;
-
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-
-            if (!move_uploaded_file($post_img['tmp_name'], $filePath)) {
-                echo json_encode(['error' => 'Error al mover la imagen del post.']);
-                exit;
-            }
-
-            $post->setCoverImg($filePath);
-            $post->setDate(date('Y-m-d H:i:s'));
-
-
-            $post->setUser(User::createById($_SESSION['identity']->id));
-
-            // Guardar en la base de datos
-            $post->createPost();
-        }
-
-        header('Location: ' . base_url . 'post');
-    }
-
-    public function delete()
-    {
-        if (Utils::isAuthor()) {
-            if (isset($_POST['post_id'])) {
-                $post = new Post();
-                $post->setId($_POST['post_id']);
-                $post->setUser(User::createById($_SESSION['identity']->id));
-                $post->deletePost();
-                $_SESSION['toast'] = [
-                    'message' => 'Publicación eliminada con éxito',
-                    'isSuccess' => true
-                ];
-            } else {
-                $_SESSION['toast'] = [
-                    'message' => 'Error al eliminar la publicación',
-                    'isSuccess' => false
-                ];
-            }
-        }
-        // Redirección inteligente basada en REFERER
-        $referer = $_SERVER['HTTP_REFERER'] ?? null;
-
-        if ($referer && strpos($referer, 'post/info?postId=') !== false) {
-            // Si el referer es la página del post eliminado, redirigir al listado
-            header('Location: ' . base_url . 'post');
-        } else if ($referer) {
-            // Si venía de otra página, regresar ahí
-            header('Location: ' . $referer);
-        } else {
-            // Si no hay referer, también redirigir al listado
-            header('Location: ' . base_url . 'post');
-        }
-
-        exit;
-    }
+		Utils::redirect('post');
+	}
 }
