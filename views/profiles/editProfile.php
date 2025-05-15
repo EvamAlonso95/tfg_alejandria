@@ -6,43 +6,43 @@ require_once 'views/layout/head.php'; ?>
 
 <!-- Contenido -->
 <main class="container my-5">
-    <form action="<?= base_url ?>user/editUser" method="post" enctype="multipart/form-data">
-        <div class="card p-4">
-            <h5 class="mb-4">Tus datos:</h5>
+	<form action="<?= BASE_URL ?>user/editUser" method="post" enctype="multipart/form-data">
+		<div class="card p-4">
+			<h5 class="mb-4">Tus datos:</h5>
 
-            <!-- Imagen y carga -->
-            <div class="row mb-3">
-                <div class="col-md-4 text-center mb-2">
-                    <div class="mx-auto mb-2 w-50">
-                        <img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
-                    </div>
-                </div>
-                <div class="col-md-8 d-flex align-items-center">
-                    <input type="file" class="form-control" name="profileImg">
-                </div>
-            </div>
+			<!-- Imagen y carga -->
+			<div class="row mb-3">
+				<div class="col-md-4 text-center mb-2">
+					<div class="mx-auto mb-2 w-50">
+						<img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+					</div>
+				</div>
+				<div class="col-md-8 d-flex align-items-center">
+					<input type="file" class="form-control" name="profileImg">
+				</div>
+			</div>
 
-            <!-- Nombre -->
-            <div class="mb-3">
-                <input type="text" class="form-control" name="name" placeholder="Nombre" value="<?= $user->getName() ?>">
-            </div>
+			<!-- Nombre -->
+			<div class="mb-3">
+				<input type="text" class="form-control" name="name" placeholder="Nombre" value="<?= $user->getName() ?>">
+			</div>
 
-            <!-- Correo -->
-            <div class="mb-3">
-                <input type="email" class="form-control" name="email" placeholder="Correo" value="<?= $user->getEmail() ?>">
-            </div>
+			<!-- Correo -->
+			<div class="mb-3">
+				<input type="email" class="form-control" name="email" placeholder="Correo" value="<?= $user->getEmail() ?>">
+			</div>
 
-            <!-- Biografía -->
-            <div class="mb-3">
-                <textarea class="form-control" name="biography" rows="4" placeholder="Biografía"><?= $user->getBiography() ?></textarea>
-            </div>
+			<!-- Biografía -->
+			<div class="mb-3">
+				<textarea class="form-control" name="biography" rows="4" placeholder="Biografía"><?= $user->getBiography() ?></textarea>
+			</div>
 
-            <!-- Botón -->
-            <div class="text-center">
-                <input type="submit" class="btn btn-earth w-100" value="Subir cambios" />
-            </div>
-        </div>
-    </form>
+			<!-- Botón -->
+			<div class="text-center">
+				<input type="submit" class="btn btn-earth w-100" value="Subir cambios" />
+			</div>
+		</div>
+	</form>
 </main>
 
 
