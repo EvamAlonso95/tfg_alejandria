@@ -36,44 +36,52 @@ session_start();
 //TODO Controlar los errores del xDebug cuando cargue una clase que no existe
 function showError()
 {
-    $error = new errorController();
-    $error->index();
+	$error = new ErrorController();
+	$error->index();
 }
 
 // Lógica para determinar qué controlador cargar
 
+// Si se proporciona solo 'action' sin 'controller', mostramos un error
+if (!isset($_GET['controller']) && isset($_GET['action'])) {
+	showError();
+	return;
+}
+
+// Si no se han definido ni 'controller' ni 'action', usamos el controlador por defecto
+if (!isset($_GET['controller']) && !isset($_GET['action'])) {
+	$nombre_controlador = CONTROLLER_DEFAULT;
+}
+
 // Si se proporciona el parámetro 'controller' por GET, lo usamos para construir el nombre de la clase
 if (isset($_GET['controller'])) {
-    $nombre_controlador = $_GET['controller'] . 'Controller';
-
-    // Si no se han definido ni 'controller' ni 'action', usamos los valores por defecto
-} elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
-    $nombre_controlador = controller_default;
-
-    // Si se proporciona solo uno de los dos o algo incorrecto, mostramos error
-} else {
-    showError();
-    exit();
+	$nombre_controlador = ucfirst($_GET['controller']) . 'Controller';
 }
 
-// Verificamos si el controlador existe y ejecutamos la acción
-
-if (class_exists($nombre_controlador)) {
-    // Instanciamos el controlador
-    $controlador = new $nombre_controlador();
-
-    // Verificamos si se proporciona una acción válida y si existe el método
-    if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
-        $action = $_GET['action'];
-        $controlador->$action();
-
-        // Si no se ha proporcionado ninguna acción, usamos la acción por defecto
-    } elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
-        $action_default = action_default;
-        $controlador->$action_default();
-    } else {
-        showError(); // Acción no válida
-    }
-} else {
-    showError(); // Controlador no válido
+// Verificamos si el controlador existe
+if (!class_exists($nombre_controlador)) {
+	showError(); // Controlador no válido
+	return;
 }
+
+// Instanciamos el controlador
+$controlador = new $nombre_controlador();
+
+// Obtenemos la acción si está definida
+$action = $_GET['action'] ?? null;
+$controllerSet = isset($_GET['controller']);
+
+// Verificamos si se proporciona una acción válida y si existe el método
+if ($action && method_exists($controlador, $action)) {
+	$controlador->$action(); // Ejecutamos la acción
+	return;
+}
+
+// Si no se ha proporcionado ningún controlador ni acción, usamos la acción por defecto
+if (!$controllerSet && !$action) {
+	$actionDefault = ACTION_DEFAULT;
+	$controlador->$actionDefault(); // Ejecutamos la acción por defecto
+	return;
+}
+
+showError(); // Acción no válida
