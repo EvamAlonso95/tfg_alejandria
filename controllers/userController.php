@@ -170,8 +170,7 @@ class UserController extends BaseController
 			Utils::redirect('user/edit');
 		}
 
-		$user = new User();
-		$user->setId($_SESSION['identity']->id);
+		$user = User::createById($_SESSION['identity']->id);
 		$user->setName($_POST['name']);
 		$user->setEmail($_POST['email']);
 		$user->setBiography($_POST['biography']);

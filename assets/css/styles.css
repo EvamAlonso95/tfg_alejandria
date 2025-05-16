@@ -1,4 +1,4 @@
-/* GENERALES */
+/* GENERALES 
 :root {
     --color-earth: #95714F;
     --color-moss: #8C916C;
@@ -6,22 +6,55 @@
     --color-almond: #EADED0;
     --color-sage: #ACB087;
 }
+*/
+
+:root {
+  --white-color:                  #ffffff;
+  --primary-color:                #81B29A;
+  --secondary-color:              #3D405B;
+  --section-bg-color:             #F4F1DE;
+  --custom-btn-bg-color:          #F2CC8F;
+  --custom-btn-bg-hover-color:    #E07A5F;
+  --dark-color:                   #000000;
+  --p-color:                      #717275;
+  --link-hover-color:             #F2CC8F;
+
+  --body-font-family:             'DM Sans', sans-serif;
+
+  --h1-font-size:                 42px;
+  --h2-font-size:                 36px;
+  --h3-font-size:                 28px;
+  --h4-font-size:                 24px;
+  --h5-font-size:                 22px;
+  --h6-font-size:                 20px;
+  --p-font-size:                  18px;
+  --menu-font-size:               16px;
+  --btn-font-size:                14px;
+
+  --border-radius-large:          100px;
+  --border-radius-medium:         20px;
+  --border-radius-small:          10px;
+
+  --font-weight-normal:           400;
+  --font-weight-medium:           500;
+  --font-weight-bold:             700;
+}
 
 * {
     padding: 0px;
     margin: 0px;
-    font-family: sans-serif, Helvetica, Arial;
+    font-family: var(--body-font-family);
 }
 
 body {
-    background-color: #EADED0;
-    color: #3C3C3C;
+    background-color: var(--white-color);
+    color: var(--dark-color);
 }
 
 a {
 
     text-decoration: none;
-    color: var(--color-earth);
+    color: var(--white-color);
 
 }
 
@@ -59,9 +92,57 @@ a:hover {
 
 nav.navbar .navbar-collapse .nav-item:hover,
 nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
-    background-color: var(--color-earth) !important;
+    background-color: var(--secondary-color) !important;
     opacity: 0.8;
     color: #fff;
+}
+
+.section-bg-image-block {
+   
+  backdrop-filter: blur(5px) saturate(180%);
+  -webkit-backdrop-filter: blur(5px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: var(--border-radius-medium);
+  border: 1px solid rgba(209, 213, 219, 0.3);
+  border-radius: var(--border-radius-medium);
+  color: var(--dark-color) !important;
+ 
+}
+
+/*---------------------------------------
+  HERO              
+-----------------------------------------*/
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 992px) {
+    .hero {
+        height: 100vh;
+    }
+
+    .custom-video,
+    .news-detail-image {
+        object-fit: cover;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .sticky-wrapper {
+        position: relative;
+        bottom: 76px;
+    }
+}
+
+.heroText {
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    text-align: center;
 }
 
 .profile-section {
@@ -136,3 +217,5 @@ nav.navbar .navbar-nav .nav-item .dropdown-menu li:hover a {
     border-radius: 15px;
     padding: 1rem;
 }
+
+
