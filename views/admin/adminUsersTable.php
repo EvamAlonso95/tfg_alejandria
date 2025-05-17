@@ -41,7 +41,7 @@
 					<div class="modal-footer">
 						<input type="hidden" name="idUser" id="idUser">
 						<input type="hidden" name="operation" id="operation">
-						<input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
+						<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
 					</div>
 
 				</form>

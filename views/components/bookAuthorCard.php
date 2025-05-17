@@ -17,7 +17,7 @@
 					<?= $book->getBook()->getTitle() ?>
 				</a>
 			</h6>
-			<a href="#" class="btn btn-earth mt-auto">Añadir</a>
+			<a href="#" class="btn btn-standar mt-auto">Añadir</a>
 		</div>
 	</div>
 </div>

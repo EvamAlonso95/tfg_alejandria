@@ -1,6 +1,7 @@
 <?php require_once './views/layout/head.php' ?>
 
 <main class="cont-background ">
+    <!-- TODO Arreglar la animación -->
     <?php require_once 'views/components/landingAnimation.php'?>
 
     <div class="container full-page d-flex justify-content-center">

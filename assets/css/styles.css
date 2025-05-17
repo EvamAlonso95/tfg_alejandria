@@ -45,6 +45,7 @@ body {
     background-color: var(--white-color);
     color: var(--dark-color);
 
+
 }
 
 /*---------------------------------------
@@ -150,22 +151,25 @@ a.navbar-brand:hover {
 /*---------------------------------------
   BUTTONS
 -----------------------------------------*/
-.btn-earth {
+.btn-standar {
 
     background-color: var(--custom-btn-bg-color);
     border: none;
     color: var(--dark-color);
     font-size: var(--btn-font-size);
-    font-weight: var(--font-weight-medium);
-    transition: all 0.3s;
+    font-weight: var(--font-weight-medium);    
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease-in-out;
 
 }
 
-.btn-earth:hover {
+.btn-standar:hover {
     background-color: var(--custom-btn-bg-hover-color);
     border: none;
     font-size: var(--btn-font-size);
     font-weight: var(--font-weight-medium);
+    
 
 }
 
@@ -220,6 +224,91 @@ a.navbar-brand:hover {
 .landing-link:hover {
     color: var(--custom-btn-bg-hover-color)
 }
+
+
+/*---------------------------------------
+  DASHBOARD    - POST
+-----------------------------------------*/
+
+.div-background {
+    background-color: var(--section-bg-color);
+    border-radius: 4px;
+
+    h6 {
+        font-size: var(--h6-font-size);
+        position: sticky;
+        top: 0;
+        background-color: var(--section-bg-color);
+        z-index: 10;
+    }
+}
+
+.container-card-post {
+    margin-bottom: 8px;
+    border: none;
+}
+
+.container-card-post .card-post {
+    border: 1px solid var(--section-bg-color);
+    border-radius: 16px;
+    background-color: var(--white-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.container-card-post .card-post:hover {
+     background-color: var(--white-color);
+}
+
+.container-card-post .card-post-img {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    object-fit: cover;
+    max-height: 250px;
+}
+
+.container-card-post .card-post-body {
+    padding: 1rem;
+}
+
+.container-card-post .card-post-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.container-card-post .card-post-text {
+    font-size: 0.95rem;
+    color: var(--p-color);
+    margin-bottom: 0.4rem;
+}
+
+
+/*---------------------------------------
+  DASHBOARD    - SCROLLBAR
+-----------------------------------------*/
+
+/* Aplica al contenedor que tiene scroll */
+.scrollspy-example::-webkit-scrollbar {
+    width: 10px;
+
+}
+
+/* Fondo de la scrollbar */
+.scrollspy-example::-webkit-scrollbar-track {
+    background: var(--section-bg-color);
+    border-radius: 10px;
+}
+
+/* Barra (scroll thumb) */
+.scrollspy-example::-webkit-scrollbar-thumb {
+    background-color: var(--custom-btn-bg-hover-color);
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
 
 
 /* ----------- */

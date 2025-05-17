@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-2 offset-10">
 			<div class="text-center">
-				<button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalGenre" id="buttonCreate">
+				<button type="button" class="btn btn-standar w-100" data-bs-toggle="modal" data-bs-target="#modalGenre" id="buttonCreate">
 					Crear
 				</button>
 			</div>
@@ -44,7 +44,7 @@
 					<div class="modal-footer">
 						<input type="hidden" name="idGenre" id="idGenre">
 						<input type="hidden" name="operation" id="operation" value="create">
-						<input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
+						<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
 					</div>
 
 				</form>

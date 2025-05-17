@@ -39,7 +39,7 @@ require_once 'views/layout/head.php'; ?>
 
 			<!-- Botón -->
 			<div class="text-center">
-				<input type="submit" class="btn btn-earth w-100" value="Subir cambios" />
+				<input type="submit" class="btn btn-standar w-100" value="Subir cambios" />
 			</div>
 		</div>
 	</form>

@@ -35,7 +35,7 @@ require_once 'views/layout/head.php'; ?>
 
 					<!-- Botón Publicar -->
 					<div class="d-grid">
-						<button type="submit" class="btn btn-earth">Publicar</button>
+						<button type="submit" class="btn btn-standar">Publicar</button>
 
 					</div>
 				</div>

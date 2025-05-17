@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-2 offset-10">
 			<div class="text-center">
-				<button type="button" class="btn btn-earth w-100" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
+				<button type="button" class="btn btn-standar w-100" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
 					Crear
 				</button>
 			</div>
@@ -70,7 +70,7 @@
 						<div class="modal-footer">
 							<input type="hidden" name="idBook" id="idBook">
 							<input type="hidden" name="operation" id="operation" value="create">
-							<input type="submit" name="action" id="action" class="btn btn-earth" value="Crear">
+							<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
 						</div>
 
 				</form>
@@ -148,7 +148,7 @@
 			$('#authors').val(rowData.author);
 			$('#genres').val(rowData.genre);
 			$('#uploadImage').html('<img src="' + rowData.cover + '" width="100"/>');
-			$('#cover').prop('required', false); 
+			$('#cover').prop('required', false);
 			$('#action').val('Actualizar');
 			$('#operation').val('edit');
 
