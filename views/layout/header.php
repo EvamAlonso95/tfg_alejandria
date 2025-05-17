@@ -1,7 +1,8 @@
 <?php
 $user = isset($_SESSION['identity']) ? User::createById($_SESSION['identity']->id)  : null;
 $isLogged = false;
-$profileImg =  BASE_URL . '/assets/img/icono-user.webp';
+$profileImg =  BASE_URL . 'assets/img/default_perfil.jpg';
+$logoImg = BASE_URL . 'assets/img/book.svg';
 $urlHome = BASE_URL;
 $isAdmin = false;
 $isAuthor = false;
@@ -17,22 +18,22 @@ if (!is_null($user)) {
 	$urlHome = BASE_URL . 'dashboard';
 }
 ?>
-<nav class="navbar navbar-expand-md bg-body-tertiary">
+<nav class="navbar navbar-expand-md ">
 	<div class="container">
 		<!-- Logo -->
-		<a class="navbar-brand" href="<?= $urlHome ?>">
-			<img src="<?= BASE_URL ?>/assets/img/logo_prueba.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+		<a class="navbar-brand " href="<?= $urlHome ?>">
+			<img src="<?= $logoImg?>" alt="Logo" width="30" height="24" class="d-inline-block align-text-top nav-logo">
 			Alejandría
 		</a>
 
 		<!-- Toggler solo visible en móvil -->
-		<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler d-md-none mobile-element" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNavbar" aria-controls="mobileNavbar" aria-expanded="false" aria-label="Toggle navigation">
 			<img height="32" class="rounded-circle" src="<?= $profileImg ?>" alt="Foto de perfil">
 		</button>
 
 		<!-- Menú colapsable SOLO para móviles -->
 		<div class="collapse navbar-collapse d-md-none" id="mobileNavbar">
-			<ul class="navbar-nav ms-auto">
+			<ul class="navbar-nav ms-auto collapse-element">
 				<?php if ($isLogged): ?>
 					<li class="nav-item d-md-none">
 						<a class="nav-link" href="<?= BASE_URL ?>user/profile">Mi perfil</a>
@@ -68,7 +69,7 @@ if (!is_null($user)) {
 		<div class="d-none d-md-block ms-auto">
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="nav-link dropdown-toggle after-element" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<img height="32" class="rounded-circle" src="<?= $profileImg ?>" alt="Foto de perfil">
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
