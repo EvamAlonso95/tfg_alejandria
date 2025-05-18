@@ -3,11 +3,11 @@
 /**  
  * @var Book $book
  */
-
-// var_dump($book);
 ?>
-<div class="col-12 d-flex border p-2">
-	<div class="me-3 container-img">
+
+
+<div class="col-lg-12 d-flex p-2 container-results">
+	<div class=" col-lg-12 col-sm-12 me-3 container-img container-img-results">
 		<!-- imagen -->
 		<img src="<?= $book->getCoverImg() ?>" alt="Imagen del libro" class="img-fluid">
 	</div>
@@ -20,7 +20,6 @@
 				<a href="<?= BASE_URL ?>author?authorId=<?= $author->getId() ?>"><?= $author->getName() ?></a>
 			</p>
 		<?php endforeach; ?>
-
 
 	</div>
 </div>
