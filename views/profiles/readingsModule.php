@@ -27,7 +27,6 @@
 			foreach ($booksReading as $bookUser) :
 				$book = $bookUser->getBook();
 				require 'views/components/bookProfile.php';
-
 			endforeach; ?>
  	</div>
 
@@ -50,7 +49,6 @@
 			foreach ($booksRead as $bookUser) :
 				$book = $bookUser->getBook();
 				require 'views/components/bookProfile.php';
-
 			endforeach; ?>
  	</div>
  </div>

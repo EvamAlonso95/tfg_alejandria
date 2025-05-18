@@ -150,6 +150,7 @@ a.navbar-brand:hover {
     padding: 8px 16px;
     border-radius: 9999px;
     transition: background-color 0.2s ease-in-out;
+    font-weight: var(--font-weight-bold);
 
 }
 
@@ -157,7 +158,8 @@ a.navbar-brand:hover {
     background-color: var(--custom-btn-bg-hover-color);
     border: none;
     font-size: var(--btn-font-size);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-bold);
+    color:var(--white-color);
 
 
 }
@@ -179,23 +181,36 @@ a.navbar-brand:hover {
   BUTTONS  -SCROLL UP
 -----------------------------------------*/
 #myBtn {
-  display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 20px; /* Place the button at the bottom of the page */
-  right: 30px; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: var(--custom-btn-bg-color); /* Set a background color */
-  color: var(--dark-color); /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Fixed/sticky position */
+    bottom: 20px;
+    /* Place the button at the bottom of the page */
+    right: 30px;
+    /* Place the button 30px from the right */
+    z-index: 99;
+    /* Make sure it does not overlap */
+    border: none;
+    /* Remove borders */
+    outline: none;
+    /* Remove outline */
+    background-color: var(--custom-btn-bg-color);
+    /* Set a background color */
+    color: var(--dark-color);
+    /* Text color */
+    cursor: pointer;
+    /* Add a mouse pointer on hover */
+    padding: 15px;
+    /* Some padding */
+    border-radius: 10px;
+    /* Rounded corners */
+    font-size: 18px;
+    /* Increase font size */
 }
 
 #myBtn:hover {
-  background-color: var(--custom-btn-bg-hover-color); 
+    background-color: var(--custom-btn-bg-hover-color);
 }
 
 
@@ -249,9 +264,9 @@ a.navbar-brand:hover {
 
     h6 {
         font-size: var(--h6-font-size);
-      
+
         background-color: var(--section-bg-color);
-       
+
     }
 }
 
@@ -363,14 +378,11 @@ a.navbar-brand:hover {
     border-bottom: 1px solid var(--secondary-color);
 }
 
-/* Lista */
 .card-news ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
-
 
 .card-news a {
     text-decoration: none;
@@ -399,9 +411,44 @@ a.navbar-brand:hover {
     width: 100%;
 }
 
+/*---------------------------------------
+    USER PROFILE
+-----------------------------------------*/
+.container-profile {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
+.profile-data {
+    margin-bottom: 16px;
+}
 
-/* ----------- */
+.profile-data .data-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--secondary-color);
+    /* display: block; */
+}
+
+.profile-data .data-value {
+
+    color: var(--dark-color);
+}
+
+.profile-image {
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-large);
+}
+
+@media (max-width: 768px) {
+    .profile-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* TABS - READINGS */
 
 .profile-section {
 
@@ -411,8 +458,6 @@ a.navbar-brand:hover {
         .data-name {
             font-weight: bold;
         }
-
-
 
         /* Condicional */
         &.block {
@@ -427,6 +472,8 @@ a.navbar-brand:hover {
     }
 }
 
+/* --------- 
+
 .card img {
     height: 150px;
 }
@@ -437,20 +484,20 @@ a.navbar-brand:hover {
 
 }
 
-/* FIX jquery-ui in modal  */
+/* FIX jquery-ui in modal  
 .ui-autocomplete {
     z-index: 9999 !important;
 }
 
 
-/* User perfil readings  */
+/* User perfil readings  
 .tab-content.lecturas {
     padding: 1rem;
     background-color: #fff;
     border: solid 1px #ddd;
 }
 
-/* Imagen de libros búsqueda */
+/* Imagen de libros búsqueda 
 
 .container-img {
     width: 100px;
@@ -476,13 +523,79 @@ a.navbar-brand:hover {
     padding: 1rem;
 }
 
+*/
+
+/*---------------------------------------
+   EDITAR PERFIL
+-----------------------------------------*/
+
+.card-edit-profile {
+  background: var(--white-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.card-edit-profile:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+h5 {
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--custom-btn-bg-color);
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.img-fluid {
+  border-radius: 50%;
+  border: 3px solid var(--custom-btn-bg-color);
+  object-fit: cover;
+  width: 100%;
+  max-width: 150px;
+  height: 150px;
+}
+
+input.form-control,
+textarea.form-control {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+  border-color: var(--custom-btn-bg-color);
+  outline: none;
+}
+
+input[type="file"] {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+}
+
+input[type="file"]:hover {
+  border-color: var(--custom-btn-bg-color);
+}
+
+
+
+
 
 /*---------------------------------------
   LANDING ANIMATION
 -----------------------------------------*/
 
 /*
-
 #flip {
     animation: wrapper 6s ease-in-out infinite;
     height: 350px;

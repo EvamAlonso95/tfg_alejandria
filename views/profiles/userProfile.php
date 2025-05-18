@@ -7,43 +7,42 @@
 <?php require_once 'views/layout/head.php'; ?>
 
 
-<main class="container my-4">
-	<h1 class="text-start mb-4"><?= $user->getName() ?></h1>
+<main class="container my-5">
 
 	<!-- Datos del usuario -->
 	<section class="profile-section">
-		<div class="row mb-4">
+		<div class="row g-4 align-items-start container-profile">
 			<!-- Foto -->
-			<div class="col-md-2">
-				<div class="border p-3">
-					<img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid object-fit-cover rounded">
+			<div class="col-md-3 my-2">
+				<div class="profile-card p-3 text-center">
+					<img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid profile-image">
 				</div>
 			</div>
 
-
-			<div class="col-md-10">
-				<div class="border p-3">
+			<!-- Datos -->
+			<div class="col-md-9">
+				<div class="profile-card p-4">
 					<div class="profile-data">
 						<span class="data-name">Nombre:</span>
-						<span class="data-value"><?= $user->getName() ?> </span>
+						<span class="data-value"><?= $user->getName() ?></span>
 					</div>
 					<div class="profile-data">
 						<span class="data-name">Correo:</span>
 						<span class="data-value"><?= $user->getEmail() ?></span>
 					</div>
-					<div class="profile-data block">
+					<div class="profile-data">
 						<span class="data-name">Biografía:</span>
 						<span class="data-value"><?= $user->getBiography() ?></span>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<?php require_once 'views/profiles/readingsModule.php'; ?>
-
-
+	<!-- Módulo adicional -->
+	<div class="mt-5">
+		<?php require_once 'views/profiles/readingsModule.php'; ?>
+	</div>
 </main>
 
 <?php require_once 'views/layout/footer.php'; ?>

@@ -7,7 +7,7 @@ require_once 'views/layout/head.php'; ?>
 <!-- Contenido -->
 <main class="container my-5">
 	<form action="<?= BASE_URL ?>user/editUser" method="post" enctype="multipart/form-data">
-		<div class="card p-4">
+		<div class="card p-4 card-edit-profile">
 			<h5 class="mb-4">Tus datos:</h5>
 
 			<!-- Imagen y carga -->
