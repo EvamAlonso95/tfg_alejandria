@@ -3,7 +3,7 @@
 /**
  * @var Book $book
  * @var Book[] $recommendedBook
- * @var BookUser @bookUser
+ * @var BookUser $bookUser
  * 
  */
 // var_dump($user);
@@ -51,31 +51,21 @@
 
 				<p><strong>Descripción:</strong></p>
 				<p><?= $book->getSynopsis() ?></p>
-				<?php
-				// Comprobar si el usuario tiene libros asignados
-				$currentStatus = null;
-				$userBooks = false;
-
-				// Obtener todos los libros del usuario
-				// $books = $bookUser->getBooksByUserId($user->getId());
-
-				// if ($books && count($books) > 0) {
-				// 	foreach ($books as $bookEntry) {
-				// 		if ($bookEntry->getBook()->getId() === $book->getId()) {
-				// 			$userBooks = true;
-				// 			$currentStatus = $bookEntry->getStatus();
-				// 			break;
-				// 		}
-				// 	}
-				// }
+				<?php if (!$bookUser): ?>
+					<a href="<?= BASE_URL ?>book/addLibrary?bookId=<?= $book->getId() ?>" class="btn btn-standar">Añadir a la biblioteca</a>
+				<?php else:
+					$status = $bookUser->getStatus()
 				?>
 
-				<select class="form-select form-select-sm mt-2" onchange="updateBookStatus(this)">
-					<option disabled <?= !$userBooks ? 'selected' : '' ?>>Añadir a tu biblioteca</option>
-					<option value="want to read" <?= $currentStatus === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
-					<option value="reading" <?= $currentStatus === 'reading' ? 'selected' : '' ?>>Leyendo</option>
-					<option value="read" <?= $currentStatus === 'read' ? 'selected' : '' ?>>Finalizado</option>
-				</select>
+					<select class="form-select form-select-sm mt-2">
+						<option value="want to read" <?= $status === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
+						<option value="reading" <?= $status === 'reading' ? 'selected' : '' ?>>Leyendo</option>
+						<option value="read" <?= $status === 'read' ? 'selected' : '' ?>>Finalizado</option>
+					</select>
+					<a href="<?= BASE_URL ?>book/removeLibrary?bookId=<?= $book->getId() ?>" class="btn btn-danger mt-5">Eliminar de la biblioteca</a>
+				<?php endif; ?>
+
+
 
 			</div>
 		</div>

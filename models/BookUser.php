@@ -3,8 +3,8 @@
 class BookUser
 {
 	private Book $book;
-	private ?int $id_book;
-	private User $id_user;
+	private ?int $bookUserId;
+	private User $user;
 	private ?string $status;
 
 	public function __construct() {}
@@ -18,21 +18,21 @@ class BookUser
 	{
 		$this->book = $book;
 	}
-	public function getIdBook(): ?int
+	public function getBookUserId(): ?int
 	{
-		return $this->id_book;
+		return $this->bookUserId;
 	}
-	public function setIdBook(?int $id_book): void
+	public function setBookUserId(?int $bookUserId): void
 	{
-		$this->id_book = $id_book;
+		$this->bookUserId = $bookUserId;
 	}
 	public function getUser(): User
 	{
-		return $this->id_user;
+		return $this->user;
 	}
-	public function setUser(User $id_user): void
+	public function setUser(User $user): void
 	{
-		$this->id_user = $id_user;
+		$this->user = $user;
 	}
 
 	public function getStatus(): ?string
@@ -46,7 +46,7 @@ class BookUser
 
 	// Método para obtener libros por ID de usuario
 	/**
-	 * @return BookUser[]
+	 * @return BookUser
 	 */
 	public static function createById(int $id): self
 	{
@@ -54,14 +54,15 @@ class BookUser
 
 		$stmt = Database::getInstance()->prepare(
 			"SELECT 
-                 books_users_saved.status
+                 *
              FROM books_users_saved 
              WHERE books_users_saved.id_book = :id"
 		);
 		$stmt->execute([':id' => $id]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
-		// var_dump($data);
 		$bookUser->setBook(Book::createById($id));
+		$bookUser->setUser(User::createById($data->id_user));
+		$bookUser->setBookUserId($data->id);
 
 		$bookUser->setStatus($data->status);
 		return $bookUser;
@@ -83,7 +84,6 @@ class BookUser
 		$dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$books = [];
 		foreach ($dataBooks as $book) {
-
 			array_push($books, self::createById($book->book_id));
 		}
 		$temp = null; // Cerrar la conexión a la base de datos
@@ -111,8 +111,43 @@ class BookUser
 		return $books;
 	}
 
+	/**
+	 * @return BookUser
+	 */
 
-	public function saveBookUser(): bool
+	public static function getBooksByBookIdAndUserId(int $userId, int $bookId): self
+	{
+		$temp = Database::getInstance();
+		$stmt = $temp->prepare(
+			"SELECT 
+                 books.id AS book_id
+             FROM books 
+             JOIN books_users_saved ON books.id = books_users_saved.id_book
+             WHERE books_users_saved.id_user = :user_id AND books_users_saved.id_book = :book_id"
+		);
+
+		$stmt->execute([':user_id' => $userId, ':book_id' => $bookId]);
+		$data = $stmt->fetch(PDO::FETCH_OBJ);
+
+		return self::createById($data->book_id);
+	}
+
+	public static function userHadBook(int $userId, int $bookId): bool
+	{
+		$temp = Database::getInstance();
+		$stmt = $temp->prepare(
+			"SELECT 
+                1
+             FROM books 
+             JOIN books_users_saved ON books.id = books_users_saved.id_book
+             WHERE books_users_saved.id_user = :user_id AND books_users_saved.id_book = :book_id"
+		);
+
+		$stmt->execute([':user_id' => $userId, ':book_id' => $bookId]);
+		return $stmt->fetch(PDO::FETCH_OBJ) !== false;
+	}
+
+	public function save(): bool
 	{
 		$temp = Database::getInstance();
 
@@ -156,6 +191,19 @@ class BookUser
 			':book_id' => $this->getBook()->getId(),
 			':user_id' => $this->getUser()->getId()
 		]);
+		return true;
+	}
+
+	public function remove(): bool
+	{
+		$stmt = Database::getInstance()->prepare(
+			"DELETE FROM books_users_saved WHERE id= :id"
+		);
+
+		$stmt->execute([
+			':id' => $this->bookUserId,
+		]);
+
 		return true;
 	}
 }

@@ -29,5 +29,5 @@
 
 </head>
 
-<body>
+<body class="cont-background">
 	<?php require_once 'header.php'; ?>

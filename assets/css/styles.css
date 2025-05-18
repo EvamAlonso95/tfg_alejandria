@@ -46,13 +46,14 @@ body {
     color: var(--dark-color);
 
 
+
 }
 
 /*---------------------------------------
   CONTAINER HEIGHT
 -----------------------------------------*/
 .full-page {
-    min-height: calc(100vh - 64px);
+    min-height: calc(100vh - 65px);
 }
 
 /*---------------------------------------
@@ -100,19 +101,7 @@ a.navbar-brand:hover {
 
 
 .after-element {
-    color: var(--custom-btn-bg-color);
-    font-size: var(--p-font-size);
-}
-
-.after-element:hover {
-    color: var(--custom-btn-bg-color);
-    font-size: var(--p-font-size);
-}
-
-
-/* TODO En focus no cambia los estilos */
-.after-element:focus {
-    color: var(--custom-btn-bg-color);
+    color: var(--custom-btn-bg-color) !important;
     font-size: var(--p-font-size);
 }
 
@@ -157,8 +146,8 @@ a.navbar-brand:hover {
     border: none;
     color: var(--dark-color);
     font-size: var(--btn-font-size);
-    font-weight: var(--font-weight-medium);    
-    padding: 0.4rem 1rem;
+    font-weight: var(--font-weight-medium);
+    padding: 8px 16px;
     border-radius: 9999px;
     transition: background-color 0.2s ease-in-out;
 
@@ -169,7 +158,7 @@ a.navbar-brand:hover {
     border: none;
     font-size: var(--btn-font-size);
     font-weight: var(--font-weight-medium);
-    
+
 
 }
 
@@ -183,6 +172,30 @@ a.navbar-brand:hover {
 .btn-sage:hover {
     background-color: var(--color-sand);
     border: none;
+}
+
+
+/*---------------------------------------
+  BUTTONS  -SCROLL UP
+-----------------------------------------*/
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: var(--custom-btn-bg-color); /* Set a background color */
+  color: var(--dark-color); /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: var(--custom-btn-bg-hover-color); 
 }
 
 
@@ -236,10 +249,9 @@ a.navbar-brand:hover {
 
     h6 {
         font-size: var(--h6-font-size);
-        position: sticky;
-        top: 0;
+      
         background-color: var(--section-bg-color);
-        z-index: 10;
+       
     }
 }
 
@@ -257,7 +269,7 @@ a.navbar-brand:hover {
 }
 
 .container-card-post .card-post:hover {
-     background-color: var(--white-color);
+    background-color: var(--white-color);
 }
 
 .container-card-post .card-post-img {
@@ -285,28 +297,106 @@ a.navbar-brand:hover {
 }
 
 
+
 /*---------------------------------------
-  DASHBOARD    - SCROLLBAR
+  DASHBOARD    - SIDEBAR
 -----------------------------------------*/
 
-/* Aplica al contenedor que tiene scroll */
-.scrollspy-example::-webkit-scrollbar {
-    width: 10px;
-
+.sticky-sidebar {
+    position: sticky;
+    top: calc(65px + 1.5rem);
+    z-index: 5;
 }
 
-/* Fondo de la scrollbar */
-.scrollspy-example::-webkit-scrollbar-track {
-    background: var(--section-bg-color);
-    border-radius: 10px;
+.sticky-sidebar .card {
+    border: 1px solid --var(--white-color);
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
 }
 
-/* Barra (scroll thumb) */
-.scrollspy-example::-webkit-scrollbar-thumb {
-    background-color: var(--custom-btn-bg-hover-color);
-    border-radius: 10px;
+.sticky-sidebar .card:hover {
+    transform: scale(1.01);
+}
 
-    cursor: pointer;
+.sticky-sidebar .card.recommendation-card {
+    /* min-height: 320px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.sticky-sidebar .card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    object-fit: cover;
+    max-height: 180px;
+}
+
+
+.input-group-text {
+    background-color: var(--white-color);
+    border: 1px solid var(--section-bg-color);
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--custom-btn-bg-color);
+}
+
+
+/*---------------------------------------
+  DASHBOARD    - NEWBOOKS
+-----------------------------------------*/
+
+.card-news {
+    background-color: var(--section-bg-color);
+}
+
+.card-news h6 {
+    font-size: var(--h6-font-size);
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding: 8px;
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+/* Lista */
+.card-news ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.card-news a {
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.2s;
+    color: var(--secondary-color);
+}
+
+.card-news a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.card-news a:hover {
+    color: var(--custom-btn-bg-hover-color)
+}
+
+.card-news a:hover::after {
+    width: 100%;
 }
 
 

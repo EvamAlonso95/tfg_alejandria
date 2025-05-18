@@ -1,6 +1,6 @@
 <?php require_once './views/layout/head.php' ?>
 
-<main class="cont-background full-page d-flex align-items-center justify-content-center ">
+<main class="full-page d-flex align-items-center justify-content-center ">
 	<div class="container pt-4">
 		<div class="row  justify-content-center">
 			<div class="col-md-8 col-lg-6 col-xl-5">

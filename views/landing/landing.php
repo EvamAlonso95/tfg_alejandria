@@ -1,6 +1,6 @@
 <?php require_once './views/layout/head.php' ?>
 
-<main class="cont-background ">
+<main class="">
     <!-- TODO Arreglar la animación -->
     <?php require_once 'views/components/landingAnimation.php'?>
 

@@ -18,11 +18,11 @@ if (!is_null($user)) {
 	$urlHome = BASE_URL . 'dashboard';
 }
 ?>
-<nav class="navbar navbar-expand-md ">
+<nav class="navbar navbar-expand-md sticky-top">
 	<div class="container">
 		<!-- Logo -->
 		<a class="navbar-brand " href="<?= $urlHome ?>">
-			<img src="<?= $logoImg?>" alt="Logo" width="30" height="24" class="d-inline-block align-text-top nav-logo">
+			<img src="<?= $logoImg ?>" alt="Logo" width="30" height="24" class="d-inline-block align-text-top nav-logo">
 			Alejandría
 		</a>
 
@@ -32,6 +32,7 @@ if (!is_null($user)) {
 		</button>
 
 		<!-- Menú colapsable SOLO para móviles -->
+		
 		<div class="collapse navbar-collapse d-md-none" id="mobileNavbar">
 			<ul class="navbar-nav ms-auto collapse-element">
 				<?php if ($isLogged): ?>
@@ -39,7 +40,13 @@ if (!is_null($user)) {
 						<a class="nav-link" href="<?= BASE_URL ?>user/profile">Mi perfil</a>
 					</li>
 					<li class="nav-item d-md-none">
-						<a class="nav-link" href="<?= BASE_URL ?>user/edit">Configuración</a>
+						<a class="nav-link" href="<?= BASE_URL ?>search">Búsqueda</a>
+					</li>
+					<li class="nav-item d-md-none">
+						<a class="nav-link" href="<?= BASE_URL ?>recommendedBook">Recomendaciones</a>
+					</li>
+					<li class="nav-item d-md-none">
+						<a class="nav-link" href="<?= BASE_URL ?>user/edit">Editar perfil</a>
 					</li>
 					<?php if ($isAdmin): ?>
 						<li class="nav-item d-md-none">
@@ -75,7 +82,7 @@ if (!is_null($user)) {
 					<ul class="dropdown-menu dropdown-menu-end">
 						<?php if ($isLogged): ?>
 							<li><a class="dropdown-item" href="<?= BASE_URL ?>user/profile">Mi perfil</a></li>
-							<li><a class="dropdown-item" href="<?= BASE_URL ?>user/edit">Configuración</a></li>
+							<li><a class="dropdown-item" href="<?= BASE_URL ?>user/edit">Editar Perfil</a></li>
 							<?php if ($isAdmin): ?>
 								<li>
 									<a class="dropdown-item" href="<?= BASE_URL ?>admin">Panel de administración</a>

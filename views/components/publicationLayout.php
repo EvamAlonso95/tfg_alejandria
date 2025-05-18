@@ -3,18 +3,12 @@
 /** @var Post[] $posts */
 ?>
 
-<!-- Contenedor con Scrollspy -->
-<div data-bs-spy="scroll"
-	data-bs-target="#navbar-example"
-	data-bs-offset="0"
-	class="scrollspy-example container div-background my-4"
-	tabindex="0"
-	style="max-height: 900px; overflow-y: auto; position: relative;">
+
+<div class="container div-background my-4">
 
 	<h6 class="p-3">
 		Últimas publicaciones:
 	</h6>
-
 
 	<div class="row">
 		<?php foreach ($posts as $index => $post): ?>
