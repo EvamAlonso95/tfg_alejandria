@@ -123,7 +123,7 @@ class Author
 
 		$books = [];
 		foreach ($dataBooks as $book) {
-			array_push($books, BookUser::createById($book->book_id));
+			array_push($books, Book::createById($book->book_id));
 		}
 
 		return $books;

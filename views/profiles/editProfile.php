@@ -5,7 +5,7 @@
 require_once 'views/layout/head.php'; ?>
 
 <!-- Contenido -->
-<main class="container my-5">
+<main class="container my-5 full-page">
 	<form action="<?= BASE_URL ?>user/editUser" method="post" enctype="multipart/form-data">
 		<div class="card p-4 card-edit-profile">
 			<h5 class="mb-4">Tus datos:</h5>
@@ -14,7 +14,7 @@ require_once 'views/layout/head.php'; ?>
 			<div class="row mb-3">
 				<div class="col-md-4 text-center mb-2">
 					<div class="mx-auto mb-2 w-50">
-						<img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid h-100 object-fit-cover rounded">
+						<img src="<?= $user->getProfileImage() ?>" alt="Foto de perfil" class="img-fluid profile-image">
 					</div>
 				</div>
 				<div class="col-md-8 d-flex align-items-center">

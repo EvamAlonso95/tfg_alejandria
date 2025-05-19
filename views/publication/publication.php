@@ -3,7 +3,7 @@ require_once 'views/layout/head.php'; ?>
 
 
 <!-- Main content -->
-<main class="container  my-5">
+<main class="container my-5 full-page">
 	<div class="row">
 		<!-- Historial de publicaciones -->
 		<div class="col-md-8 mb-4 order-2 order-md-1">

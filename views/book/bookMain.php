@@ -8,7 +8,7 @@
 ?>
 <?php require_once 'views/layout/head.php'; ?>
 
-<main class="container my-5">
+<main class="container my-5 full-page">
 
 	<!-- Datos del libro -->
 	<section class="book-section">

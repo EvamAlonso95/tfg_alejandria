@@ -1,23 +1,34 @@
 <?php
 
 /**  
- * @var BookUser $book
+ * @var Book $book
  */
 
 ?>
 
-
-
-<div class="col">
-	<div class="card h-100">
-		<img src="<?= $book->getBook()->getCoverImg() ?>" alt="Imagen del libro" class="card-img-top img-fluid">
+<div class="col-sm-6 col-md-4">
+	<div class="card h-100 shadow-sm border-0 rounded-3">
+		<img
+			src="<?= $book->getCoverImg() ?>"
+			alt="Imagen del libro"
+			class="card-img-top"
+			style="height: 180px; object-fit: cover;">
 		<div class="card-body d-flex flex-column">
-			<h6 class="card-title">
-				<a href="<?= BASE_URL ?>book?bookId=<?= $book->getBook()->getId() ?>">
-					<?= $book->getBook()->getTitle() ?>
-				</a>
+			<h6 class="card-title mb-1">				
+					<?= $book->getTitle() ?>				
 			</h6>
-			<a href="#" class="btn btn-standar mt-auto">Añadir</a>
+
+			<?php
+			$authorNames = [];
+			foreach ($book->getAuthors() as $author) {
+				$authorNames[] =  $author->getName() ;
+			}
+			?>
+			<p class="card-text text-muted small mb-2">Autor/es: <?= implode(', ', $authorNames) ?></p>
+
+			<a
+				href="<?= BASE_URL ?>book?bookId=<?= $book->getId() ?>"
+				class="btn btn-standar btn-sm mt-auto align-self-end">Ver más</a>
 		</div>
 	</div>
 </div>

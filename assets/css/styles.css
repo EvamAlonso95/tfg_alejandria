@@ -755,7 +755,7 @@ form .form-control:focus {
     position: sticky;
     top: 70px;
     /* Ajusta si tu navbar es más alto o más bajo */
-   
+
 }
 
 .sticky-form .title-post {
@@ -766,7 +766,15 @@ form .form-control:focus {
     z-index: 101;
 }
 
-
+/*---------------------------------------
+ AUTHOR INFO
+-----------------------------------------*/
+.title-author {
+    font-size: var(--h2-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--secondary-color) !important;
+    margin-bottom: 8px;
+}
 
 /*---------------------------------------
   LANDING ANIMATION
