@@ -32,7 +32,7 @@
 					$authorLinks = [];
 					foreach ($book->getAuthors() as $author) {
 						$url = BASE_URL . 'author?authorId=' . $author->getId();
-						$authorLinks[] = '<a href="' . $url . '" class="custom-link">' . $author->getName() . '</a>';
+						$authorLinks[] = '<a class="custom-link" href="' . $url . '">' . $author->getName() . '</a>';
 					}
 					?>
 					<div class="book-data">

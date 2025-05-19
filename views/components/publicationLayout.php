@@ -4,11 +4,8 @@
 ?>
 
 
-<div class="container div-background my-4">
+<div class="container div-background my-4 pt-4">
 
-	<h6 class="p-3">
-		Últimas publicaciones:
-	</h6>
 
 	<div class="row">
 		<?php foreach ($posts as $index => $post): ?>
