@@ -961,3 +961,21 @@ h4 {
     transform: translate3d(12px, 350px, -25px) rotateX(-90deg) skewX(20deg);
     transform-origin: 0 0;
 }
+
+/*---------------------------------------
+FOOTER
+-----------------------------------------*/
+
+#footer {
+  font-size: 0.95rem;
+  background: var(--white-color);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  #footer {
+    background-color: var(--dark-color);
+    color: var(--white-color);;
+    border-top-color: var(--p-color);
+  }
+}

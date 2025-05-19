@@ -2,11 +2,13 @@
  <?php
 	if ($this->showFooter):
 	?>
- 	<footer id="footer" class="border-top py-3 text-center bg-light">
- 		<div class="container">
- 			<p class="mb-0">Desarrollado por Eva Alonso &copy; <?= date('Y') ?></p>
+ 	<footer id="footer" class="border-top  text-muted py-2 mt-1">
+ 		<div class="container text-center">
+ 			<p class="mb-1 fw-semibold">Desarrollado por Eva Alonso &copy; <?= date('Y') ?></p>
+ 			<p class="mb-0 small">Todos los derechos reservados.</p>
  		</div>
  	</footer>
+
 
  <?php
 	endif;
