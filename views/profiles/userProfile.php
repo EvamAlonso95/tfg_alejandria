@@ -10,8 +10,8 @@
 <main class="container my-5 full-page">
 
 	<!-- Datos del usuario -->
-	<section class="profile-section">
-		<div class="row g-4 align-items-start container-profile">
+<div class="card p-4 ">
+		<div class="row g-4 align-items-start">
 			<!-- Foto -->
 			<div class="col-md-3 my-2">
 				<div class="profile-card p-3 text-center">
@@ -37,12 +37,36 @@
 				</div>
 			</div>
 		</div>
-	</section>
-
-	<!-- Módulo adicional -->
-	<div class="mt-5">
-		<?php require_once 'views/profiles/readingsModule.php'; ?>
 	</div>
+
+
+
+	<?php require_once 'views/profiles/readingsModule.php'; ?>
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 </main>
 
 <?php require_once 'views/layout/footer.php'; ?>
+
+<script>
+	// Get the button:
+	let mybutton = document.getElementById("myBtn");
+
+	// When the user scrolls down 20px from the top of the document, show the button
+	window.onscroll = function() {
+		scrollFunction()
+	};
+
+	function scrollFunction() {
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+			mybutton.style.display = "block";
+		} else {
+			mybutton.style.display = "none";
+		}
+	}
+
+	// When the user clicks on the button, scroll to the top of the document
+	function topFunction() {
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	}
+</script>

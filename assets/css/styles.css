@@ -398,8 +398,6 @@ a.navbar-brand:hover {
     }
 }
 
-/* TABS - READINGS */
-
 .profile-section {
 
     .profile-data {
@@ -421,6 +419,68 @@ a.navbar-brand:hover {
 
     }
 }
+
+/*---------------------------------------
+    USER READINGS
+-----------------------------------------*/
+.custom-tabs .nav-link {
+    font-weight: var(--font-weight-bold);
+    color: var(--custom-btn-bg-hover-color);
+    background-color: var(--section-bg-color);
+    border-color: transparent;
+    margin-right: 4px;
+    border-radius: 0.5rem 0.5rem 0 0;
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+
+}
+
+
+.custom-tabs .nav-link:hover {
+    background-color: var(--custom-btn-bg-hover-color);
+    color: var(--secondary-color);
+    text-decoration: none;
+    border-color: var(--custom-btn-bg-hover-color) var(--custom-btn-bg-hover-color) var(--custom-btn-bg-color);
+
+
+
+}
+
+.custom-tabs .nav-link.active {
+    background-color: var(--custom-btn-bg-color);
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    border-color:  var(--custom-btn-bg-color);
+}
+
+/* Contenedor de contenido */
+.tab-content.lecturas {
+    border: 1px solid var(--custom-btn-bg-color) ;
+    border-top: none;
+    padding: 1rem;
+    background-color: var(--custom-btn-bg-color);
+    border-radius: 0 0 0.5rem 0.5rem;
+    text-decoration: none;
+}
+
+.container-readings{
+    margin-bottom: 16px;
+}
+
+.custom-tabs button {
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+.profile-p{
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-bold);
+}
+
+
+
+/* TABS - READINGS */
 
 /* --------- 
 

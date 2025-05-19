@@ -11,8 +11,8 @@
 <main class="container my-5 full-page">
 
 	<!-- Perfil del autor -->
-	<section class="profile-section">
-		<div class="row g-4 align-items-start container-profile">
+<div class="card p-4 ">
+		<div class="row g-4 align-items-start ">
 			<!-- Foto -->
 			<div class="col-md-3 my-2">
 				<div class="profile-card p-3 text-center">
@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+</div>
 
 	<!-- Libros del autor -->
 	<section class="mt-5 container-similar-books p-4">
