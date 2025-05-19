@@ -13,11 +13,11 @@
 	</div>
 	<div>
 		<h6>
-			<a href="<?= BASE_URL ?>book?bookId=<?= $book->getId() ?>"><?= $book->getTitle() ?></a>
+			<a href="<?= BASE_URL ?>book?bookId=<?= $book->getId() ?>" class="custom-link"><?= $book->getTitle() ?></a>
 		</h6>
 		<?php foreach ($book->getAuthors() as $author): ?>
 			<p class="mb-1">
-				<a href="<?= BASE_URL ?>author?authorId=<?= $author->getId() ?>"><?= $author->getName() ?></a>
+				<a href="<?= BASE_URL ?>author?authorId=<?= $author->getId() ?>" ><?= $author->getName() ?></a>
 			</p>
 		<?php endforeach; ?>
 

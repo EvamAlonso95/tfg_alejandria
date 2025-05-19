@@ -102,7 +102,7 @@
 
 						<div class="text-center pt-3">
 							<p class="mb-0 text-muted">¿Ya tienes cuenta?
-								<a href="<?= BASE_URL ?>user/login" class="text-decoration-none fw-semibold landing-link">Inicia sesión</a>
+								<a href="<?= BASE_URL ?>user/login" class="text-decoration-none custom-link landing-link">Inicia sesión</a>
 							</p>
 						</div>
 					</div>

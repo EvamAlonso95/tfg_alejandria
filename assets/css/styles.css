@@ -15,6 +15,8 @@
     --section-bg-color: #F4F1DE;
     --custom-btn-bg-color: #F2CC8F;
     --custom-btn-bg-hover-color: #E07A5F;
+    --custom-btn-delete-color: rgb(187, 54, 54);
+    --custom-btn-delete-hover-color: rgb(128, 25, 25);
     --dark-color: #000000;
     --p-color: #717275;
     --link-hover-color: #F2CC8F;
@@ -158,18 +160,40 @@ a.navbar-brand:hover {
 
 }
 
-.btn-sage {
+.btn-delete {
 
-    background-color: var(--color-sage);
-    border: none;
+    background-color: var(--custom-btn-delete-color);
+    font-size: var(--btn-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--white-color);
+        border-radius: 9999px;
 
 }
 
-.btn-sage:hover {
-    background-color: var(--color-sand);
-    border: none;
+.btn-delete:hover {
+    background-color: var(--custom-btn-delete-hover-color);
+    font-size: var(--btn-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--white-color);
+        border-radius: 9999px;
 }
 
+
+/*---------------------------------------
+ LINKS 
+-----------------------------------------*/
+
+.custom-link {
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.custom-link:hover {
+    color: var(--custom-btn-bg-hover-color);
+    text-decoration: underline;
+}
 
 /*---------------------------------------
   BUTTONS  -SCROLL UP
@@ -231,19 +255,6 @@ a.navbar-brand:hover {
     background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='59.428' patternTransform='scale(2) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='%233d405bff'/><path d='M0 70.975V47.881m20-1.692L8.535 52.808v13.239L20 72.667l11.465-6.62V52.808zm0-32.95l11.465-6.62V-6.619L20-13.24 8.535-6.619V6.619L20 13.24m8.535 4.927v13.238L40 38.024l11.465-6.62V18.166L40 11.546zM20 36.333L0 47.88m0 0v23.094m0 0l20 11.548 20-11.548V47.88m0 0L20 36.333m0 0l20 11.549M0 11.547l-11.465 6.619v13.239L0 38.025l11.465-6.62v-13.24L0 11.548v-23.094l20-11.547 20 11.547v23.094M20 36.333V13.24'  stroke-linecap='square' stroke-width='0.5' stroke='%23f2cc8fff' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,-1.712)' fill='url(%23a)'/></svg>")
 }
 
-
-/*---------------------------------------
-  FORMS LINKS
------------------------------------------*/
-
-.landing-link {
-    color: var(--secondary-color);
-    transition: all 0.3s;
-}
-
-.landing-link:hover {
-    color: var(--custom-btn-bg-hover-color)
-}
 
 /*---------------------------------------
   DASHBOARD    - POST
@@ -348,56 +359,6 @@ a.navbar-brand:hover {
 .form-control:focus {
     box-shadow: none;
     border-color: var(--custom-btn-bg-color);
-}
-
-/*---------------------------------------
-  DASHBOARD    - NEWBOOKS
------------------------------------------*/
-
-.card-news {
-    background-color: var(--section-bg-color);
-}
-
-.card-news h6 {
-    font-size: var(--h6-font-size);
-    font-weight: 600;
-    margin-bottom: 16px;
-    padding: 8px;
-    color: var(--secondary-color);
-    border-bottom: 1px solid var(--secondary-color);
-}
-
-.card-news ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.card-news a {
-    text-decoration: none;
-    font-weight: 500;
-    position: relative;
-    transition: color 0.2s;
-    color: var(--secondary-color);
-}
-
-.card-news a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background: var(--secondary-color);
-    transition: width 0.3s ease;
-}
-
-.card-news a:hover {
-    color: var(--custom-btn-bg-hover-color)
-}
-
-.card-news a:hover::after {
-    width: 100%;
 }
 
 /*---------------------------------------
@@ -549,7 +510,7 @@ h5 {
 
 input.form-control,
 textarea.form-control {
-   
+
     border-radius: 8px;
     padding: 0.75rem 1rem;
     font-size: 1rem;
@@ -634,17 +595,6 @@ section.py-3 .form-control:focus {
     font-weight: var(--font-weight-bold);
 }
 
-.container-results h6 a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.container-results h6 a:hover {
-    color: var(--custom-btn-bg-hover-color);
-    text-decoration: underline;
-}
-
 /* Autores */
 .container-results p {
     margin: 0;
@@ -682,86 +632,64 @@ section.py-3 .form-control:focus {
 /*---------------------------------------
   BOOK INFO
 -----------------------------------------*/
-
-/* Portada del libro */
-.book-cover {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
+.book-section {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius-medium);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Título del libro */
-.book-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-/* Texto general */
-.book-meta p {
-    margin-bottom: 0.5rem;
-    color: #555;
+.book-data {
+    margin-bottom: 16px;
 }
 
 
+.book-data .data-value {
 
-/* Libros recomendados */
-.recommended-book {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 12px;
+    color: var(--dark-color);
+}
+
+.book-data {
+    h2 {
+        color: var(--secondary-color) !important;
+        font-weight: var(--font-weight-bold);
+
+    }
+}
+
+.book-data .data-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--secondary-color);
+    /* display: block; */
+}
+
+
+
+.book-image {
     height: 100%;
-    transition: box-shadow 0.3s;
-    background-color: #fff;
-}
-
-.recommended-book:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Imagen de libros recomendados */
-.recommended-book img {
-    width: 100%;
-    height: 180px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 10px;
+    border-radius: 0%;
+
 }
 
-/* Autor recomendado */
-.recommended-book small {
-    font-weight: bold;
-    color: #333;
-}
-
-/* Responsive mejoras */
-@media (max-width: 576px) {
-    .book-title {
-        font-size: 1.5rem;
-    }
-
-    .recommended-book img {
-        height: 140px;
+@media (max-width: 768px) {
+    .book-image {
+        width: 100%;
+        height: auto;
     }
 }
 
 
+/*---------------------------------------
+  BOOK INFO - SIMILAR BOOKS
+-----------------------------------------*/
 
-
-
-
-
-
-
-
-
-
-
-
-
+.container-similar-books{
+    background-color: var(--section-bg-color);
+    border: none;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 /*---------------------------------------
   LANDING ANIMATION
 -----------------------------------------*/

@@ -59,7 +59,7 @@
 
 						<div class="text-center pt-3">
 							<p class="mb-0 text-muted">¿No tienes cuenta?
-								<a href="<?= BASE_URL ?>user/register" class="text-decoration-none fw-semibold landing-link">Regístrate</a>
+								<a href="<?= BASE_URL ?>user/register" class="text-decoration-none custom-link landing-link">Regístrate</a>
 							</p>
 						</div>
 					</div>
