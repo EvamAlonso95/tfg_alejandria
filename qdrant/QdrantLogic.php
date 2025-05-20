@@ -94,18 +94,66 @@ class QdrantLogic
 
 	function getBookVector($bookId)
 	{
-		$qdrant = new QdrantClient();
-		$response = $qdrant->getPoints('books', 100);
-		foreach ($response['result']['points'] as $point) {
-			if ($point['id'] == $bookId) {
-				return $point['vector'];
+		return $this->qdrantClient->getVectorId('books', $bookId);
+	}
+
+	// Vector del usuario
+	private function getUserVector($userId)
+	{
+		$dictionary = $this->getDictionary();
+		// $vector = array_fill(0, count($dictionary), 0);
+		$userVector = null;
+		$count = 0;
+		$bookUsers = BookUser::getBooksByUserId($userId);
+
+
+		foreach ($bookUsers as $bookUser) {
+
+			$bookVector = $this->getBookVector($bookUser->getBook()->getId());
+			if ($bookVector) {
+				if ($userVector === null) {
+					$userVector = array_fill(0, count($bookVector), 0);
+				}
+				// var_dump($userVector);
+				foreach ($bookVector as $i => $value) {
+					// var_dump($i);
+					// var_dump($value);
+					$userVector[$i] += $value;
+				}
+				$count++;
 			}
 		}
-		return null;
+
+		// Promedio para crear el perfil del usuario
+		if ($count > 0 && $userVector) {
+			foreach ($userVector as $i => $value) {
+				$userVector[$i] = $value / $count;
+			}
+		}
+
+
+		return $userVector;
 	}
-	function getUserVector($userId)
+
+	function getRecommendationsBooksId($userId, $limit = 10)
 	{
-		// TODO: Implementar
-		return null;
+		$userVector = $this->getUserVector($userId);
+		if (empty($userVector)) return [];
+
+		$readBooks = BookUser::getBooksByUserId($userId);
+		$mustNot = [];
+		foreach ($readBooks as $book) {
+			$mustNot[] = [
+				'key'   => 'id',
+				'match' => ['value' => $book->getBook()->getId()]
+			];
+		}
+
+		$filter = [
+			'must_not' => $mustNot
+		];
+		// var_dump($userVector);
+		// var_dump($filter);
+		return $this->qdrantClient->search('books', $userVector, $limit, $filter);
 	}
 }

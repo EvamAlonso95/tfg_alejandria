@@ -770,7 +770,7 @@ form .form-control:focus {
 
 
 .card-container {
-    background: white;
+    background: var(--section-bg-color);
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -778,9 +778,31 @@ form .form-control:focus {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-container:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+.container-recommended {
+    font-size: var(--h4-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--secondary-color) !important;
+    margin-bottom: 8px;
+}
+
+.book-card-recomended {
+    background: var(--white-color);
+}
+
+.book-card-title {
+    font-size: var(--h4-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--secondary-color) !important;
+    margin-bottom: 8px;
+}
+
+.book-card-recommended-ul {
+    list-style-type: none;
+}
+
+.book-card-recomended-h6{
+    font-weight: var(--font-weight-bold);
+    color: var(--secondary-color);
 }
 
 .text-center {
@@ -826,6 +848,39 @@ form .form-control:focus {
     background-color: var(--primary-color);
     color: white;
 }
+
+.no-books-message {
+
+
+    border-style: dashed;
+    border-width: 2px;
+    border-color: #ced4da;
+    background-color: #f8f9fa;
+    color: var(--p-color);
+    border-radius: var(--border-radius-medium);
+    box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.03);
+    margin: auto;
+}
+
+.no-books-message .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link-recommended {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.link-recommended:hover {
+    text-decoration: none;
+    color: var(--white-color);
+
+}
+
+
+
 
 
 /*---------------------------------------
@@ -1104,7 +1159,7 @@ h4 {
 DATATABLE
 -----------------------------------------*/
 
-.container-admin{
+.container-admin {
     background-color: var(--custom-btn-bg-color);
     border-radius: var(--border-radius-medium);
 }
@@ -1115,30 +1170,30 @@ DATATABLE
 
 /* Modal personalizado */
 .modal-content {
-  border-radius: 0.5rem;
-  border: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .modal-header {
-  background-color: #f0f2f5;
-  border-bottom: 1px solid #dee2e6;
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .modal-title {
-  font-size: 1.25rem;
-  font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 500;
 }
 
 .modal-body label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  display: inline-block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .form-select {
 
-  max-width: 300px;
+    max-width: 300px;
 }
 
 

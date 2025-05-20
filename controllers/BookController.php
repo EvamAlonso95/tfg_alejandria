@@ -40,7 +40,6 @@ class BookController extends BaseController
 
 	public function addLibrary()
 	{
-
 		$this->_checkLogged();
 		$this->_checkBookId();
 
@@ -49,8 +48,16 @@ class BookController extends BaseController
 		$bookUser->setUser(User::createById($_SESSION['identity']->id));
 		$bookUser->setStatus('want to read');
 		$bookUser->save();
-		Utils::redirect('/book?bookId=' . $_GET['bookId']);
+
+		$referer = $_SERVER['HTTP_REFERER'] ?? '';
+
+		if (strpos($referer, '/recommendedBook') !== false) {
+			Utils::redirectReferer();
+		} else {
+			Utils::redirect('/book?bookId=' . $_GET['bookId']);
+		}
 	}
+
 
 	public function removeLibrary()
 	{
@@ -69,18 +76,18 @@ class BookController extends BaseController
 		if (empty($_POST['bookId'])) {
 			Utils::redirect();
 		}
-		
+
 		if (empty($_POST['status'])) {
 			Utils::redirect();
 		}
-		
+
 		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $_POST['bookId']);
 		$bookUser->setStatus($_POST['status']);
 		var_dump($bookUser->getStatus());
 		var_dump($bookUser->getUser()->getId());
 		var_dump($bookUser->getBook()->getId());
-		
-		
+
+
 		$bookUser->updateStatus();
 		Utils::redirect('/book?bookId=' . $_POST['bookId']);
 	}
