@@ -827,12 +827,6 @@ form .form-control:focus {
     color: white;
 }
 
-.book-data {
-    background: white;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
 
 /*---------------------------------------
   LANDING ANIMATION

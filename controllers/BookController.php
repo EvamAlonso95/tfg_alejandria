@@ -67,14 +67,16 @@ class BookController extends BaseController
 	{
 
 		$this->_checkLogged();
-		$this->_checkBookId();
-
-		if (empty($_GET['status'])) {
+		if (empty($_POST['bookId'])) {
 			Utils::redirect();
 		}
-		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id,  $_GET['bookId']);
-		$bookUser->setStatus($_GET['status']);
+		
+		if (empty($_POST['status'])) {
+			Utils::redirect();
+		}
+		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $_POST['bookId']);
+		$bookUser->setStatus($_POST['status']);
 		$bookUser->updateStatus();
-		Utils::redirect('/book?bookId=' . $_GET['bookId']);
+		Utils::redirect('/book?bookId=' . $_POST['bookId']);
 	}
 }

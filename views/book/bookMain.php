@@ -63,24 +63,37 @@
 							$status = $bookUser->getStatus();
 						?>
 							<div class="row g-2 align-items-stretch">
+								<!-- Formulario para cambiar estado -->
 								<div class="col-12 col-md-6">
-									<div class="d-flex h-100">
-										<select class="form-select w-100">
-											<option value="want to read" <?= $status === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
-											<option value="reading" <?= $status === 'reading' ? 'selected' : '' ?>>Leyendo</option>
-											<option value="read" <?= $status === 'read' ? 'selected' : '' ?>>Finalizado</option>
-										</select>
-									</div>
+									<form method="POST" action="<?= BASE_URL ?>book/updateBookStatus">
+										<div class="row g-2 align-items-stretch">
+											<div class="col-12 col-md-6">
+												<select name="status" class="form-select w-100 h-100">
+													<option value="want to read" <?= $status === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
+													<option value="reading" <?= $status === 'reading' ? 'selected' : '' ?>>Leyendo</option>
+													<option value="read" <?= $status === 'read' ? 'selected' : '' ?>>Finalizado</option>
+												</select>
+											</div>
+											<div class="col-12 col-md-6">
+												<input type="hidden" name="bookId" value="<?= $book->getId() ?>">
+												<input type="submit" class="btn btn-standar w-100 h-100" value="Guardar Estado">
+											</div>
+										</div>
+									</form>
 								</div>
+
+								<!-- Botón de eliminar -->
 								<div class="col-12 col-md-6">
 									<a href="<?= BASE_URL ?>book/removeLibrary?bookId=<?= $book->getId() ?>" class="btn btn-delete-style w-100 h-100 d-flex align-items-center justify-content-center">Eliminar de la biblioteca</a>
 								</div>
 							</div>
-						<?php endif; ?>
-					</div>
 
+					</div>
+				<?php endif; ?>
 				</div>
+
 			</div>
+		</div>
 		</div>
 	</section>
 
