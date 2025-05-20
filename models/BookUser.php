@@ -68,6 +68,9 @@ class BookUser
 		return $bookUser;
 	}
 
+	/**
+	 * @return BookUser[]
+	 */
 	public static function getBooksByUserId(int $userId): array
 	{
 		$temp = Database::getInstance();
@@ -90,6 +93,9 @@ class BookUser
 		return $books;
 	}
 
+	/**
+	 * @return BookUser[]
+	 */
 	public static function getBooksByUserIdAndStatus(int $userId, string $status): array
 	{
 		$temp = Database::getInstance();
@@ -181,18 +187,26 @@ class BookUser
 	//Método para cambiar el estado de un libro
 	public function updateStatus(): bool
 	{
-		$stmt = Database::getInstance()->prepare(
-			"UPDATE books_users_saved 
+		try {
+			$stmt = Database::getInstance()->prepare(
+				"UPDATE books_users_saved 
              SET status = :status 
              WHERE id_book = :book_id AND id_user = :user_id"
-		);
-		$stmt->execute([
-			':status' => $this->getStatus(),
-			':book_id' => $this->getBook()->getId(),
-			':user_id' => $this->getUser()->getId()
-		]);
-		return true;
+			);
+
+			$stmt->execute([
+				':status' => (string) $this->getStatus(),
+				':book_id' => (int) $this->getBook()->getId(),
+				':user_id' => (int) $this->getUser()->getId()
+			]);
+
+			return $stmt->rowCount() > 0;
+		} catch (PDOException $e) {
+			error_log("Error updating status: " . $e->getMessage());
+			return false;
+		}
 	}
+
 
 	public function remove(): bool
 	{

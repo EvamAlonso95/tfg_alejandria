@@ -65,7 +65,6 @@ class BookController extends BaseController
 
 	public function updateBookStatus()
 	{
-
 		$this->_checkLogged();
 		if (empty($_POST['bookId'])) {
 			Utils::redirect();
@@ -74,8 +73,14 @@ class BookController extends BaseController
 		if (empty($_POST['status'])) {
 			Utils::redirect();
 		}
+		
 		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $_POST['bookId']);
 		$bookUser->setStatus($_POST['status']);
+		var_dump($bookUser->getStatus());
+		var_dump($bookUser->getUser()->getId());
+		var_dump($bookUser->getBook()->getId());
+		
+		
 		$bookUser->updateStatus();
 		Utils::redirect('/book?bookId=' . $_POST['bookId']);
 	}
