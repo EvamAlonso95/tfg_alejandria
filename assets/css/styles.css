@@ -58,7 +58,7 @@ body {
 /*---------------------------------------
   NAVBAR 
 -----------------------------------------*/
-nav {
+nav.navbar {
 
     background-color: var(--secondary-color);
     border-bottom: 1px solid var(--custom-btn-bg-color);
@@ -160,7 +160,7 @@ a.navbar-brand:hover {
 
 }
 
-.btn-delete {
+.btn-delete-style {
 
     background-color: var(--custom-btn-delete-color);
     font-size: var(--btn-font-size);
@@ -170,7 +170,7 @@ a.navbar-brand:hover {
 
 }
 
-.btn-delete:hover {
+.btn-delete-style:hover {
     background-color: var(--custom-btn-delete-hover-color);
     font-size: var(--btn-font-size);
     font-weight: var(--font-weight-bold);
@@ -1105,6 +1105,50 @@ h4 {
     transform: translate3d(12px, 350px, -25px) rotateX(-90deg) skewX(20deg);
     transform-origin: 0 0;
 }
+
+/*---------------------------------------
+DATATABLE
+-----------------------------------------*/
+
+.container-admin{
+    background-color: var(--custom-btn-bg-color);
+    border-radius: var(--border-radius-medium);
+}
+
+
+/* Botones dentro de tabla (no modifico clases como .btn-warning ni .btn-outline-danger para no romper Bootstrap) */
+
+
+/* Modal personalizado */
+.modal-content {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background-color: #f0f2f5;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.modal-body label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.form-select {
+
+  max-width: 300px;
+}
+
+
+
 
 /*---------------------------------------
 FOOTER

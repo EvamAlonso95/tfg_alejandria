@@ -26,13 +26,13 @@
             </svg>
             <a href="#" class="custom-link">Leer más</a>.
         </div>
-        <button class="btn btn-standar" id="acceptCookies">Aceptar</button>
+        <button class="btn btn-standar col-12 col-md-2" id="acceptCookies">Aceptar</button>
     </div>
 </main>
 
 <script>
-    document.getElementById('acceptCookies').addEventListener('click', function () {
-      document.getElementById('cookieBanner').classList.add('hide');
+    document.getElementById('acceptCookies').addEventListener('click', function() {
+        document.getElementById('cookieBanner').classList.add('hide');
     });
-  </script>
+</script>
 <?php require_once './views/layout/footer.php' ?>

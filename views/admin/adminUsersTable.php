@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-admin">
 	<div class="table-responsive">
 		<table id="myTable" class="table table-striped table-bordered table-admin">
 			<thead>
@@ -10,7 +10,7 @@
 					<th class="table-header">Imagen</th>
 					<th class="table-header">Rol</th>
 					<th class="table-header">Editar</th>
-					<th class="table-header">Eliminar</th>
+					<th class="table-header btn-delete">Eliminar</th>
 				</tr>
 			</thead>
 
@@ -87,13 +87,13 @@
 				{
 					data: null,
 					render: function(data, type, row) {
-						return '<button class="btn btn-warning btn-edit" role="button">Editar</button>';
+						return '<button class="btn  btn-standar btn-edit" role="button">Editar</button>';
 					}
 				},
 				{
 					data: null,
 					render: function(data, type, row) {
-						return '<button class="btn btn-outline-danger btn-delete" role="button">Eliminar</button>';
+						return '<button class="btn  btn-delete btn-delete-style" role="button">Eliminar</button>';
 					}
 				},
 				{

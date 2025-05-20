@@ -73,7 +73,7 @@
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
-									<a href="<?= BASE_URL ?>book/removeLibrary?bookId=<?= $book->getId() ?>" class="btn btn-delete w-100 h-100 d-flex align-items-center justify-content-center">Eliminar de la biblioteca</a>
+									<a href="<?= BASE_URL ?>book/removeLibrary?bookId=<?= $book->getId() ?>" class="btn btn-delete-style w-100 h-100 d-flex align-items-center justify-content-center">Eliminar de la biblioteca</a>
 								</div>
 							</div>
 						<?php endif; ?>
