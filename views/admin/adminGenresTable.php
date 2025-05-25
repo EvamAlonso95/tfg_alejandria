@@ -1,67 +1,69 @@
-<div class="container">
-	<div class="row">
-		<div class="col-2 offset-10">
-			<div class="text-center">
-				<button type="button" class="btn btn-standar w-100" data-bs-toggle="modal" data-bs-target="#modalGenre" id="buttonCreate">
-					Crear
-				</button>
+<main class="full-page p-4">
+	<div class="container  container-admin">
+		<div class="row">
+			<div class="col-2 offset-10">
+				<div class="text-center">
+					<button type="button" class="btn btn-standar-admin w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalGenre" id="buttonCreate">
+						Crear
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table id="myTable" class="table table-striped table-bordered table-admin">
+				<thead>
+					<tr>
+						<th class="table-header text-center">Id</th>
+						<th class="table-header text-center">Nombre</th>
+						<th class="table-header text-center">Editar</th>
+						<th class="table-header text-center">Eliminar</th>
+					</tr>
+				</thead>
+
+			</table>
+
+		</div>
+
+	</div>
+
+	<!-- Modal -->
+
+	<div class="modal fade" id="modalGenre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="form">
+
+						<label for="genreName">Nombre</label>
+						<input required type="text" name="genreName" id="genreName" class="form-control">
+						<br>
+
+						<div class="modal-footer">
+							<input type="hidden" name="idGenre" id="idGenre">
+							<input type="hidden" name="operation" id="operation" value="create">
+							<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
+						</div>
+
+					</form>
+				</div>
+
 			</div>
 		</div>
 	</div>
-	<div class="table-responsive">
-		<table id="myTable" class="table table-striped table-bordered table-admin">
-			<thead>
-				<tr>
-					<th class="table-header">Id</th>
-					<th class="table-header">Nombre</th>
-					<th class="table-header">Editar</th>
-					<th class="table-header">Eliminar</th>
-				</tr>
-			</thead>
-
-		</table>
-
-	</div>
-
-</div>
-
-<!-- Modal -->
-
-<div class="modal fade" id="modalGenre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+		<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="d-flex">
+				<div class="toast-body" id="toastBody">
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
 			</div>
-			<div class="modal-body">
-				<form id="form">
-
-					<label for="genreName">Nombre</label>
-					<input required type="text" name="genreName" id="genreName" class="form-control">
-					<br>
-
-					<div class="modal-footer">
-						<input type="hidden" name="idGenre" id="idGenre">
-						<input type="hidden" name="operation" id="operation" value="create">
-						<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
-					</div>
-
-				</form>
-			</div>
-
 		</div>
 	</div>
-</div>
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
-	<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-		<div class="d-flex">
-			<div class="toast-body" id="toastBody">
-			</div>
-			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-		</div>
-	</div>
-</div>
+</main>
 
 
 <script>
@@ -81,13 +83,13 @@
 				{
 					data: null,
 					render: function() {
-						return '<button class="btn btn-warning btn-edit" role="button">Editar</button>';
+						return '<button class="btn btn-standar btn-edit" role="button">Editar</button>';
 					}
 				},
 				{
 					data: null,
 					render: function() {
-						return '<button class="btn btn-outline-danger btn-delete" role="button">Eliminar</button>';
+						return '<button class="btn  btn-delete btn-delete-style" role="button">Eliminar</button>';
 					}
 				},
 			]

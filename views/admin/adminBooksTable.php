@@ -4,36 +4,38 @@
 /** @var string $genres */
 
 ?>
-<div class="container">
-	<div class="row">
-		<div class="col-2 offset-10">
-			<div class="text-center">
-				<button type="button" class="btn btn-standar w-100" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
-					Crear
-				</button>
+<main class="full-page p-4">
+	<div class="container  container-admin">
+		<div class="row">
+			<div class="col-2 offset-10">
+				<div class="text-center">
+					<button type="button" class="btn btn-standar-admin w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalBook" id="buttonCreate">
+						Crear
+					</button>
+				</div>
 			</div>
 		</div>
+		<div class="table-responsive">
+			<table id="myTable" class="table table-striped table-bordered table-admin">
+				<thead>
+					<tr>
+						<th class="table-header text-center">Id</th>
+						<th class="table-header text-center">Portada</th>
+						<th class="table-header text-center">Título</th>
+						<th class="table-header text-center">Sinopsis</th>
+						<th class="table-header text-center">Autor</th>
+						<th class="table-header text-center">Género</th>
+						<th class="table-header text-center">Editar</th>
+						<th class="table-header text-center">Eliminar</th>
+					</tr>
+				</thead>
+
+			</table>
+
+		</div>
+
 	</div>
-	<div class="table-responsive">
-		<table id="myTable" class="table table-striped table-bordered table-admin">
-			<thead>
-				<tr>
-					<th class="table-header">Id</th>
-					<th class="table-header">Portada</th>
-					<th class="table-header">Título</th>
-					<th class="table-header">Sinopsis</th>
-					<th class="table-header">Autor</th>
-					<th class="table-header">Género</th>
-					<th class="table-header">Editar</th>
-					<th class="table-header">Eliminar</th>
-				</tr>
-			</thead>
-
-		</table>
-
-	</div>
-
-</div>
+</main>
 
 <!-- Modal -->
 
@@ -124,13 +126,13 @@
 				{
 					data: null,
 					render: function() {
-						return '<button class="btn btn-warning btn-edit" role="button">Editar</button>';
+						return '<button class="btn btn-standar btn-edit" role="button">Editar</button>';
 					}
 				},
 				{
 					data: null,
 					render: function() {
-						return '<button class="btn btn-outline-danger btn-delete" role="button">Eliminar</button>';
+						return '<button class="btn btn-delete btn-delete-style" role="button">Eliminar</button>';
 					}
 				}
 			]

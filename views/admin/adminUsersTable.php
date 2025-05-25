@@ -1,65 +1,66 @@
-<div class="container container-admin">
-	<div class="table-responsive">
-		<table id="myTable" class="table table-striped table-bordered table-admin">
-			<thead>
-				<tr>
-					<th class="table-header">Id</th>
-					<!-- <th>Nombre</th> -->
-					<th class="table-header">Correo</th>
-					<!-- <th>Biografía</th> -->
-					<th class="table-header">Imagen</th>
-					<th class="table-header">Rol</th>
-					<th class="table-header">Editar</th>
-					<th class="table-header btn-delete">Eliminar</th>
-				</tr>
-			</thead>
+<main class="full-page p-4">
 
-		</table>
 
-	</div>
+	<div class="container container-admin">
+		<div class="table-responsive">
+			<table id="myTable" class="table table-striped table-bordered table-admin">
+				<thead>
+					<tr >
+						<th class="table-header text-center">Id</th>
+						<th class="table-header text-center">Correo</th>
+						<th class="table-header text-center">Imagen</th>
+						<th class="table-header text-center">Rol</th>
+						<th class="table-header text-center">Editar</th>
+						<th class="table-header text-center btn-delete">Eliminar</th>
+					</tr>
+				</thead>
 
-</div>
-
-<!-- Modal -->
-
-<div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Editar rol del usuario</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form id="form">
-					<label for="role">Selecciona el rol</label>
-					<select name="role" id="role" class="form-select">
-						<option value="1">Author</option>
-						<option value="2">Reader</option>
-						<option value="3">Admin</option>
-					</select>
-					<br>
-					<div class="modal-footer">
-						<input type="hidden" name="idUser" id="idUser">
-						<input type="hidden" name="operation" id="operation">
-						<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
-					</div>
-
-				</form>
-			</div>
+			</table>
 
 		</div>
+
 	</div>
-</div>
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
-	<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-		<div class="d-flex">
-			<div class="toast-body" id="toastBody">
+
+	<!-- Modal -->
+
+	<div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Editar rol del usuario</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="form">
+						<label for="role">Selecciona el rol</label>
+						<select name="role" id="role" class="form-select">
+							<option value="1">Author</option>
+							<option value="2">Reader</option>
+							<option value="3">Admin</option>
+						</select>
+						<br>
+						<div class="modal-footer">
+							<input type="hidden" name="idUser" id="idUser">
+							<input type="hidden" name="operation" id="operation">
+							<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
+						</div>
+
+					</form>
+				</div>
+
 			</div>
-			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
 		</div>
 	</div>
-</div>
-
+	<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
+		<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="d-flex">
+				<div class="toast-body" id="toastBody">
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+			</div>
+		</div>
+	</div>
+</main>
 
 <script>
 	$(document).ready(function() {

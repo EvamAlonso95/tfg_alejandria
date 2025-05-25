@@ -150,6 +150,7 @@ a.navbar-brand:hover {
 
 }
 
+
 .btn-standar:hover {
     background-color: var(--custom-btn-bg-hover-color);
     border: none;
@@ -157,8 +158,18 @@ a.navbar-brand:hover {
     font-weight: var(--font-weight-bold);
     color: var(--white-color);
 
-
 }
+
+.btn-standar-admin,
+.btn-standar-admin:hover {
+    background-color: var(--custom-btn-bg-hover-color);
+    border: none;
+    font-size: var(--btn-font-size);
+    font-weight: var(--font-weight-bold);
+    color: var(--white-color);
+}
+
+
 
 .btn-delete-style {
 
@@ -800,7 +811,7 @@ form .form-control:focus {
     list-style-type: none;
 }
 
-.book-card-recomended-h6{
+.book-card-recomended-h6 {
     font-weight: var(--font-weight-bold);
     color: var(--secondary-color);
 }
@@ -1162,11 +1173,12 @@ DATATABLE
 .container-admin {
     background-color: var(--custom-btn-bg-color);
     border-radius: var(--border-radius-medium);
+    text-align: center;
 }
 
-
-/* Botones dentro de tabla (no modifico clases como .btn-warning ni .btn-outline-danger para no romper Bootstrap) */
-
+.table-header{
+    text-align: center;
+}
 
 /* Modal personalizado */
 .modal-content {
