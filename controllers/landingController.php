@@ -12,4 +12,18 @@ class LandingController extends BaseController
 		$quote = Utils::obtenerFraseLiterariaAleatoria(); //TODO: obtener de bbdd
 		require_once 'views/landing/landing.php';
 	}
+
+	public function cookies()
+	{
+		$this->showFooter = false;
+		$this->showUserMenu = false;
+		require_once 'views/cookies.php';
+	}
+
+	public function privacyPolicy()
+	{
+		$this->showFooter = false;
+		$this->showUserMenu = false;
+		require_once 'views/privacy-policy.php';
+	}
 }
