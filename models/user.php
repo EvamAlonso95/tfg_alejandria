@@ -208,11 +208,9 @@ class User
 		if ($usuario) {
 			// Verificar la contraseña
 			if (password_verify($password, $usuario->password)) {
-
 				$result = $usuario;
 			}
 		}
-
 		return $result;
 	}
 

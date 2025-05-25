@@ -84,8 +84,6 @@ class Utils
 			"Aquel que tiene imaginación, con qué facilidad saca de la nada un mundo. — Gustavo Adolfo Bécquer",
 			"Las palabras son, en mi nada humilde opinión, nuestra fuente más inagotable de magia. — J.K. Rowling, Harry Potter",
 			"El que domina a los otros es fuerte; el que se domina a sí mismo es poderoso. — Lao-Tse",
-
-			// Brandon Sanderson
 			"La vida antes que la muerte, la fuerza antes que la debilidad, el viaje antes que el destino. — El Archivo de las Tormentas",
 			"A veces el poder no reside en lo que puedes hacer, sino en lo que decides no hacer. — Nacidos de la Bruma",
 			"No hay héroes que no tengan grietas; lo que importa es lo que hacen a pesar de ellas. — El Camino de los Reyes",

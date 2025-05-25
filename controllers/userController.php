@@ -58,8 +58,6 @@ class UserController extends BaseController
 	public function save()
 	{
 		if (isset($_POST)) {
-
-			// Si existe el post, será el valor de la variable, sino será false
 			$name = isset($_POST['username']) ? $_POST['username'] : false;
 			$email = isset($_POST['email']) ? $_POST['email'] : false;
 			$password = isset($_POST['password']) ? $_POST['password'] : false;
@@ -71,7 +69,6 @@ class UserController extends BaseController
 				Utils::redirect('user/register');
 			}
 
-			// Cada valor se le pasa al setter FALTARÍA LA VALIDACIÓN DEL PROYECTO ANTERIOR
 			if ($name  && $email && $password && $role) {
 				$user = new User();
 				$user->setName($name);
@@ -82,12 +79,9 @@ class UserController extends BaseController
 				$user->setBiography('');
 
 				$save = $user->save();
-				// var_dump($usuario);
-
 
 				if ($save) {
 					$_SESSION['register'] = "complete";
-					// Cookie o por GET
 					$_SESSION['email'] = $user->getEmail();
 					Utils::redirect('user/login');
 				} else {
@@ -116,12 +110,11 @@ class UserController extends BaseController
 		// Crear objeto usuario y setear credenciales
 		$user = new User();
 		$user->setEmail(trim($_POST['email']));
-		$user->setPassword($_POST['password']); // Asegúrate de que el modelo hashea la contraseña
+		$user->setPassword($_POST['password']); 
 
-		// Intentar login
+		
 		$identity = $user->login();
 
-		// Si el login falla
 		if (!$identity || !is_object($identity)) {
 			$_SESSION['error_login'] = 'Credenciales incorrectas';
 			Utils::redirect('user/login');
@@ -130,13 +123,12 @@ class UserController extends BaseController
 		// Limpiar sesiones anteriores
 		unset($_SESSION['admin'], $_SESSION['author'], $_SESSION['reader'], $_SESSION['role'], $_SESSION['error_login']);
 
-		// Guardar identidad del usuario
+		// Guardar el usuario
 		$_SESSION['identity'] = $identity;
 
 		$role = new Role();
-		// Obtener roles del usuario (asumo que getRoles() devuelve los roles del usuario logueado)
+		// Obtener roles del usuario 
 		$roles = $role->getRoles($identity->id); // Pasar el ID del usuario logueado
-
 		$user_id_role = $identity->id_role;
 
 		foreach ($roles as $rol) {
@@ -157,8 +149,6 @@ class UserController extends BaseController
 				}
 			}
 		}
-
-		// Redirigir al dashboard
 		Utils::redirect();
 	}
 

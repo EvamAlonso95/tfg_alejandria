@@ -140,7 +140,7 @@
 		}
 	});
 
-	// Validación personalizada para confirmar contraseña
+	
 	document.querySelector('form').addEventListener('submit', function(event) {
 		const password = document.getElementById('password').value;
 		const confirmPassword = document.getElementById('confirmPassword').value;
