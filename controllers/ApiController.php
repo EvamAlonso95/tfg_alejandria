@@ -51,15 +51,7 @@ class ApiController extends BaseController
 		}
 
 		$user = User::createById($_POST['idUser']);
-		// $user->setName($_POST['name']);
 		$user->setRole(intval($_POST['role']));
-
-		// Para no romper el método de User de edición, pues espera mas campos
-		$user->setName($user->getName());
-		$user->setEmail($user->getEmail());
-		$user->setBiography($user->getBiography());
-		$user->setProfileImage($user->getProfileImage());
-
 		$user->editUser();
 
 		echo json_encode(['success' => 'Se ha podido editar el usuario.']);
@@ -174,7 +166,8 @@ class ApiController extends BaseController
 
 		$authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
 		$genres = array_filter(array_map('trim', explode(',', $rawGenres)));
-
+		$book->cleanAuthors();
+		$book->cleanGenres();
 		foreach ($genres as $genre) {
 			$book->setGenre($genre);
 		}
@@ -295,6 +288,7 @@ class ApiController extends BaseController
 		}
 
 		$author->edit();
+		$this->restartQdrantLogic();
 		echo json_encode(['success' => 'Se ha podido editar el autor.']);
 		return;
 	}
@@ -361,6 +355,7 @@ class ApiController extends BaseController
 		$genre = Genre::createById($_POST['idGenre']);
 		$genre->setName($_POST['genreName']);
 		$genre->edit();
+		$this->restartQdrantLogic();
 		echo json_encode(['success' => 'Se ha podido editar el género.']);
 		return;
 	}

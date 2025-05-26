@@ -1176,7 +1176,7 @@ DATATABLE
     text-align: center;
 }
 
-.table-header{
+.table-header {
     text-align: center;
 }
 
@@ -1206,8 +1206,12 @@ DATATABLE
 .form-select {
 
     max-width: 300px;
+
 }
 
+.autocomplete-input {
+    z-index: 999999 !important;
+}
 
 
 

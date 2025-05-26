@@ -5,7 +5,7 @@
 		<div class="table-responsive">
 			<table id="myTable" class="table table-striped table-bordered table-admin">
 				<thead>
-					<tr >
+					<tr>
 						<th class="table-header text-center">Id</th>
 						<th class="table-header text-center">Correo</th>
 						<th class="table-header text-center">Imagen</th>
@@ -209,8 +209,7 @@
 
 			toastBody.html(message);
 
-			toastEl.removeClass('bg-success', 'bg-danger');
-			toastEl.addClass(isSuccess ? 'bg-success' : 'bg-danger');
+			toastEl.removeClass('bg-success bg-danger').addClass(isSuccess ? 'bg-success' : 'bg-danger');
 
 			const toast = new bootstrap.Toast(toastEl);
 			toast.show();

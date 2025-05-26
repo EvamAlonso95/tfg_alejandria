@@ -1,3 +1,4 @@
+<!-- TODO REVISAR COMPONENTE AÑADIR EL HTML -->
 <?php if (isset($_SESSION['toast'])): ?>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

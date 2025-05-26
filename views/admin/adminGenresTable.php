@@ -164,7 +164,7 @@
 				processData: false,
 				contentType: false,
 				success: function(response) {
-					$('#modalBook').modal('hide');
+					$('#modalGenre').modal('hide');
 					$('#myTable').DataTable().ajax.reload();
 					showToast('¡Género guardado correctamente!');
 				},

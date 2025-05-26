@@ -289,7 +289,11 @@
 					terms.push("");
 					this.value = terms.join(", ");
 					return false;
+				},
+				classes: {
+					"ui-autocomplete": "autocomplete-input"
 				}
-			});
+			})
+
 	}
 </script>

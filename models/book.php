@@ -102,6 +102,16 @@ class Book
 		$this->authors[] = $author;
 	}
 
+	public function cleanAuthors(){
+	
+		$this->authors = [];
+	}
+
+	public function cleanGenres(){
+	
+		$this->genres = [];
+	}
+
 	//GETTERS
 	public function getId(): ?int
 	{
