@@ -101,11 +101,9 @@ class QdrantLogic
 	private function getUserVector($userId)
 	{
 		$dictionary = $this->getDictionary();
-		// $vector = array_fill(0, count($dictionary), 0);
 		$userVector = null;
 		$count = 0;
 		$bookUsers = BookUser::getBooksByUserId($userId);
-
 
 		foreach ($bookUsers as $bookUser) {
 
@@ -114,23 +112,18 @@ class QdrantLogic
 				if ($userVector === null) {
 					$userVector = array_fill(0, count($bookVector), 0);
 				}
-				// var_dump($userVector);
 				foreach ($bookVector as $i => $value) {
-					// var_dump($i);
-					// var_dump($value);
 					$userVector[$i] += $value;
 				}
 				$count++;
 			}
 		}
-
 		// Promedio para crear el perfil del usuario
 		if ($count > 0 && $userVector) {
 			foreach ($userVector as $i => $value) {
 				$userVector[$i] = $value / $count;
 			}
 		}
-
 
 		return $userVector;
 	}
@@ -152,8 +145,6 @@ class QdrantLogic
 		$filter = [
 			'must_not' => $mustNot
 		];
-		// var_dump($userVector);
-		// var_dump($filter);
 		return $this->qdrantClient->search('books', $userVector, $limit, $filter);
 	}
 }

@@ -125,7 +125,6 @@ class Author
 		foreach ($dataBooks as $book) {
 			array_push($books, Book::createById($book->book_id));
 		}
-
 		return $books;
 	}
 

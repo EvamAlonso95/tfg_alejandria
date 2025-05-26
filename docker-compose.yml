@@ -10,3 +10,5 @@ services:
 networks:
   qdrant-network:
     driver: bridge
+
+
