@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2025 a las 10:27:12
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Servidor: mysql
+-- Tiempo de generación: 31-05-2025 a las 15:52:22
+-- Versión del servidor: 8.4.5
+-- Versión de PHP: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,9 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `tfg_alejandria`
+-- Base de datos: `alejandria`
 --
-USE alejandria;
+use `alejandria`;
 
 -- --------------------------------------------------------
 
@@ -29,11 +29,11 @@ USE alejandria;
 --
 
 CREATE TABLE `authors` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `biography` text NOT NULL,
-  `profile_img` varchar(255) NOT NULL,
-  `id_user` int(11) DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `biography` text COLLATE utf8mb4_general_ci NOT NULL,
+  `profile_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_user` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -154,10 +154,10 @@ INSERT INTO `authors` (`id`, `name`, `biography`, `profile_img`, `id_user`) VALU
 --
 
 CREATE TABLE `books` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `synopsis` varchar(255) NOT NULL,
-  `cover_img` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `synopsis` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `cover_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `title`, `synopsis`, `cover_img`) VALUES
-(1, 'El Cantar de Mio Cid', 'Poema épico castellano que narra las hazañas heroicas inspiradas libremente en los últimos años de la vida del caballero castellano Rodrigo Díaz de Vivar, el Cid Campeador.', 'uploads/books/book_6834c73d26b812.66632251.jpg'),
+(1, 'El Cantar de Mio Cid', 'Poema épico castellano que narra las hazañas heroicas inspiradas libremente en los últimos años de la vida del caballero castellano Rodrigo Díaz de Vivar, el Cid Campeador.', 'assets/img/default_book_cover.jpg'),
 (2, 'Beowulf', 'Poema épico anglosajón, la más antigua obra extensa de la literatura inglesa. Narra las hazañas del héroe Beowulf.', 'assets/img/default_book_cover.jpg'),
 (3, 'Las mil y una noches', 'Una célebre recopilación medieval en lengua árabe de cuentos tradicionales del Oriente Medio.', 'assets/img/default_book_cover.jpg'),
 (4, 'El Hobbit', 'Un hobbit llamado Bilbo Bolsón es arrastrado a una aventura inesperada por el mago Gandalf y una compañía de enanos.', 'assets/img/default_book_cover.jpg'),
@@ -489,9 +489,9 @@ INSERT INTO `books` (`id`, `title`, `synopsis`, `cover_img`) VALUES
 --
 
 CREATE TABLE `books_genres` (
-  `id` int(11) NOT NULL,
-  `id_book` int(11) NOT NULL,
-  `id_genre` int(11) NOT NULL
+  `id` int NOT NULL,
+  `id_book` int NOT NULL,
+  `id_genre` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1993,9 +1993,9 @@ INSERT INTO `books_genres` (`id`, `id_book`, `id_genre`) VALUES
 --
 
 CREATE TABLE `books_published` (
-  `id` int(11) NOT NULL,
-  `id_book` int(11) NOT NULL,
-  `id_author` int(11) NOT NULL
+  `id` int NOT NULL,
+  `id_book` int NOT NULL,
+  `id_author` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2326,10 +2326,10 @@ INSERT INTO `books_published` (`id`, `id_book`, `id_author`) VALUES
 --
 
 CREATE TABLE `books_users_saved` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_book` int(11) NOT NULL,
-  `status` varchar(50) NOT NULL
+  `id` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_book` int NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2466,8 +2466,8 @@ INSERT INTO `books_users_saved` (`id`, `id_user`, `id_book`, `status`) VALUES
 --
 
 CREATE TABLE `genres` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2610,12 +2610,12 @@ INSERT INTO `genres` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
+  `id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `content` text COLLATE utf8mb4_general_ci NOT NULL,
   `date` datetime NOT NULL,
-  `post_img` varchar(255) NOT NULL,
-  `id_author` int(11) NOT NULL
+  `post_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_author` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2680,8 +2680,8 @@ INSERT INTO `posts` (`id`, `title`, `content`, `date`, `post_img`, `id_author`) 
 --
 
 CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2700,13 +2700,13 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `biography` varchar(255) DEFAULT NULL,
-  `profile_img` varchar(255) DEFAULT NULL,
-  `id_role` int(11) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `biography` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `profile_img` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_role` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2726,12 +2726,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `biography`, `profile_im
 (10, 'Haruki Murakami', 'haruki.murakami@example.com', '$2y$04$BGrja0AnKLKcdCCoYL67LeozwMEBfmeQIxUIydx9QoL.wAJmEp5iW', '', 'uploads/images/default.jpg', 1),
 (11, 'Chimamanda Ngozi Adichie', 'autor@example.com', '$2y$04$DdiM84YeAZcK04RsUlRPeOwFYt5gIuvbz48ne1rCp5KRIXHywbIVm', '', 'uploads/images/default.jpg', 1),
 (12, 'Eva Alonso', 'evaalonso888@gmail.com', '$2y$04$zEpVS3aIdm9sa6V3TpcN1eaX5PAHc3RcogMd3eJTPDWhhG1dbQzyu', '', 'uploads/images/default.jpg', 2),
-(15, 'Prueba', 'correoPrueba@example.com', '$2y$04$hr0T40L9lvpGVIw6rbqzKu2nh8o2A6MdbGM/T7d/aGc.PvhM4apIO', '', 'uploads/images/default.jpg', 2),
-(16, 'Prueba-477f0006-acae-41fa-9c9a-87f47c7846fc', 'correoPrueba477f0006-acae-41fa-9c9a-87f47c7846fc@e', '$2y$04$bIZaWDRfLrKsY.DgJ.BJv..UG8c/rGnhEefJ5uLyHZI6D5qhkWGdW', '', 'uploads/images/default.jpg', 2),
-(17, 'Prueba-18bddc84-6a70-478e-99d7-dfba5b2ff690', 'correoPrueba18bddc84-6a70-478e-99d7-dfba5b2ff690@e', '$2y$04$oU0fwMaeiMYCuQMXCScvY.kVpWLzKpd0PnUwE..d6N25lMN5c0MK2', '', 'uploads/images/default.jpg', 2),
-(18, 'Prueba-9c65545a-ece5-4c0e-a00b-9ab002281158', 'correoPrueba9c65545a-ece5-4c0e-a00b-9ab002281158@e', '$2y$04$Y2VTe6FptbjYn2zb/0ExROo7UVOdmdI4DU8e9F7XNhQDi0Rr370ri', '', 'uploads/images/default.jpg', 2),
-(19, 'Prueba-253ec632-1d0b-4536-8fa8-fe1d00900606', 'correoPrueba253ec632-1d0b-4536-8fa8-fe1d00900606@e', '$2y$04$xIvsYaeK9WOwY3lt2o8VJ.aicITOjvAwlUimP5Rygb3.DciKXO.nm', '', 'uploads/images/default.jpg', 2),
-(20, 'Prueba-70962795-ed48-4e38-a6a0-7dbf9f79ce55', 'correoPrueba70962795-ed48-4e38-a6a0-7dbf9f79ce55@e', '$2y$04$.bVyTStPBvXJ0qJVCP8Lfe/9RaMd4bbzWdcXOKTY6I.871exC5OjW', '', 'uploads/images/default.jpg', 2);
+(15, 'Prueba', 'correoPrueba@example.com', '$2y$04$hr0T40L9lvpGVIw6rbqzKu2nh8o2A6MdbGM/T7d/aGc.PvhM4apIO', '', 'uploads/images/default.jpg', 2);
 
 --
 -- Índices para tablas volcadas
@@ -2808,55 +2803,55 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT de la tabla `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT de la tabla `books_genres`
 --
 ALTER TABLE `books_genres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1533;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1534;
 
 --
 -- AUTO_INCREMENT de la tabla `books_published`
 --
 ALTER TABLE `books_published`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=362;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
 -- AUTO_INCREMENT de la tabla `books_users_saved`
 --
 ALTER TABLE `books_users_saved`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT de la tabla `genres`
 --
 ALTER TABLE `genres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Restricciones para tablas volcadas
