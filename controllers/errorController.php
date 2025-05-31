@@ -10,15 +10,15 @@ class ErrorController extends BaseController
 
 	public function notFound()
 	{
-		$this->showFooter = false;
+		$this->showFooter = true;
 		$this->showUserMenu = false;
 		http_response_code(404);
-		require_once 'views/error404.php';
+		require_once 'views/errorPage.php';
 	}
 
 	public function forbidden()
 	{
-		$this->showFooter = false;
+		$this->showFooter = true;
 		$this->showUserMenu = false;
 		http_response_code(403);
 		require_once 'views/forbiddenPage.php';

@@ -57,45 +57,42 @@ class UserController extends BaseController
 	// Método para guardar el usuario
 	public function save()
 	{
-		if (isset($_POST)) {
-			$name = isset($_POST['username']) ? $_POST['username'] : false;
-			$email = isset($_POST['email']) ? $_POST['email'] : false;
-			$password = isset($_POST['password']) ? $_POST['password'] : false;
-			$confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : false;
-			$role = isset($_POST['role']) ? $_POST['role'] : false;
-
-			if ($password != $confirmPassword) {
-				$_SESSION['error_password'] = "Error, las contraseñas no coinciden";
-				Utils::redirect('user/register');
-			}
-
-			if ($name  && $email && $password && $role) {
-				$user = new User();
-				$user->setName($name);
-				$user->setEmail($email);
-				$user->setPassword($password);
-				$user->setRole($role);
-				$user->setProfileImage('uploads/images/default.jpg'); // Imagen por defecto
-				$user->setBiography('');
-
-				$save = $user->save();
-
-				if ($save) {
-					$_SESSION['register'] = "complete";
-					$_SESSION['email'] = $user->getEmail();
-					Utils::redirect('user/login');
-				} else {
-					$_SESSION['register'] = "failed";
-				}
-			} else {
-				$_SESSION['register'] = "failed";
-			}
-		} else {
+		if (!isset($_POST)) {
 			$_SESSION['register'] = "failed";
-			// Control de errores 
+			return Utils::redirect('user/register');
 		}
-		Utils::redirect('user/register');
+
+		$name = $_POST['username'] ?? false;
+		$email = $_POST['email'] ?? false;
+		$password = $_POST['password'] ?? false;
+		$confirmPassword = $_POST['confirmPassword'] ?? false;
+		$role = $_POST['role'] ?? false;
+
+		if ($password !== $confirmPassword) {
+			$_SESSION['error_password'] = "Error, las contraseñas no coinciden";
+			return Utils::redirect('user/register');
+		}
+
+		if ($name && $email && $password && $role) {
+			$user = new User();
+			$user->setName($name);
+			$user->setEmail($email);
+			$user->setPassword($password);
+			$user->setRole($role);
+			$user->setProfileImage('uploads/images/default.jpg');
+			$user->setBiography('');
+
+			if ($user->save()) {
+				$_SESSION['register'] = "complete";
+				$_SESSION['email'] = $user->getEmail();
+				return Utils::redirect('user/login');
+			}
+		}
+
+		$_SESSION['register'] = "failed";
+		return Utils::redirect('user/register');
 	}
+
 
 	// Método para logear al usuario
 	public function loginUser()
@@ -110,9 +107,9 @@ class UserController extends BaseController
 		// Crear objeto usuario y setear credenciales
 		$user = new User();
 		$user->setEmail(trim($_POST['email']));
-		$user->setPassword($_POST['password']); 
+		$user->setPassword($_POST['password']);
 
-		
+
 		$identity = $user->login();
 
 		if (!$identity || !is_object($identity)) {

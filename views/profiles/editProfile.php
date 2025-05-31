@@ -18,7 +18,7 @@ require_once 'views/layout/head.php'; ?>
 					</div>
 				</div>
 				<div class="col-md-8 d-flex align-items-center">
-					<input type="file" class="form-control" name="profileImg">
+					<input type="file" class="form-control" name="profileImg" accept="image/*">
 				</div>
 			</div>
 

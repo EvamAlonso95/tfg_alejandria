@@ -50,7 +50,7 @@
 				<form id="form">
 
 					<label for="cover">Archivo de portada:</label>
-					<input required type="file" name="cover" id="cover" class="form-control">
+					<input required type="file" name="cover" id="cover" accept="image/*" class="form-control">
 					<span id="uploadImage"></span>
 					<br>
 					<label for="title">Título</label>
@@ -81,16 +81,8 @@
 		</div>
 	</div>
 </div>
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
-	<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-		<div class="d-flex">
-			<div class="toast-body" id="toastBody">
-			</div>
-			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-		</div>
-	</div>
-</div>
 
+<?php require_once 'views/components/spinner.php'; ?>
 
 <script>
 	const availableAuthors = <?= $authors ?>;
@@ -165,6 +157,8 @@
 			const rowData = table.row($(this).closest('tr')).data();
 
 			if (confirm("¿Estás seguro de que deseas eliminar este libro?")) {
+				$('#spinner').removeClass('d-none');
+				$('body').css('overflow', 'hidden');
 				$.ajax({
 					url: "<?= BASE_URL ?>api/deleteBook",
 					type: 'POST',
@@ -181,6 +175,10 @@
 							msg += response.responseJSON.error;
 						}
 						showToast(msg, false);
+					},
+					complete: function() {
+						$('body').css('overflow', 'auto');
+						$('#spinner').addClass('d-none');
 					}
 				});
 			}
@@ -204,6 +202,8 @@
 			formData.append('authors', $('#authors').val());
 			formData.append('genres', $('#genres').val());
 			formData.append('cover', $('#cover')[0].files[0]);
+			$('#spinner').removeClass('d-none');
+			$('body').css('overflow', 'hidden');
 			// TODO añadir un spinner mientras se envia el formulario
 			$.ajax({
 				url: url,
@@ -222,6 +222,10 @@
 						msg += response.responseJSON.error;
 					}
 					showToast(msg, false);
+				},
+				complete: function() {
+					$('body').css('overflow', 'auto');
+					$('#spinner').addClass('d-none');
 				}
 			});
 
@@ -240,17 +244,6 @@
 			$('#exampleModalLabel').text('Crear Libro');
 
 		});
-
-		// Toast reusable
-		function showToast(message, isSuccess = true) {
-			const toastEl = $('#toastNotification');
-			const toastBody = $('#toastBody');
-
-			toastBody.html(message);
-			toastEl.removeClass('bg-success bg-danger').addClass(isSuccess ? 'bg-success' : 'bg-danger');
-			new bootstrap.Toast(toastEl).show();
-		}
-
 
 		setupAutocomplete("#authors", availableAuthors);
 		setupAutocomplete("#genres", availableGenres);

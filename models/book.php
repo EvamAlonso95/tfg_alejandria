@@ -25,6 +25,9 @@ class Book
 		$stmt->execute([':id' => $id]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
 
+		if (!$data) {
+			throw new Exception("Libro no encontrado con ID: $id");
+		}
 		// Obtenemos los géneros y autores del libro
 		$book = new self();
 		$book->setId($data->book_id);
@@ -102,13 +105,15 @@ class Book
 		$this->authors[] = $author;
 	}
 
-	public function cleanAuthors(){
-	
+	public function cleanAuthors()
+	{
+
 		$this->authors = [];
 	}
 
-	public function cleanGenres(){
-	
+	public function cleanGenres()
+	{
+
 		$this->genres = [];
 	}
 

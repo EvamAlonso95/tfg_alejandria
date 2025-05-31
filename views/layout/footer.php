@@ -14,9 +14,10 @@
 	endif;
 	?>
 
+ <?php require_once 'views/components/toast.php'; ?>
 
  <script src="<?= BASE_URL ?>assets/js/bootstrap.bundle.min.js"></script>
-
+ <script src="<?= BASE_URL ?>/assets/js/toastMessage.js"></script>
  </body>
 
  </html>

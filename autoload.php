@@ -19,18 +19,18 @@
  */
 function controller_autoload($classname)
 {
-    $file = 'controllers/' . $classname . '.php';
-    if (file_exists($file)) {
-        include $file;
-    }
+	$file = './controllers/' . $classname . '.php';
+	if (file_exists($file)) {
+		include $file;
+	}
 }
 
 function model_autoload($classname)
 {
-    $file = 'models/' . $classname . '.php';
-    if (file_exists($file)) {
-        include $file;
-    }
+	$file = './models/' . $classname . '.php';
+	if (file_exists($file)) {
+		include $file;
+	}
 }
 
 spl_autoload_register('model_autoload');

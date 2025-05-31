@@ -102,4 +102,7 @@
 
 </main>
 
+<script>
+	const toastData = <?= json_encode($toastData) ?>;
+</script>
 <?php require_once 'views/layout/footer.php'; ?>

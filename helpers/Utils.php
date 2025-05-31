@@ -27,7 +27,7 @@ class Utils
 	}
 
 	// Si no hay una sesión iniciada como admin, redirige a la página de login
-	public static function  isAdmin()
+	public static function isAdmin()
 	{
 		if (Utils::isLogged() && $_SESSION['identity']->id_role == 3) {
 			return true;
@@ -92,5 +92,22 @@ class Utils
 		];
 
 		return $frases[array_rand($frases)];
+	}
+
+	public static function setToast($message, $isSuccess = true)
+	{
+		$_SESSION['toast'] = [
+			'message' => $message,
+			'isSuccess' => $isSuccess
+		];
+	}
+
+	public static function getToast(): array
+	{
+		$data = $_SESSION['toast'] ?? [];
+		if (isset($data['message'])) {
+			unset($_SESSION['toast']);
+		}
+		return $data;
 	}
 }

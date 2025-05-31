@@ -20,7 +20,7 @@ require_once 'views/layout/head.php'; ?>
 					<div class="border p-3 bg-light h-100">
 						<!-- Imagen -->
 						<div class="mb-3">
-							<input type="file" class="form-control" name="cover_img" id="cover_img">
+							<input type="file" class="form-control" accept="image/*" name="cover_img" id="cover_img">
 							<small class="text-muted ms-1">Sube una imagen para tu post (opcional)</small>
 						</div>
 						<!-- Título -->
@@ -44,18 +44,10 @@ require_once 'views/layout/head.php'; ?>
 	<!-- TODO REVISAR EL BOTON Y EL SCRIPT -->
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 </main>
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
-	<div id="toastNotification" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
-		<div class="d-flex">
-			<div class="toast-body" id="toastBody">
-				<!-- Aquí va el mensaje -->
-			</div>
-			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-		</div>
-	</div>
-</div>
-
+<script>
+	const toastData = <?= json_encode($toastData) ?>;
+</script>
 <?php
 require_once 'views/components/scrollUp.php';
+
 require_once 'views/layout/footer.php';
-require_once 'views/components/toastDeletePost.php';

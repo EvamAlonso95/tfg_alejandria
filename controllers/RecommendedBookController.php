@@ -10,12 +10,12 @@ class RecommendedBookController extends BaseController
 		$qdrantRecomendations = $qdrant->getRecommendationsBooksId($_SESSION['identity']->id);
 		/** @var Book[] $booksRecommended */
 		$booksRecommended = [];
-		if(!empty($qdrantRecomendations)){
+		if (!empty($qdrantRecomendations)) {
 			foreach ($qdrantRecomendations['result'] as $recomendation) {
 				array_push($booksRecommended, Book::createById($recomendation['id']));
 			}
 		}
-	
+
 		require_once 'views/recommendedBook/recommended.php';
 	}
 }

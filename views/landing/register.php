@@ -113,46 +113,5 @@
 
 </main>
 
-<script>
-	// Función para mostrar/ocultar contraseña
-	document.getElementById('togglePassword').addEventListener('click', function() {
-		const passwordInput = document.getElementById('password');
-		const icon = this.querySelector('i');
-		if (passwordInput.type === 'password') {
-			passwordInput.type = 'text';
-			icon.classList.replace('bi-eye', 'bi-eye-slash');
-		} else {
-			passwordInput.type = 'password';
-			icon.classList.replace('bi-eye-slash', 'bi-eye');
-		}
-	});
-
-	// Función para mostrar/ocultar confirmación de contraseña
-	document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-		const confirmPasswordInput = document.getElementById('confirmPassword');
-		const icon = this.querySelector('i');
-		if (confirmPasswordInput.type === 'password') {
-			confirmPasswordInput.type = 'text';
-			icon.classList.replace('bi-eye', 'bi-eye-slash');
-		} else {
-			confirmPasswordInput.type = 'password';
-			icon.classList.replace('bi-eye-slash', 'bi-eye');
-		}
-	});
-
-	
-	document.querySelector('form').addEventListener('submit', function(event) {
-		const password = document.getElementById('password').value;
-		const confirmPassword = document.getElementById('confirmPassword').value;
-
-		if (password !== confirmPassword) {
-			document.getElementById('confirmPassword').classList.add('is-invalid');
-			event.preventDefault();
-			event.stopPropagation();
-		}
-
-		this.classList.add('was-validated');
-	});
-</script>
 
 <?php require_once './views/layout/footer.php' ?>

@@ -9,19 +9,18 @@
  */
 
 // Carga automática de clases de controladores
-require_once 'autoload.php';
+require_once './autoload.php';
 
 // Carga de parámetros globales de configuración
-require_once 'config/parameters.php';
+require_once './config/parameters.php';
 
 // Conexión a la base de datos
-require_once 'config/db.php';
+require_once './config/db.php';
 
 // Funciones auxiliares (helpers)
-require_once 'helpers/Utils.php';
-require_once 'qdrant/QdrantClient.php';
-require_once 'qdrant/QdrantLogic.php';
-
+require_once './helpers/Utils.php';
+require_once './qdrant/QdrantClient.php';
+require_once './qdrant/QdrantLogic.php';
 
 
 // Inicia la sesión para poder manejar información persistente entre peticiones

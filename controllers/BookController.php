@@ -3,6 +3,7 @@
 class BookController extends BaseController
 {
 
+
 	private function _checkBookId()
 	{
 		if (empty($_GET['bookId'])) {
@@ -14,7 +15,14 @@ class BookController extends BaseController
 	{
 		$this->_checkLogged();
 		$this->_checkBookId();
-		$book = Book::createById($_GET['bookId']);
+
+		try {
+			$book = Book::createById($_GET['bookId']);
+		} catch (Exception $e) {
+
+			Utils::setToast('Libro no encontrado', false);
+			Utils::redirect('error/notFound');
+		}
 		$client = new QdrantClient();
 		$vector = $client->getVectorId('books', $book->getId());
 		$filter = [
@@ -34,7 +42,6 @@ class BookController extends BaseController
 		if (BookUser::userHadBook($_SESSION['identity']->id, $book->getId())) {
 			$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $book->getId());
 		}
-
 		require_once 'views/book/bookInfo.php';
 	}
 
@@ -50,6 +57,7 @@ class BookController extends BaseController
 		$bookUser->save();
 
 		$referer = $_SERVER['HTTP_REFERER'] ?? '';
+		Utils::setToast('Libro añadido a tu biblioteca');
 
 		if (strpos($referer, '/recommendedBook') !== false) {
 			Utils::redirectReferer();
@@ -67,6 +75,7 @@ class BookController extends BaseController
 
 		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id,  $_GET['bookId']);
 		$bookUser->remove();
+		Utils::setToast('Libro eliminado de la biblioteca');
 		Utils::redirect('/book?bookId=' . $_GET['bookId']);
 	}
 
@@ -83,12 +92,11 @@ class BookController extends BaseController
 
 		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $_POST['bookId']);
 		$bookUser->setStatus($_POST['status']);
-		var_dump($bookUser->getStatus());
-		var_dump($bookUser->getUser()->getId());
-		var_dump($bookUser->getBook()->getId());
+
 
 
 		$bookUser->updateStatus();
+		Utils::setToast('Estado del libro actualizado');
 		Utils::redirect('/book?bookId=' . $_POST['bookId']);
 	}
 }

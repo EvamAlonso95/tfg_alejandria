@@ -145,8 +145,7 @@ class User
 			$this->id = Database::getInstance()->lastInsertId();
 			return true;
 		} catch (InvalidArgumentException $e) {
-			// Captura específicamente errores de validación
-			$_SESSION['register'] = "failed";
+
 			error_log("Error de validación: " . $e->getMessage());
 			return false;
 		} catch (PDOException $e) {
@@ -177,12 +176,16 @@ class User
 			$_SESSION['register'] = "failed";
 			throw new InvalidArgumentException("Los campos no pueden estar vacíos");
 		}
-
 		if ($this->emailExists()) {
 			$_SESSION['register'] = "failed";
 			throw new InvalidArgumentException("El email ya existe");
 		}
+		if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/', $this->password)) {
+			$_SESSION['register'] = "failed";
+			throw new InvalidArgumentException("La contraseña debe tener al menos 8 caracteres, incluir letras, números y un símbolo");
+		}
 	}
+
 
 	// Método para verificar la contraseña
 	public function verifyPassword(string $password): bool

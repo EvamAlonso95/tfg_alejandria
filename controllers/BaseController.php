@@ -5,6 +5,12 @@ abstract class BaseController
 	public $showHeader = true;
 	public $showUserMenu = true;
 	public $title = 'Alejandria';
+	public $toastData;
+
+	public function __construct()
+	{
+		$this->toastData = Utils::getToast();
+	}
 
 	protected function _checkLogged()
 	{
@@ -23,7 +29,7 @@ abstract class BaseController
 	protected function _checkAdmin()
 	{
 		if (!Utils::isAdmin()) {
-			Utils::redirect();
+			Utils::redirect('error/forbidden');
 		}
 	}
 }

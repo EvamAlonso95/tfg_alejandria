@@ -20,47 +20,38 @@
 		</div>
 
 	</div>
-
-	<!-- Modal -->
-
-	<div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Editar rol del usuario</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form id="form">
-						<label for="role">Selecciona el rol</label>
-						<select name="role" id="role" class="form-select">
-							<option value="1">Author</option>
-							<option value="2">Reader</option>
-							<option value="3">Admin</option>
-						</select>
-						<br>
-						<div class="modal-footer">
-							<input type="hidden" name="idUser" id="idUser">
-							<input type="hidden" name="operation" id="operation">
-							<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
-						</div>
-
-					</form>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	<div class="position-fixed top-0 end-0 p-3" style="z-index: 1100">
-		<div id="toastNotification" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="d-flex">
-				<div class="toast-body" id="toastBody">
-				</div>
-				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-			</div>
-		</div>
-	</div>
 </main>
+<!-- Modal -->
+
+<div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Editar rol del usuario</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form">
+					<label for="role">Selecciona el rol</label>
+					<select name="role" id="role" class="form-select">
+						<option value="1">Author</option>
+						<option value="2">Reader</option>
+						<option value="3">Admin</option>
+					</select>
+					<br>
+					<div class="modal-footer">
+						<input type="hidden" name="idUser" id="idUser">
+						<input type="hidden" name="operation" id="operation">
+						<input type="submit" name="action" id="action" class="btn btn-standar" value="Crear">
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+<?php require_once 'views/components/spinner.php'; ?>
 
 <script>
 	$(document).ready(function() {
@@ -142,6 +133,8 @@
 
 			// Confirmar eliminación
 			if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+				$('#spinner').removeClass('d-none');
+				$('body').css('overflow', 'hidden');
 				$.ajax({
 					url: "<?= BASE_URL ?>api/deleteUser",
 					type: 'POST',
@@ -160,7 +153,6 @@
 			}
 		});
 
-
 		// Enviar formulario por AJAX
 		$('#form').on('submit', function(e) {
 			e.preventDefault();
@@ -175,12 +167,10 @@
 			// Modificar el valor de la acción según la operación
 			const url = isEdit ?
 				"<?= BASE_URL ?>api/editUser" :
-				"<?= BASE_URL ?>api/save";
+				"<?= BASE_URL ?>api/saveBook";
 
-
-
-
-
+			$('#spinner').removeClass('d-none');
+			$('body').css('overflow', 'hidden');
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -196,24 +186,12 @@
 				error: function(xhr, status, error) {
 					console.error('Error al guardar:', error);
 					showToast('Ocurrió un error al guardar. Intenta de nuevo.', false);
+				},
+				complete: function() {
+					$('body').css('overflow', 'auto');
+					$('#spinner').addClass('d-none');
 				}
 			});
-
-
 		});
-
-		// Mostrar toast
-		function showToast(message, isSuccess = true) {
-			const toastEl = $('#toastNotification');
-			const toastBody = $('#toastBody');
-
-			toastBody.html(message);
-
-			toastEl.removeClass('bg-success bg-danger').addClass(isSuccess ? 'bg-success' : 'bg-danger');
-
-			const toast = new bootstrap.Toast(toastEl);
-			toast.show();
-		}
-
 	});
 </script>

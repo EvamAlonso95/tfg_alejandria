@@ -76,29 +76,23 @@ class PostController extends BaseController
 
 		// Guardar en la base de datos
 		$post->createPost();
+		Utils::setToast('Publicación creada correctamente');
 		Utils::redirect('post');
 	}
 
 	public function delete()
 	{
-		$_SESSION['toast'] = [
-			'message' => 'Error al eliminar la publicación',
-			'isSuccess' => false
-		];
 		$this->_checkLogged();
 		$this->_checkAuthor();
 		if (!isset($_POST['post_id'])) {
+			Utils::setToast('Error al eliminar la publicación', false);
 			Utils::redirect('post');
 		}
 
 		$post = Post::createById($_POST['post_id']);
 		$this->_checkIsAuthorPost($post);
 		$post->deletePost();
-		$_SESSION['toast'] = [
-			'message' => 'Publicación eliminada con éxito',
-			'isSuccess' => true
-		];
-
+		Utils::setToast('Publicación eliminada con éxito');
 		Utils::redirect('post');
 	}
 }
