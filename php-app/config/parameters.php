@@ -13,7 +13,7 @@
  * Se utiliza como raíz para generar rutas absolutas dentro de la aplicación.
  * Asegúrate de cambiar este valor cuando subas el proyecto a un servidor diferente.
  */
-define("BASE_URL", "http://localhost/alejandria/");
+define("BASE_URL", "http://localhost/");
 
 /**
  * Controlador por defecto

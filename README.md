@@ -1,6 +1,13 @@
 # Alejandria
 
+
 ## Cómo levantar el proyecto
+
+Clona el proyecto con:
+
+```
+git clone https://github.com/EvamAlonso95/tfg_alejandria.git
+```
 
 Para levantar todos los servicios del proyecto (PHP, MySQL, Qdrant, phpMyAdmin, etc.) usa el siguiente comando:
 

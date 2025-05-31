@@ -1,7 +1,7 @@
 <?php
 class QdrantClient
 {
-    private $host = 'localhost:6333';
+	private $host = 'qdrant:6333';
 
 	public function createCollection($collectionName, $vectorSize)
 	{
