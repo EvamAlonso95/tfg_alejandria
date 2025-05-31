@@ -4,3 +4,4 @@ views/layout/header_old.php
 uploads/
 
 qdrant-data/
+e2e/node_modules/
