@@ -1,16 +1,20 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
+import { login } from "./utils";
 
-test('recommendedBook', async ({ page }) => {
-  await page.goto('http://localhost/user/login');
+test("booksRecommended", async ({ page }) => {
+  await login("correoPrueba@example.com", "12345678+a", page);
 
+  await page.goto("http://localhost/book?bookId=250");
+  await page.getByRole("link", { name: "Añadir a la biblioteca" }).click();
+  await page.goto("http://localhost/recommendedBook");
+  await page.getByRole("heading", { name: "Matilda" }).click();
+  await page.locator("a:nth-child(2)").first().click();
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
 
-  await page.getByRole('textbox', { name: 'Correo electrónico' }).click();
-  await page.getByRole('textbox', { name: 'Correo electrónico' }).fill('correoPrueba@example.com');
-  await page.getByRole('textbox', { name: 'Contraseña' }).click();
-  await page.getByRole('textbox', { name: 'Contraseña' }).fill('12345678+a');
-  await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-  await page.getByRole('link', { name: 'Descubre más lecturas' }).click();
-  await page.locator('a:nth-child(2)').first().click();
-  await page.getByText('Libro añadido a tu biblioteca').click();
+  await page.goto("http://localhost/book?bookId=248");
+  await expect(page.getByRole("combobox")).toHaveValue("want to read");
+  await page.click(".btn-delete-style");
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
 });
-

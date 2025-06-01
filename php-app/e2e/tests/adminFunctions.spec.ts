@@ -1,17 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { login } from "./utils";
 
 test("user", async ({ page }) => {
-  await page.goto("http://localhost/");
-  await page.getByRole("button", { name: "Foto de perfil" }).click();
-  await page.getByRole("link", { name: "Iniciar sesión" }).click();
-  await page.getByRole("textbox", { name: "Correo electrónico" }).click();
-  await page
-    .getByRole("textbox", { name: "Correo electrónico" })
-    .fill("admin@admin.es");
-  await page.getByRole("textbox", { name: "Contraseña" }).click();
-  await page.getByRole("textbox", { name: "Contraseña" }).fill("alejandria25+");
-  await page.getByRole("button", { name: "Iniciar sesión" }).click();
-  await page.getByRole("button", { name: "Foto de perfil" }).click();
+   await login("admin@admin.es", "alejandria25+", page);
+	 page.goto("http://localhost/admin/");
+
   await page.getByRole("link", { name: "Panel de administración" }).click();
   await page
     .getByRole("row", { name: "2 mariana.rios89@example.com" })
@@ -28,19 +21,8 @@ test("user", async ({ page }) => {
 });
 
 test("genres", async ({ page }) => {
-  await page.goto("http://localhost/");
-  await page.getByRole("button", { name: "Foto de perfil" }).click();
-  await page.getByRole("link", { name: "Iniciar sesión" }).click();
-
-  await page
-    .getByRole("textbox", { name: "Correo electrónico" })
-    .fill("admin@admin.es");
-  await page.getByRole("textbox", { name: "Contraseña" }).fill("alejandria25+");
-  await page.getByRole("button", { name: "Iniciar sesión" }).click();
-
-  await page.getByRole("button", { name: "Foto de perfil" }).click();
-  await page.getByRole("link", { name: "Panel de administración" }).click();
-  await page.getByRole("link", { name: "Géneros" }).click();
+  await login("admin@admin.es", "alejandria25+", page);
+  page.goto("http://localhost/admin/genres");
 
   // Crear género
   await page.getByRole("button", { name: "Crear" }).click();
@@ -76,11 +58,7 @@ test("genres", async ({ page }) => {
 });
 
 test("books", async ({ page }) => {
-  await page.goto("http://localhost/user/login");
-  await page.getByRole("textbox", { name: "Correo electrónico" })
-    .fill("admin@admin.es");
-  await page.getByRole("textbox", { name: "Contraseña" }).fill("alejandria25+");
-  await page.getByRole("button", { name: "Iniciar sesión" }).click();
+  await login("admin@admin.es", "alejandria25+", page);
   await page.goto("http://localhost/admin/books");
 
   await page.getByRole('button', { name: 'Crear' }).click();
