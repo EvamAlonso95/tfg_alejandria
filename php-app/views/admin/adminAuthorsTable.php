@@ -17,7 +17,6 @@
 						<th class="table-header text-center">Nombre</th>
 						<th class="table-header text-center">Biografía</th>
 						<th class="table-header text-center">Imagen perfil</th>
-						<th class="table-header text-center">Nombre de usuario</th>
 						<th class="table-header text-center">Editar</th>
 						<th class="table-header text-center">Eliminar</th>
 					</tr>
@@ -52,11 +51,6 @@
 					<input type="file" name="profileImage" id="profileImage" accept="image/*" class="form-control">
 					<span id="uploadImage"></span>
 					<br>
-
-					<label for="userName">Nombre Usuario</label>
-					<input type="text" name="userName" id="userName" class="form-control">
-					<br>
-
 					<div class="modal-footer">
 						<input type="hidden" name="idAuthor" id="idAuthor">
 						<input type="hidden" name="operation" id="operation" value="create">
@@ -93,12 +87,7 @@
 						return '<img src="' + data + '" alt="Imagen perfil del autor" width="50">';
 					}
 				},
-				{
-					data: 'userName',
-					render: function(data, type, row) {
-						return data ? data : 'Autor sin nombre de usuario';
-					}
-				},
+
 				{
 					data: null,
 					render: function() {

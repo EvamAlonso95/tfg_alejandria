@@ -7,7 +7,7 @@
  <!-- Sección de pestañas -->
  <div class="mt-5 container-fluid">
  	<!-- Tabs con scroll horizontal en pantallas pequeñas -->
- 	<ul class="nav nav-tabs custom-tabs d-flex flex-nowrap overflow-auto text-center" id="tabsLectura" role="tablist">
+ 	<ul class="nav nav-tabs custom-tabs d-flex flex-nowrap text-center" id="tabsLectura" role="tablist">
  		<li class="nav-item" role="presentation">
  			<button class="nav-link active custom-link" id="leyendo-tab" data-bs-toggle="tab" data-bs-target="#leyendo" type="button" role="tab"> Leyendo</button>
  		</li>
