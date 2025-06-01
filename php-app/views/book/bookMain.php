@@ -5,6 +5,7 @@
  * @var Book[] $recommendedBooks
  * @var BookUser|null $bookUser
  */
+
 ?>
 <?php require_once 'views/layout/head.php'; ?>
 
@@ -69,9 +70,11 @@
 										<div class="row g-2 align-items-stretch">
 											<div class="col-12 col-md-6">
 												<select name="status" class="form-select w-100 h-100">
-													<option value="want to read" <?= $status === 'want to read' ? 'selected' : '' ?>>Quiero leer</option>
-													<option value="reading" <?= $status === 'reading' ? 'selected' : '' ?>>Leyendo</option>
-													<option value="read" <?= $status === 'read' ? 'selected' : '' ?>>Finalizado</option>
+													<option value="want to read" <?= $status === BookUserStatus::wantToRead ? 'selected' : '' ?>>Quiero leer</option>
+													<option value="reading" <?= $status === BookUserStatus::reading ? 'selected' : '' ?>>Leyendo</option>
+													<option value="read" <?= $status === BookUserStatus::read ? 'selected' : '' ?>>Finalizado</option>
+													<option value="discarded" <?= $status === BookUserStatus::discarded ? 'selected' : '' ?>>Descartado</option>
+
 												</select>
 											</div>
 											<div class="col-12 col-md-6">

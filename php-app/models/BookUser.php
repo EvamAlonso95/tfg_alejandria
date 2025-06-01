@@ -48,7 +48,7 @@ class BookUser
 	/**
 	 * @return BookUser
 	 */
-	public static function createByBookId(int $id): self
+	public static function createByBookUserId(int $id): self
 	{
 		$bookUser = new self();
 
@@ -56,17 +56,16 @@ class BookUser
 			"SELECT 
                  *
              FROM books_users_saved 
-             WHERE books_users_saved.id_book = :id"
+             WHERE books_users_saved.id= :id"
 		);
 		$stmt->execute([':id' => $id]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
 		if (!$data) {
 			throw new Exception("BookUser no encontrado con ID: $id");
 		}
-		$bookUser->setBook(Book::createById($id));
+		$bookUser->setBook(Book::createById($data->id_book));
 		$bookUser->setUser(User::createById($data->id_user));
 		$bookUser->setBookUserId($data->id);
-
 		$bookUser->setStatus(BookUserStatus::from($data->status));
 		return $bookUser;
 	}
@@ -79,8 +78,7 @@ class BookUser
 		$temp = Database::getInstance();
 		$stmt = $temp->prepare(
 			"SELECT 
-                 books.id AS book_id,
-                 books_users_saved.status
+                 	books_users_saved.id AS id
              FROM books 
              JOIN books_users_saved ON books.id = books_users_saved.id_book
              WHERE books_users_saved.id_user = :user_id"
@@ -90,7 +88,7 @@ class BookUser
 		$dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$books = [];
 		foreach ($dataBooks as $book) {
-			array_push($books, self::createByBookId($book->book_id));
+			array_push($books, self::createByBookUserId($book->id));
 		}
 		$temp = null; // Cerrar la conexión a la base de datos
 		return $books;
@@ -104,7 +102,7 @@ class BookUser
 		$temp = Database::getInstance();
 		$stmt = $temp->prepare(
 			"SELECT 
-                 books.id AS book_id
+                 books_users_saved.id AS id
              FROM books 
              JOIN books_users_saved ON books.id = books_users_saved.id_book
              WHERE books_users_saved.id_user = :user_id AND books_users_saved.status = :status"
@@ -114,7 +112,7 @@ class BookUser
 		$dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$books = [];
 		foreach ($dataBooks as $book) {
-			array_push($books, self::createByBookId($book->book_id));
+			array_push($books, self::createByBookUserId($book->id));
 		}
 		$temp = null; // Cerrar la conexión a la base de datos
 		return $books;
@@ -129,7 +127,7 @@ class BookUser
 		$temp = Database::getInstance();
 		$stmt = $temp->prepare(
 			"SELECT 
-                 books.id AS book_id
+             		books_users_saved.id AS id
              FROM books 
              JOIN books_users_saved ON books.id = books_users_saved.id_book
              WHERE books_users_saved.id_user = :user_id AND books_users_saved.id_book = :book_id"
@@ -138,7 +136,7 @@ class BookUser
 		$stmt->execute([':user_id' => $userId, ':book_id' => $bookId]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
 
-		return self::createByBookId($data->book_id);
+		return self::createByBookUserId($data->id);
 	}
 
 	public static function userHadBook(int $userId, int $bookId): bool

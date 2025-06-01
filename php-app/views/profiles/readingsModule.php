@@ -2,6 +2,7 @@
 	/** @var BookUser[] $booksReading */
 	/** @var BookUser[] $booksRead */
 	/** @var BookUser[] $booksWantToRead */
+	/** @var BookUser[] $booksDiscarded */
 	?>
  <!-- Sección de pestañas -->
  <div class="mt-5 container-fluid">
@@ -15,6 +16,9 @@
  		</li>
  		<li class="nav-item" role="presentation">
  			<button class="nav-link custom-link" id="finalizadas-tab" data-bs-toggle="tab" data-bs-target="#finalizadas" type="button" role="tab"> Finalizadas</button>
+ 		</li>
+ 		<li class="nav-item" role="presentation">
+ 			<button class="nav-link custom-link" id="descartadas-tab" data-bs-toggle="tab" data-bs-target="#descartadas" type="button" role="tab"> Descartadas</button>
  		</li>
  	</ul>
 
@@ -54,6 +58,19 @@
  				</div>
  			<?php endif;
 				foreach ($booksRead as $bookUser):
+					$book = $bookUser->getBook();
+					require 'views/components/bookProfile.php';
+				endforeach; ?>
+ 		</div>
+
+ 		<div class="tab-pane fade" id="descartadas" role="tabpanel" aria-labelledby="descartadas-tab">
+ 			<?php if (empty($booksDiscarded)): ?>
+ 				<div class="text-center my-4">
+ 					<p class="fs-5 profile-p">📖 No tienes libros descartados aún</p>
+ 					<small class="text-muted">😅 ¡Tu historial de lectura está más limpio que una hoja en blanco!</small>
+ 				</div>
+ 			<?php endif;
+				foreach ($booksDiscarded as $bookUser):
 					$book = $bookUser->getBook();
 					require 'views/components/bookProfile.php';
 				endforeach; ?>

@@ -96,7 +96,7 @@ class BookController extends BaseController
 		}
 
 		$bookUser = BookUser::getBooksByBookIdAndUserId($_SESSION['identity']->id, $_POST['bookId']);
-		$bookUser->setStatus($_POST['status']);
+		$bookUser->setStatus(BookUserStatus::from($_POST['status']));
 
 
 
