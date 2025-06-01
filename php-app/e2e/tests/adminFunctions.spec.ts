@@ -74,3 +74,60 @@ test("genres", async ({ page }) => {
   await page.waitForSelector("#toastNotification");
   await page.click("#toastNotification button");
 });
+
+test("books", async ({ page }) => {
+  await page.goto("http://localhost/user/login");
+  await page.getByRole("textbox", { name: "Correo electrónico" })
+    .fill("admin@admin.es");
+  await page.getByRole("textbox", { name: "Contraseña" }).fill("alejandria25+");
+  await page.getByRole("button", { name: "Iniciar sesión" }).click();
+  await page.goto("http://localhost/admin/books");
+
+  await page.getByRole('button', { name: 'Crear' }).click();
+  await page.getByRole('textbox', { name: 'Título' }).click();
+  await page.getByRole('textbox', { name: 'Título' }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Título' }).fill('libro-test');
+  await page.getByRole('textbox', { name: 'Sinopsis Autores: Genres:' }).click();
+  await page.getByRole('textbox', { name: 'Sinopsis Autores: Genres:' }).fill('libro-test');
+  await page.getByRole('textbox', { name: 'Sinopsis Autores: Genres:' }).press('Tab');
+  await page.getByRole('textbox', { name: 'Autores:', exact: true }).press('CapsLock');
+  await page.getByRole('textbox', { name: 'Autores:', exact: true }).fill('Anónimo');
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).fill('Fantasía');
+  await page.getByText('Fantasía', { exact: true }).click();
+  await page.click("#action");
+
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
+
+  //Editar libro
+  await page.getByRole("searchbox", { name: "Buscar:" }).fill("libro-test");
+  await page.getByRole("button", { name: "Editar", exact: true }).click();
+  await page.getByRole('textbox', { name: 'Título' }).click();
+  await page.getByRole('textbox', { name: 'Título' }).fill('libro-test editar');
+  await page.getByRole('textbox', { name: 'Sinopsis Autores: Anónimo' }).click();
+  await page.getByRole('textbox', { name: 'Sinopsis Autores: Anónimo' }).fill('PRUEBA editar');
+  await page.getByRole('textbox', { name: 'Autores:', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Autores:', exact: true }).fill('Anónimo, Jorge Luis Borges');
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).fill('Fantasía, Romance');
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).press('ControlOrMeta+-');
+  await page.getByRole('textbox', { name: 'Genres:', exact: true }).press('ControlOrMeta+-');
+  await page.click("#action");
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
+
+  //Eliminar libro
+  page.once("dialog", async (dialog) => {
+    if (dialog.type() === "confirm") {
+      await dialog.accept(); // Simula hacer click en "Aceptar"
+    } else {
+      await dialog.dismiss(); // Para otros diálogos, lo descarta
+    }
+  });
+
+  await page.getByRole("button", { name: "Eliminar", exact: true }).click();
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
+
+});
