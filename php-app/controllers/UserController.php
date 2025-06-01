@@ -37,9 +37,10 @@ class UserController extends BaseController
 		$user =  User::createById($_SESSION['identity']->id);
 		$this->title = 'Perfil de usuario - ' . $user->getName();
 		// Obtener los libros del usuario
-		$booksReading = BookUser::getBooksByUserIdAndStatus($user->getId(), 'reading');
-		$booksRead = BookUser::getBooksByUserIdAndStatus($user->getId(), 'read');
-		$booksWantToRead = BookUser::getBooksByUserIdAndStatus($user->getId(), 'want to read');
+		$booksReading = BookUser::getBooksByUserIdAndStatus($user->getId(), BookUserStatus::reading);
+		$booksRead = BookUser::getBooksByUserIdAndStatus($user->getId(), BookUserStatus::read);
+		$booksWantToRead = BookUser::getBooksByUserIdAndStatus($user->getId(), BookUserStatus::wantToRead);
+		$booksDiscarded = BookUser::getBooksByUserIdAndStatus($user->getId(), BookUserStatus::discarded);
 		require_once 'views/profiles/userProfile.php';
 	}
 
@@ -79,7 +80,7 @@ class UserController extends BaseController
 			$user->setEmail($email);
 			$user->setPassword($password);
 			$user->setRole($role);
-			$user->setProfileImage('uploads/images/default.jpg');
+			$user->setProfileImage('assets/img/default_perfil.jpg');
 			$user->setBiography('');
 
 			if ($user->save()) {

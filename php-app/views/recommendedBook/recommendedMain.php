@@ -47,7 +47,7 @@
 					<h6 class="book-card-recomended-h6">Resumen:</h6> <?= htmlspecialchars($book->getSynopsis()) ?></p>
 				</div>
 				<div class="book-buttons mt-2">
-					<a class="btn btn-not-interest" href="#">No interesa</button>
+					<a class="btn btn-not-interest" href="<?= BASE_URL ?>book/addLibrary?bookId=<?= $book->getId() ?>&status=<?= BookUserStatus::discarded->value ?>">No interesa</button>
 						<a href="<?= BASE_URL ?>book/addLibrary?bookId=<?= $book->getId() ?>" class="btn btn-interest link-recommended">¡Quiero leerlo!</a>
 				</div>
 			</div>

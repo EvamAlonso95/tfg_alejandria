@@ -19,7 +19,6 @@ class BookController extends BaseController
 		try {
 			$book = Book::createById($_GET['bookId']);
 		} catch (Exception $e) {
-
 			Utils::setToast('Libro no encontrado', false);
 			Utils::redirect('error/notFound');
 		}
@@ -50,14 +49,20 @@ class BookController extends BaseController
 		$this->_checkLogged();
 		$this->_checkBookId();
 
+		$status = BookUserStatus::from($_GET['status'] ?? 'want to read');
+
 		$bookUser = new BookUser();
 		$bookUser->setBook(Book::createById($_GET['bookId']));
 		$bookUser->setUser(User::createById($_SESSION['identity']->id));
-		$bookUser->setStatus('want to read');
+		$bookUser->setStatus($status);
 		$bookUser->save();
 
 		$referer = $_SERVER['HTTP_REFERER'] ?? '';
-		Utils::setToast('Libro añadido a tu biblioteca');
+		if ($status == BookUserStatus::wantToRead) {
+			Utils::setToast('Libro añadido a tu biblioteca');
+		} else {
+			Utils::setToast('Libro descartado');
+		}
 
 		if (strpos($referer, '/recommendedBook') !== false) {
 			Utils::redirectReferer();

@@ -16,7 +16,9 @@ class Post
 		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
-
+		if (!$data) {
+			throw new Exception("Post no encontrado con ID: $id");
+		}
 		$post = new self();
 		$post->setId($data->id);
 		$post->setTitle($data->title);
@@ -99,7 +101,7 @@ class Post
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$posts = [];
 		foreach ($dataPosts as $dataPost) {
-			$posts[] = Post::createById($dataPost->id);
+			$posts[] = self::createById($dataPost->id);
 		}
 		return $posts;
 	}
@@ -116,7 +118,7 @@ class Post
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$posts = [];
 		foreach ($dataPosts as $dataPost) {
-			$posts[] = Post::createById($dataPost->id);
+			$posts[] = self::createById($dataPost->id);
 		}
 		return $posts;
 	}

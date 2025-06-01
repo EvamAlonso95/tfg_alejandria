@@ -49,8 +49,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idUser']) || empty($_POST['role'])) {
 			$this->error->apiError('Faltan datos para editar el usuario');
 		}
-
-		$user = User::createById($_POST['idUser']);
+		try {
+			$user = User::createById($_POST['idUser']);
+		} catch (Exception $e) {
+			$this->error->apiError('Usuario no encontrado');
+		}
 		$user->setRole(intval($_POST['role']));
 		$user->editUser();
 
@@ -65,8 +68,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idUser'])) {
 			$this->error->apiError('Faltan datos para eliminar el usuario');
 		}
-
-		$user = User::createById($_POST['idUser']);
+		try {
+			$user = User::createById($_POST['idUser']);
+		} catch (Exception $e) {
+			$this->error->apiError('Usuario no encontrado');
+		}
 		$user->deleteUser();
 		echo json_encode(['success' => 'Se ha podido eliminar el usuario.']);
 		return;
@@ -121,14 +127,16 @@ class ApiController extends BaseController
 		$book = new Book();
 		$book->setTitle($_POST['title']);
 		$book->setSynopsis($_POST['synopsis']);
-
-		foreach ($genres as $genre) {
-			$book->setGenre($genre);
+		try {
+			foreach ($genres as $genre) {
+				$book->setGenre($genre);
+			}
+			foreach ($authors as $author) {
+				$book->setAuthor($author);
+			}
+		} catch (Exception $e) {
+			$this->error->apiError('Error al crear el libro');
 		}
-		foreach ($authors as $author) {
-			$book->setAuthor($author);
-		}
-
 		$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
 		$uniqueName = uniqid('book_', true) . '.' . $extension;
 
@@ -156,8 +164,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idBook']) || empty($_POST['title']) || empty($_POST['synopsis']) || empty($_POST['authors']) || empty($_POST['genres'])) {
 			$this->error->apiError('Faltan datos para editar el libro');
 		}
-
-		$book = Book::createById($_POST['idBook']);
+		try {
+			$book = Book::createById($_POST['idBook']);
+		} catch (Exception $e) {
+			$this->error->apiError('Libro no encontrado');
+		}
 		$book->setTitle($_POST['title']);
 		$book->setSynopsis($_POST['synopsis']);
 
@@ -168,11 +179,15 @@ class ApiController extends BaseController
 		$genres = array_filter(array_map('trim', explode(',', $rawGenres)));
 		$book->cleanAuthors();
 		$book->cleanGenres();
-		foreach ($genres as $genre) {
-			$book->setGenre($genre);
-		}
-		foreach ($authors as $author) {
-			$book->setAuthor($author);
+		try {
+			foreach ($genres as $genre) {
+				$book->setGenre($genre);
+			}
+			foreach ($authors as $author) {
+				$book->setAuthor($author);
+			}
+		} catch (Exception $e) {
+			$this->error->apiError('Error al crear el libro');
 		}
 
 		if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
@@ -205,7 +220,11 @@ class ApiController extends BaseController
 			$this->error->apiError('Faltan datos para eliminar el libro');
 		}
 
-		$book = Book::createById(intval($_POST['idBook']));
+		try {
+			$book = Book::createById(intval($_POST['idBook']));
+		} catch (Exception $e) {
+			$this->error->apiError('Libro no encontrado');
+		}
 		$book->delete();
 		$qdrant = new QdrantLogic();
 		$qdrant->getQdrantClient()->deletePoints('books', [$book->getId()]);
@@ -271,8 +290,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idAuthor']) || empty($_POST['authorName']) || empty($_POST['biography'])) {
 			$this->error->apiError('Faltan datos para editar el autor');
 		}
-
-		$author = Author::createById($_POST['idAuthor']);
+		try {
+			$author = Author::createById($_POST['idAuthor']);
+		} catch (Exception $e) {
+			$this->error->apiError('Autor no encontrado');
+		}
 		$author->setName($_POST['authorName']);
 		$author->setBiography($_POST['biography']);
 
@@ -300,8 +322,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idAuthor'])) {
 			$this->error->apiNotFound();
 		}
-
-		$author = Author::createById(intval($_POST['idAuthor']));
+		try {
+			$author = Author::createById(intval($_POST['idAuthor']));
+		} catch (Exception $e) {
+			$this->error->apiError('Autor no encontrado');
+		}
 		$author->delete();
 		$this->restartQdrantLogic();
 		echo json_encode(['success' => 'Se ha podido eliminar el autor.']);
@@ -351,8 +376,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idGenre']) || empty($_POST['genreName'])) {
 			$this->error->apiError('Faltan datos para editar el género');
 		}
-
-		$genre = Genre::createById($_POST['idGenre']);
+		try {
+			$genre = Genre::createById($_POST['idGenre']);
+		} catch (Exception $e) {
+			$this->error->apiError('Género no encontrado');
+		}
 		$genre->setName($_POST['genreName']);
 		$genre->edit();
 		$this->restartQdrantLogic();
@@ -367,8 +395,11 @@ class ApiController extends BaseController
 		if (empty($_POST['idGenre'])) {
 			$this->error->apiError('Faltan datos para eliminar el género');
 		}
-
-		$genre = Genre::createById(intval($_POST['idGenre']));
+		try {
+			$genre = Genre::createById(intval($_POST['idGenre']));
+		} catch (Exception $e) {
+			$this->error->apiError('Género no encontrado');
+		}
 		$genre->delete();
 		$this->restartQdrantLogic();
 		echo json_encode(['success' => 'Se ha podido eliminar el género.']);

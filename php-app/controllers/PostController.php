@@ -28,8 +28,12 @@ class PostController extends BaseController
 		if (!isset($_GET['postId'])) {
 			Utils::redirect('post');
 		}
-
-		$post = Post::createById($_GET['postId']);
+		try {
+			$post = Post::createById($_GET['postId']);
+		} catch (Exception $e) {
+			Utils::setToast('Publicación no encontrada', false);
+			Utils::redirect('error/notFound');
+		}
 		$this->title = 'Post: ' . $post->getTitle();
 		require_once 'views/publication/postInfo.php';
 	}

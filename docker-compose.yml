@@ -13,7 +13,12 @@ services:
       - PHP_ALLOW_URL_FOPEN=1
       - PHP_ALLOW_URL_INCLUDE=1
     command: >
-      sh -c "chown -R www-data:www-data /var/www/html/uploads &&
+      sh -c "mkdir -p /var/www/html/uploads &&
+             mkdir -p /var/www/html/uploads/books &&
+             mkdir -p /var/www/html/uploads/authors &&
+             mkdir -p /var/www/html/uploads/post &&
+             mkdir -p /var/www/html/uploads/images &&
+             chown -R www-data:www-data /var/www/html/uploads &&
              chmod -R 0755 /var/www/html/uploads &&
              apache2-foreground"
 

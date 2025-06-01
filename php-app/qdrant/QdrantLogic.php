@@ -103,7 +103,15 @@ class QdrantLogic
 		$dictionary = $this->getDictionary();
 		$userVector = null;
 		$count = 0;
-		$bookUsers = BookUser::getBooksByUserId($userId);
+		$bookUsers = [];
+
+		// Obtener todos los libros del usuario menos los que NO quiere leer
+		$bookUsers = array_merge(
+			$bookUsers,
+			BookUser::getBooksByUserIdAndStatus($userId, BookUserStatus::wantToRead),
+			BookUser::getBooksByUserIdAndStatus($userId, BookUserStatus::reading),
+			BookUser::getBooksByUserIdAndStatus($userId, BookUserStatus::read)
+		);
 
 		foreach ($bookUsers as $bookUser) {
 
@@ -133,7 +141,7 @@ class QdrantLogic
 		$userVector = $this->getUserVector($userId);
 		if (empty($userVector)) return [];
 
-		$readBooks = BookUser::getBooksByUserId($userId);
+		$readBooks = BookUser::getBooksByUserId($userId); //Cogemos todos incluidos los descartados
 		$mustNot = [];
 		foreach ($readBooks as $book) {
 			$mustNot[] = [

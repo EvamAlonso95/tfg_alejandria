@@ -16,6 +16,9 @@ class User
 		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
+		if (!$data) {
+			throw new Exception("Usuario no encontrado con ID: $id");
+		}
 
 		$user = new User();
 		$user->setId($data->id);

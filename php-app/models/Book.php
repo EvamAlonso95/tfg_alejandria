@@ -232,8 +232,6 @@ class Book
 				':id_genre' => $genre->getId()
 			]);
 		}
-
-
 		return true;
 	}
 

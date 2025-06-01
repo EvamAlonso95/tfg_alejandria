@@ -15,7 +15,9 @@ class Author
 		$stmt = Database::getInstance()->prepare("SELECT * FROM authors WHERE id = :id");
 		$stmt->execute([':id' => $id]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
-
+		if (!$data) {
+			throw new Exception("Autor no encontrado con ID: $id");
+		}
 		$author = new self();
 		$author->setId($data->id);
 		$author->setName($data->name);

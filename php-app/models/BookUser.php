@@ -5,7 +5,7 @@ class BookUser
 	private Book $book;
 	private ?int $bookUserId;
 	private User $user;
-	private ?string $status;
+	private ?BookUserStatus $status;
 
 	public function __construct() {}
 
@@ -35,11 +35,11 @@ class BookUser
 		$this->user = $user;
 	}
 
-	public function getStatus(): ?string
+	public function getStatus(): ?BookUserStatus
 	{
 		return $this->status;
 	}
-	public function setStatus(?string $status): void
+	public function setStatus(?BookUserStatus $status): void
 	{
 		$this->status = $status;
 	}
@@ -48,7 +48,7 @@ class BookUser
 	/**
 	 * @return BookUser
 	 */
-	public static function createById(int $id): self
+	public static function createByBookId(int $id): self
 	{
 		$bookUser = new self();
 
@@ -60,11 +60,14 @@ class BookUser
 		);
 		$stmt->execute([':id' => $id]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
+		if (!$data) {
+			throw new Exception("BookUser no encontrado con ID: $id");
+		}
 		$bookUser->setBook(Book::createById($id));
 		$bookUser->setUser(User::createById($data->id_user));
 		$bookUser->setBookUserId($data->id);
 
-		$bookUser->setStatus($data->status);
+		$bookUser->setStatus(BookUserStatus::from($data->status));
 		return $bookUser;
 	}
 
@@ -87,7 +90,7 @@ class BookUser
 		$dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$books = [];
 		foreach ($dataBooks as $book) {
-			array_push($books, self::createById($book->book_id));
+			array_push($books, self::createByBookId($book->book_id));
 		}
 		$temp = null; // Cerrar la conexión a la base de datos
 		return $books;
@@ -96,7 +99,7 @@ class BookUser
 	/**
 	 * @return BookUser[]
 	 */
-	public static function getBooksByUserIdAndStatus(int $userId, string $status): array
+	public static function getBooksByUserIdAndStatus(int $userId, BookUserStatus $status): array
 	{
 		$temp = Database::getInstance();
 		$stmt = $temp->prepare(
@@ -107,11 +110,11 @@ class BookUser
              WHERE books_users_saved.id_user = :user_id AND books_users_saved.status = :status"
 		);
 
-		$stmt->execute([':user_id' => $userId, ':status' => $status]);
+		$stmt->execute([':user_id' => $userId, ':status' => $status->value]);
 		$dataBooks = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$books = [];
 		foreach ($dataBooks as $book) {
-			array_push($books, self::createById($book->book_id));
+			array_push($books, self::createByBookId($book->book_id));
 		}
 		$temp = null; // Cerrar la conexión a la base de datos
 		return $books;
@@ -135,7 +138,7 @@ class BookUser
 		$stmt->execute([':user_id' => $userId, ':book_id' => $bookId]);
 		$data = $stmt->fetch(PDO::FETCH_OBJ);
 
-		return self::createById($data->book_id);
+		return self::createByBookId($data->book_id);
 	}
 
 	public static function userHadBook(int $userId, int $bookId): bool
@@ -179,7 +182,7 @@ class BookUser
 		$insertStmt->execute([
 			':book_id' => $this->getBook()->getId(),
 			':user_id' => $this->getUser()->getId(),
-			':status' => $this->getStatus()
+			':status' => $this->getStatus()->value,
 		]);
 		return true;
 	}
@@ -195,7 +198,7 @@ class BookUser
 			);
 
 			$stmt->execute([
-				':status' => (string) $this->getStatus(),
+				':status' => (string) $this->getStatus()->value,
 				':book_id' => (int) $this->getBook()->getId(),
 				':user_id' => (int) $this->getUser()->getId()
 			]);
