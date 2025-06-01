@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 test('checkLogoInHeader', async ({ page }) => {
-    await page.goto('http://localhost/alejandria/');
+    await page.goto('http://localhost/');
     await expect(page.getByRole('link', { name: 'Logo Alejandría' })).toBeVisible();
 });
 
 test('checkCookieBanner', async ({ page }) => {
-    await page.goto('http://localhost/alejandria/');
+    await page.goto('http://localhost/');
     await expect(page.locator('#cookieBanner')).toBeVisible();
     await page.getByRole('button', { name: 'Aceptar' }).click();
     await expect(page.locator('#cookieBanner')).not.toBeVisible();
@@ -15,7 +15,7 @@ test('checkCookieBanner', async ({ page }) => {
 
 test('register', async ({ page }) => {
     const id = crypto.randomUUID();
-    await page.goto('http://localhost/alejandria/');
+    await page.goto('http://localhost/');
     await page.getByRole('button', { name: 'Foto de perfil' }).click();
     await page.getByRole('link', { name: 'Registrarse' }).click();
     await page.getByRole('textbox', { name: 'Nombre de usuario' }).click();
