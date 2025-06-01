@@ -7,7 +7,7 @@ test('recommendedBook', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Correo electrónico' }).click();
   await page.getByRole('textbox', { name: 'Correo electrónico' }).fill('correoPrueba@example.com');
   await page.getByRole('textbox', { name: 'Contraseña' }).click();
-  await page.getByRole('textbox', { name: 'Contraseña' }).fill('alejandria25+');
+  await page.getByRole('textbox', { name: 'Contraseña' }).fill('12345678+a');
   await page.getByRole('button', { name: 'Iniciar sesión' }).click();
   await page.getByRole('link', { name: 'Descubre más lecturas' }).click();
   await page.locator('a:nth-child(2)').first().click();
