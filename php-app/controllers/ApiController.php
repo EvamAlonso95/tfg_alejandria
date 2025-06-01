@@ -114,13 +114,12 @@ class ApiController extends BaseController
 	public function saveBook()
 	{
 		$this->_checkAdmin();
-		if (empty($_POST['title']) || empty($_POST['synopsis']) || empty($_POST['authors']) || empty($_POST['genres']) || empty($_FILES['cover'])) {
+		if (empty($_POST['title']) || empty($_POST['synopsis']) || empty($_POST['authors']) || empty($_POST['genres'])) {
 			$this->error->apiError('Faltan datos para guardar el libro');
 		}
 
 		$rawAuthors = $_POST['authors'];
 		$rawGenres = $_POST['genres'];
-		$cover = $_FILES['cover'];
 		$authors = array_filter(array_map('trim', explode(',', $rawAuthors)));
 		$genres = array_filter(array_map('trim', explode(',', $rawGenres)));
 
@@ -137,14 +136,21 @@ class ApiController extends BaseController
 		} catch (Exception $e) {
 			$this->error->apiError('Error al crear el libro');
 		}
-		$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
-		$uniqueName = uniqid('book_', true) . '.' . $extension;
+		if (!empty($_FILES['cover'])) {
 
-		$filePath = 'uploads/books/' . $uniqueName;
-		$book->setCoverImg($filePath);
 
-		if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
-			$this->error->apiError('Error al mover la imagen del libro.');
+			$cover = $_FILES['cover'];
+			$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
+			$uniqueName = uniqid('book_', true) . '.' . $extension;
+
+			$filePath = 'uploads/book/' . $uniqueName;
+			$book->setCoverImg($filePath);
+
+			if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
+				$this->error->apiError('Error al mover la imagen del libro.');
+			}
+		} else {
+			$book->setCoverImg('assets/img/default_book_cover.jpg');
 		}
 
 		$book->save();
@@ -190,17 +196,24 @@ class ApiController extends BaseController
 			$this->error->apiError('Error al crear el libro');
 		}
 
-		if (isset($_FILES['cover']) && $_FILES['cover']['error'] == 0) {
+		if (!empty($_FILES['cover'])) {
+
+
 			$cover = $_FILES['cover'];
 			$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
 			$uniqueName = uniqid('book_', true) . '.' . $extension;
-			$filePath = 'uploads/books/' . $uniqueName;
+
+			$filePath = 'uploads/book/' . $uniqueName;
+			$book->setCoverImg($filePath);
 
 			if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
 				$this->error->apiError('Error al mover la imagen del libro.');
 			}
-			$book->setCoverImg($filePath);
+		} else {
+			$book->setCoverImg('assets/img/default_book_cover.jpg');
 		}
+
+
 		$book->edit();
 
 		// Eliminamos el point de qdrant y lo volvemos a subir con la nueva informacion
@@ -259,22 +272,27 @@ class ApiController extends BaseController
 	public function saveAuthor()
 	{
 		$this->_checkAdmin();
-		if (empty($_POST['authorName']) || empty($_POST['biography']) || empty($_FILES['profileImage'])) {
+		if (empty($_POST['authorName']) || empty($_POST['biography'])) {
 			$this->error->apiError('Faltan datos para guardar el autor');
 		}
-		$profileImage = $_FILES['profileImage'];
 		$author = new Author();
 		$author->setName($_POST['authorName']);
 		$author->setBiography($_POST['biography']);
+		if (!empty($_FILES['profileImage'])) {
 
-		$extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
-		$uniqueName = uniqid('author_', true) . '.' . $extension;
 
-		$filePath = 'uploads/authors/' . $uniqueName;
-		$author->setProfileImage($filePath);
+			$profileImage = $_FILES['profileImage'];
+			$extension = pathinfo($profileImage['name'], PATHINFO_EXTENSION);
+			$uniqueName = uniqid('author_', true) . '.' . $extension;
 
-		if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
-			$this->error->apiError('Error al mover la imagen del autor.');
+			$filePath = 'uploads/authors/' . $uniqueName;
+			$author->setProfileImage($filePath);
+
+			if (!move_uploaded_file($profileImage['tmp_name'], $filePath)) {
+				$this->error->apiError('Error al mover la imagen del autor.');
+			}
+		} else {
+			$author->setProfileImage('assets/img/default_perfil.jpg');
 		}
 
 		$author->save();

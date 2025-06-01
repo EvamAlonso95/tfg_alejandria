@@ -50,7 +50,7 @@
 				<form id="form">
 
 					<label for="cover">Archivo de portada:</label>
-					<input required type="file" name="cover" id="cover" accept="image/*" class="form-control">
+					<input type="file" name="cover" id="cover" accept="image/*" class="form-control">
 					<span id="uploadImage"></span>
 					<br>
 					<label for="title">Título</label>
