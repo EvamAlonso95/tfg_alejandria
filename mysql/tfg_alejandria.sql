@@ -41,7 +41,7 @@ CREATE TABLE `authors` (
 --
 
 INSERT INTO `authors` (`id`, `name`, `biography`, `profile_img`, `id_user`) VALUES
-(2, 'Anónimo', 'Este autor engloba todas las obras cuyo creador es desconocido.', 'uploads/authors/author_6834c9c4b029d0.16684350.jpg', NULL),
+(2, 'Anónimo', 'Este autor engloba todas las obras cuyo creador es desconocido.', 'assets/img/default_perfil.jpg', NULL),
 (3, 'J.R.R. Tolkien', 'Filólogo y escritor británico, conocido por \"El Hobbit\" y \"El Señor de los Anillos\", pilares de la alta fantasía.', 'assets/img/default_perfil.jpg', NULL),
 (4, 'George R.R. Martin', 'Escritor estadounidense de literatura fantástica, ciencia ficción y terror, famoso por \"Canción de Hielo y Fuego\".', 'assets/img/default_perfil.jpg', NULL),
 (5, 'Isaac Asimov', 'Escritor y profesor de bioquímica ruso-estadounidense, célebre por sus obras de ciencia ficción y divulgación científica.', 'assets/img/default_perfil.jpg', NULL),
@@ -2714,19 +2714,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `biography`, `profile_img`, `id_role`) VALUES
-(1, 'admin', 'admin@admin.es', '$2y$04$rxnEjfj8odJLKGWe656pSePLtSEM4D/zEE2MOA71wLwG3Ps7GPvnK', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su', 'uploads/images/SFS11829.png', 3),
-(2, 'Mariana Ríos', 'mariana.rios89@example.com', '$2y$04$X1r7UfktKknrsFm3jeowFuiL8hA7BHOyQnbQY3xi/dWd2B8pwbygi', '', 'uploads/images/autor.jpeg', 2),
-(3, 'Tomás Herrera', 'tomas.herrera21@example.com', '$2y$04$3pEiu9ezmSRqmhlsOWH8Ne7qN.sgxCOFdImT5wb.UTCL9T9w4YGFq', '', 'uploads/images/default.jpg', 2),
-(4, 'Laura Méndez', 'laura.mendez74@example.com', '$2y$04$tBO3cUWpT6c/qHTafuSMl.7Ve8/Ompih0hW/N9lHojJRH9iEMGwou', '', 'uploads/images/default.jpg', 2),
-(5, 'Jorge Castillo', 'jorge.castillo56@example.com', '$2y$04$rA9Ox1qukqWLOPgJy/TeF.7dehdUssskP5vkQ.M0Ke.J3UhZOXTRW', '', 'uploads/images/default.jpg', 2),
-(6, 'Camila Vargas', 'lector@example.com', '$2y$04$/QH8IzBWWrGnjNN0CvjWF.yUqj.z35RoSKqE9sZQFr9jQYEvQRAIi', '', 'uploads/images/default.jpg', 2),
-(7, 'Brandon Sanderson', 'brandon.sanderson@example.com', '$2y$04$lxdEb8rco3Xh4zsKiFenduZSEE8Ke6kja/Ejw1aDBlLmWtxdfBJOe', '', 'uploads/images/default.jpg', 1),
-(8, 'Neil Gaiman', 'neil.gaiman@example.com', '$2y$04$LoRBFfIf1Rq4boZ7bN2TsOXnQLg/u8i7wZvy.CRKCTIHDuU6j9zAK', '', 'uploads/images/default.jpg', 1),
-(9, 'Isabel Allende', 'isabel.allende@example.com', '$2y$04$cjX5YGJmFojBlan.dU3VqeJr8FYRaV.t97VvgI2vcwgry7U7yS5T6', '', 'uploads/images/default.jpg', 1),
-(10, 'Haruki Murakami', 'haruki.murakami@example.com', '$2y$04$BGrja0AnKLKcdCCoYL67LeozwMEBfmeQIxUIydx9QoL.wAJmEp5iW', '', 'uploads/images/default.jpg', 1),
-(11, 'Chimamanda Ngozi Adichie', 'autor@example.com', '$2y$04$DdiM84YeAZcK04RsUlRPeOwFYt5gIuvbz48ne1rCp5KRIXHywbIVm', '', 'uploads/images/default.jpg', 1),
-(12, 'Eva Alonso', 'evaalonso888@gmail.com', '$2y$04$zEpVS3aIdm9sa6V3TpcN1eaX5PAHc3RcogMd3eJTPDWhhG1dbQzyu', '', 'uploads/images/default.jpg', 2),
-(15, 'Prueba', 'correoPrueba@example.com', '$2y$04$hr0T40L9lvpGVIw6rbqzKu2nh8o2A6MdbGM/T7d/aGc.PvhM4apIO', '', 'uploads/images/default.jpg', 2);
+(1, 'admin', 'admin@admin.es', '$2y$04$xBvmOd.8kDT7F6/WQBcdpOEJm4VNxF2fMBkpavKi23qkC3FBV0tSe', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su', 'assets/img/default_perfil.jpg', 3),
+(2, 'Mariana Ríos', 'mariana.rios89@example.com', '$2y$04$X1r7UfktKknrsFm3jeowFuiL8hA7BHOyQnbQY3xi/dWd2B8pwbygi', '', 'assets/img/default_perfil.jpg', 2),
+(3, 'Tomás Herrera', 'tomas.herrera21@example.com', '$2y$04$3pEiu9ezmSRqmhlsOWH8Ne7qN.sgxCOFdImT5wb.UTCL9T9w4YGFq', '', 'assets/img/default_perfil.jpg', 2),
+(4, 'Laura Méndez', 'laura.mendez74@example.com', '$2y$04$tBO3cUWpT6c/qHTafuSMl.7Ve8/Ompih0hW/N9lHojJRH9iEMGwou', '', 'assets/img/default_perfil.jpg', 2),
+(5, 'Jorge Castillo', 'jorge.castillo56@example.com', '$2y$04$rA9Ox1qukqWLOPgJy/TeF.7dehdUssskP5vkQ.M0Ke.J3UhZOXTRW', '', 'assets/img/default_perfil.jpg', 2),
+(6, 'Camila Vargas', 'lector@example.com', '$2y$04$/QH8IzBWWrGnjNN0CvjWF.yUqj.z35RoSKqE9sZQFr9jQYEvQRAIi', '', 'assets/img/default_perfil.jpg', 2),
+(7, 'Brandon Sanderson', 'brandon.sanderson@example.com', '$2y$04$lxdEb8rco3Xh4zsKiFenduZSEE8Ke6kja/Ejw1aDBlLmWtxdfBJOe', '', 'assets/img/default_perfil.jpg', 1),
+(8, 'Neil Gaiman', 'neil.gaiman@example.com', '$2y$04$LoRBFfIf1Rq4boZ7bN2TsOXnQLg/u8i7wZvy.CRKCTIHDuU6j9zAK', '', 'assets/img/default_perfil.jpg', 1),
+(9, 'Isabel Allende', 'isabel.allende@example.com', '$2y$04$cjX5YGJmFojBlan.dU3VqeJr8FYRaV.t97VvgI2vcwgry7U7yS5T6', '', 'assets/img/default_perfil.jpg', 1),
+(10, 'Haruki Murakami', 'haruki.murakami@example.com', '$2y$04$BGrja0AnKLKcdCCoYL67LeozwMEBfmeQIxUIydx9QoL.wAJmEp5iW', '', 'assets/img/default_perfil.jpg', 1),
+(11, 'Chimamanda Ngozi Adichie', 'autor@example.com', '$2y$04$DdiM84YeAZcK04RsUlRPeOwFYt5gIuvbz48ne1rCp5KRIXHywbIVm', '', 'assets/img/default_perfil.jpg', 1),
+(12, 'Eva Alonso', 'evaalonso888@gmail.com', '$2y$04$zEpVS3aIdm9sa6V3TpcN1eaX5PAHc3RcogMd3eJTPDWhhG1dbQzyu', '', 'assets/img/default_perfil.jpg', 2),
+(15, 'Prueba', 'correoPrueba@example.com', '$2y$04$hr0T40L9lvpGVIw6rbqzKu2nh8o2A6MdbGM/T7d/aGc.PvhM4apIO', '', 'assets/img/default_perfil.jpg', 2);
 
 --
 -- Índices para tablas volcadas
