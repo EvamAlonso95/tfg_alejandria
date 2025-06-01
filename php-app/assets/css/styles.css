@@ -904,8 +904,10 @@ form .form-control:focus {
 /*---------------------------------------
   LANDING ANIMATION
 -----------------------------------------*/
+.animation-book-container {
+    position: relative;
+}
 
-/*
 #flip {
     animation: wrapper 6s ease-in-out infinite;
     height: 350px;
@@ -949,6 +951,7 @@ form .form-control:focus {
     transform-origin: -100% 0;
 }
 
+/* avoid pages overlap */
 #flip #back,
 #flip #back div {
     background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/164210/map1_.jpg);
@@ -1000,6 +1003,8 @@ form .form-control:focus {
     background-position-x: -229px;
 }
 
+/* the more pieces you have, the smoother the bend is */
+
 @keyframes page {
     15% {
         transform: rotateY(-10deg);
@@ -1026,11 +1031,14 @@ form .form-control:focus {
     top: 30%;
     transform: translate3d(0px, 0px, -10px) rotateX(60deg) rotateZ(29deg);
     transform-style: preserve-3d;
+    -webkit-transform-origin: 0 0 0;
 }
 
 @keyframes book {
+    25% {
+        box-shadow: inset rgba(0, 0, 0, .2) 0px 0 50px -140px;
+    }
 
-    25%,
     50% {
         box-shadow: inset rgba(0, 0, 0, .2) 0px 0 50px -140px;
     }
@@ -1055,7 +1063,8 @@ form .form-control:focus {
 
 #book #bottom {
     background: #E7DED1;
-    box-shadow: rgba(83, 53, 13, 0.2) 4px 2px 1px, #35582C 1px 1px 0px 0px;
+    box-shadow: rgba(83, 53, 13, 0.2) 4px 2px 1px,
+        #35582C 1px 1px 0px 0px;
     height: 350px;
     width: 253px;
     position: absolute;
@@ -1090,7 +1099,7 @@ form .form-control:focus {
 }
 
 #book #front {
-    background: linear-gradient(top, #FCF6EA, #D8D1C3);
+    background: -webkit-linear-gradient(top, #FCF6EA, #D8D1C3);
     background-size: 100% 2px;
     box-shadow: inset #C2BBA2 3px 0 0px, #35582C -2px 1px 0px 0px;
     height: 40px;
@@ -1105,7 +1114,7 @@ form .form-control:focus {
 }
 
 #book #right {
-    background: linear-gradient(left, #DDD2BB, #BDB3A0);
+    background: -webkit-linear-gradient(left, #DDD2BB, #BDB3A0);
     background-size: 2px 100%;
     box-shadow: inset rgba(0, 0, 0, 0) 0 0 0 20px;
     height: 100%;
@@ -1117,16 +1126,8 @@ form .form-control:focus {
     transform-origin: 0 50%;
 }
 
-h4 {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    margin: 0;
-    font-weight: 200;
-    opacity: 1;
-    font-family: sans-serif;
-    color: rgba(0, 0, 0, 0.3);
-}
+
+/* bookmark */
 
 #bookmark {
     position: absolute;
@@ -1172,6 +1173,7 @@ h4 {
     transform: translate3d(12px, 350px, -25px) rotateX(-90deg) skewX(20deg);
     transform-origin: 0 0;
 }
+
 
 /*---------------------------------------
 DATATABLE
