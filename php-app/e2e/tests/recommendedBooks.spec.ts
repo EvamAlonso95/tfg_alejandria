@@ -7,12 +7,17 @@ test("booksRecommended", async ({ page }) => {
   await page.goto("http://localhost/book?bookId=250");
   await page.getByRole("link", { name: "Añadir a la biblioteca" }).click();
   await page.goto("http://localhost/recommendedBook");
-  await page.getByRole("heading", { name: "Matilda" }).click();
+  await page.getByRole("heading", { name: "Cartas del Diablo a su Sobrino" }).click();
   await page.locator("a:nth-child(2)").first().click();
   await page.waitForSelector("#toastNotification");
   await page.click("#toastNotification button");
 
-  await page.goto("http://localhost/book?bookId=248");
+  await page.goto("http://localhost/book?bookId=255");
+  await expect(page.getByRole("combobox")).toHaveValue("want to read");
+  await page.click(".btn-delete-style");
+  await page.waitForSelector("#toastNotification");
+  await page.click("#toastNotification button");
+  await page.goto("http://localhost/book?bookId=250");
   await expect(page.getByRole("combobox")).toHaveValue("want to read");
   await page.click(".btn-delete-style");
   await page.waitForSelector("#toastNotification");

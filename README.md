@@ -34,3 +34,30 @@ docker compose down -v
 Este proyecto realiza una precarga automática de usuarios y libros en la base de datos y en Qdrant al iniciar.
 
 **Es necesario esperar aproximadamente 60 segundos tras el arranque para que Qdrant tenga todos los libros cargados correctamente y esté listo para usarse.**
+
+## Cómo ejecutar los test con playwright
+
+Todos estos comandos deben realizarse dentro del directorio php-app/e2e:
+
+```bash
+cd php-app/e2e
+```
+Instalar dependencias para ejecutar los test:
+
+```bash
+npm install
+```
+
+Ejecutar test npx:
+
+```bash
+npx playwright test
+```
+
+Obtener reportes:
+
+```bash
+npx playwright show-report
+```
+
+

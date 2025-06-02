@@ -2,10 +2,9 @@ import { test, expect } from "@playwright/test";
 import { login } from "./utils";
 
 test("user", async ({ page }) => {
-   await login("admin@admin.es", "alejandria25+", page);
-	 page.goto("http://localhost/admin/");
+  await login("admin@admin.es", "alejandria25+", page);
+  page.goto("http://localhost/admin/");
 
-  await page.getByRole("link", { name: "Panel de administración" }).click();
   await page
     .getByRole("row", { name: "2 mariana.rios89@example.com" })
     .getByRole("button")
