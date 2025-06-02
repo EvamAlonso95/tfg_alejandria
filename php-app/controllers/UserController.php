@@ -160,7 +160,7 @@ class UserController extends BaseController
 
 		$user = User::createById($_SESSION['identity']->id);
 		$user->setName($_POST['name']);
-		$user->setEmail($_POST['email']);
+		
 		$user->setBiography($_POST['biography']);
 
 		// Comprobar si se ha subido una imagen
@@ -176,9 +176,8 @@ class UserController extends BaseController
 		$user->editUser();
 
 		// Actualizar la sesión con los nuevos datos
-		$_SESSION['identity']->name = $_POST['name'];
-		$_SESSION['identity']->email = $_POST['email'];
-		$_SESSION['identity']->biography = $_POST['biography'];
+		$_SESSION['identity']->name = $user->getName();
+		$_SESSION['identity']->biography = $user->getBiography();
 		if (isset($filePath)) {
 			$_SESSION['identity']->profile_img = $filePath;
 		}

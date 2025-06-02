@@ -29,7 +29,7 @@ require_once 'views/layout/head.php'; ?>
 
 			<!-- Correo -->
 			<div class="mb-3">
-				<input type="email" class="form-control" name="email" placeholder="Correo" value="<?= $user->getEmail() ?>">
+				<input type="email" class="form-control" readonly name="email" placeholder="Correo" value="<?= $user->getEmail() ?>">
 			</div>
 
 			<!-- Biografía -->

@@ -20,8 +20,8 @@ require_once 'views/layout/head.php'; ?>
 					<div class="border p-3 bg-light h-100">
 						<!-- Imagen -->
 						<div class="mb-3">
-							<input type="file" class="form-control" accept="image/*" name="cover_img" id="cover_img">
-							<small class="text-muted ms-1">Sube una imagen para tu post (opcional)</small>
+							<input type="file" required class="form-control" accept="image/*" name="cover_img" id="cover_img">
+							<small class="text-muted ms-1">Sube una imagen para tu post</small>
 						</div>
 						<!-- Título -->
 						<div class="mb-3">

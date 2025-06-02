@@ -143,7 +143,7 @@ class ApiController extends BaseController
 			$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
 			$uniqueName = uniqid('book_', true) . '.' . $extension;
 
-			$filePath = 'uploads/book/' . $uniqueName;
+			$filePath = 'uploads/books/' . $uniqueName;
 			$book->setCoverImg($filePath);
 
 			if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
@@ -203,7 +203,7 @@ class ApiController extends BaseController
 			$extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
 			$uniqueName = uniqid('book_', true) . '.' . $extension;
 
-			$filePath = 'uploads/book/' . $uniqueName;
+			$filePath = 'uploads/books/' . $uniqueName;
 			$book->setCoverImg($filePath);
 
 			if (!move_uploaded_file($cover['tmp_name'], $filePath)) {
