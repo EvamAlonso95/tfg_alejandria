@@ -58,7 +58,7 @@
 		// Inicializar DataTable
 		$('#myTable').DataTable({
 			language: {
-				url: "https://cdn.datatables.net/plug-ins/2.2.2/i18n/es-ES.json"
+				url: "<?= BASE_URL ?>assets/js/datatable.locale.es_ES.json"
 			},
 			ajax: "<?= BASE_URL ?>api/users",
 			columns: [{
@@ -148,6 +148,10 @@
 					error: function(xhr, status, error) {
 						console.error('Error al eliminar:', error);
 						showToast('Ocurrió un error al eliminar. Intenta de nuevo.', false);
+					},
+					complete: function() {
+						$('body').css('overflow', 'auto');
+						$('#spinner').addClass('d-none');
 					}
 				});
 			}
