@@ -45,12 +45,12 @@ class Genre
 
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData($this->id);
 	}
 
 	public function getName(): ?string
 	{
-		return $this->name;
+		return Utils::escapeData($this->name);
 	}
 
 	// Setters

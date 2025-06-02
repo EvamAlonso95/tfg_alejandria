@@ -51,15 +51,15 @@ class Author
 
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData( $this->id);
 	}
 	public function getName(): ?string
 	{
-		return $this->name;
+		return Utils::escapeData( $this->name);
 	}
 	public function getBiography(): ?string
 	{
-		return $this->biography;
+		return Utils::escapeData( $this->biography);
 	}
 	public function getProfileImage(): ?string
 	{
@@ -67,7 +67,7 @@ class Author
 	}
 	public function getUser(): ?User
 	{
-		return $this->user;
+		return  $this->user;
 	}
 
 	public function setId(int $id): void

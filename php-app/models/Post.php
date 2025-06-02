@@ -64,15 +64,15 @@ class Post
 	//GETTERS
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData($this->id);
 	}
 	public function getTitle(): ?string
 	{
-		return $this->title;
+		return Utils::escapeData($this->title);
 	}
 	public function getContent(): ?string
 	{
-		return $this->content;
+		return Utils::escapeData($this->content);
 	}
 	public function getCoverImg(): ?string
 	{
@@ -80,7 +80,7 @@ class Post
 	}
 	public function getCreatedAt(): ?string
 	{
-		return $this->date;
+		return Utils::escapeData($this->date);
 	}
 	public function getAuhtor(): User
 	{
@@ -95,7 +95,7 @@ class Post
 	public static function getAllPosts(): array
 	{
 		$temp = Database::getInstance();
-		$sql = "SELECT * FROM posts ORDER BY date DESC";
+		$sql = "SELECT * FROM posts ORDER BY date ASC";
 		$stmt = $temp->prepare($sql);
 		$stmt->execute();
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -112,7 +112,7 @@ class Post
 	public static function getAllPostsByAuthor($userId): array
 	{
 		$temp = Database::getInstance();
-		$sql = "SELECT * FROM posts WHERE id_author = :id_author";
+		$sql = "SELECT * FROM posts WHERE id_author = :id_author ORDER BY date ASC";
 		$stmt = $temp->prepare($sql);
 		$stmt->execute([':id_author' => $userId]);
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);

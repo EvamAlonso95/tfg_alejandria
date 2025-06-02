@@ -45,6 +45,30 @@ class Utils
 		}
 	}
 
+	public static function setToast($message, $isSuccess = true)
+	{
+		$_SESSION['toast'] = [
+			'message' => $message,
+			'isSuccess' => $isSuccess
+		];
+	}
+
+	public static function getToast(): array
+	{
+		$data = $_SESSION['toast'] ?? [];
+		if (isset($data['message'])) {
+			unset($_SESSION['toast']);
+		}
+		return $data;
+	}
+
+	public static function escapeData($data)
+	{
+		return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+	}
+
+
+
 	public static function obtenerFraseLiterariaAleatoria()
 	{
 		$frases = [
@@ -92,22 +116,5 @@ class Utils
 		];
 
 		return $frases[array_rand($frases)];
-	}
-
-	public static function setToast($message, $isSuccess = true)
-	{
-		$_SESSION['toast'] = [
-			'message' => $message,
-			'isSuccess' => $isSuccess
-		];
-	}
-
-	public static function getToast(): array
-	{
-		$data = $_SESSION['toast'] ?? [];
-		if (isset($data['message'])) {
-			unset($_SESSION['toast']);
-		}
-		return $data;
 	}
 }

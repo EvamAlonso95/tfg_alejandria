@@ -20,7 +20,7 @@ class BookUser
 	}
 	public function getBookUserId(): ?int
 	{
-		return $this->bookUserId;
+		return Utils::escapeData($this->bookUserId);
 	}
 	public function setBookUserId(?int $bookUserId): void
 	{

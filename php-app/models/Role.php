@@ -46,12 +46,12 @@ class Role
 
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData($this->id);
 	}
 
 	public function getName(): string
 	{
-		return $this->name;
+		return Utils::escapeData($this->name);
 	}
 
 	// Método para obtener todos los roles

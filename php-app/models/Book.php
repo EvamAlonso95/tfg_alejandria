@@ -120,17 +120,17 @@ class Book
 	//GETTERS
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData($this->id);
 	}
 
 	public function getTitle(): ?string
 	{
-		return $this->title;
+		return Utils::escapeData($this->title);
 	}
 
 	public function getSynopsis(): ?string
 	{
-		return $this->synopsis;
+		return Utils::escapeData($this->synopsis);
 	}
 
 	public function getCoverImg(): ?string

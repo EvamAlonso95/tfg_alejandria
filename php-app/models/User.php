@@ -36,22 +36,22 @@ class User
 	// -- GETTERS --
 	public function getId(): ?int
 	{
-		return $this->id;
+		return Utils::escapeData($this->id);
 	}
 
 	public function getName(): ?string
 	{
-		return $this->name;
+		return Utils::escapeData($this->name);
 	}
 
 	public function getEmail(): ?string
 	{
-		return $this->email;
+		return Utils::escapeData($this->email);
 	}
 
 	public function getBiography(): ?string
 	{
-		return $this->biography;
+		return Utils::escapeData($this->biography);
 	}
 
 	public function getProfileImage(): ?string
@@ -244,12 +244,11 @@ class User
 	{
 		try {
 			$stmt = Database::getInstance()->prepare(
-				"UPDATE users SET name = :name, email = :email, biography = :biography, profile_img = :profileImage, id_role = :role WHERE id = :id"
+				"UPDATE users SET name = :name, biography = :biography, profile_img = :profileImage, id_role = :role WHERE id = :id"
 			);
 
 			$stmt->execute([
 				':name' => $this->name,
-				':email' => $this->email,
 				':biography' => $this->biography,
 				':profileImage' => $this->profileImage,
 				':id' => $this->id,
