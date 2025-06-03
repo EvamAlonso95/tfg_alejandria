@@ -19,7 +19,7 @@ require_once 'views/layout/head.php';
 			<?php if ($post->getAuhtor()->getId() == $_SESSION['identity']->id): ?>
 				<form action="<?= BASE_URL ?>post/delete" method="post" onsubmit="return confirm('¿Estás seguro de eliminar este post?');">
 					<input type="hidden" name="post_id" value="<?= $post->getId(); ?>">
-					<button type="submit" class="btn btn-delete-style m">
+					<button type="submit" class="btn btn-delete-style btn-delete-post m">
 						<i class="bi bi-trash"></i> Eliminar
 					</button>
 				</form>

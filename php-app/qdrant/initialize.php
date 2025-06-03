@@ -3,6 +3,7 @@ chdir('../');
 require_once 'autoload.php';
 require_once 'config/parameters.php';
 require_once 'config/db.php';
+require_once 'helpers/Utils.php';
 require_once './qdrant/QdrantLogic.php';
 require_once './qdrant/QdrantClient.php';
 
