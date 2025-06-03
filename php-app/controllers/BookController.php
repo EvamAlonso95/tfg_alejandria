@@ -15,7 +15,7 @@ class BookController extends BaseController
 	{
 		$this->_checkLogged();
 		$this->_checkBookId();
-
+		$this->title = 'Información del libro';
 		try {
 			$book = Book::createById($_GET['bookId']);
 		} catch (Exception $e) {

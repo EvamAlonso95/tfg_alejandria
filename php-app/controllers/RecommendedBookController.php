@@ -5,6 +5,7 @@ class RecommendedBookController extends BaseController
 	public function index()
 	{
 		$this->_checkLogged();
+		$this->title = 'Recomendaciones';
 
 		$qdrant = new QdrantLogic();
 		$qdrantRecomendations = $qdrant->getRecommendationsBooksId($_SESSION['identity']->id);

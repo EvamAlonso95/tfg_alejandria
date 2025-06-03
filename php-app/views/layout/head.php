@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="<?= BASE_URL ?>assets/css/jquery-ui.css">
 
 	<title><?= $this->title ?? 'Alejandria' ?></title>
+	<link rel="icon" type="image/vnd.icon" href=" <?= BASE_URL ?>assets/img/book.ico">
 
 
 

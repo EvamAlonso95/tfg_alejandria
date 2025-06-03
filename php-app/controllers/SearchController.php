@@ -5,6 +5,7 @@ class SearchController extends BaseController
 	public function index()
 	{
 		$this->_checkLogged();
+		$this->title = 'Búsqueda de libros';
 		$books = null;
 		if (!empty($_GET['search'])) {
 			$books = Book::search($_GET['search']);
