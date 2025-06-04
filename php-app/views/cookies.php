@@ -1,6 +1,6 @@
 <?php require_once 'views/layout/head.php'; ?>
 <main class="full-page p-4">
-    <div class="bg-light pt-5 pb-5 min-vh-100">
+    <div class="bg-light pt-5 pb-5 ">
         <div class="container text-center">
             <h1 class="display-4 font-weight-bold mb-4">Uso de Cookies</h1>
             <p class="lead text-secondary">

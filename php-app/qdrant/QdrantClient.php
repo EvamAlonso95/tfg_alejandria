@@ -110,7 +110,6 @@ class QdrantClient
 
 		if ($httpCode >= 400) {
 			$body = json_decode($response, true) ?? $response;
-			var_dump($body);
 			throw new Exception("Error HTTP $httpCode en $endpoint: " . print_r($body, true));
 		}
 

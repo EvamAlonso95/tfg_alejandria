@@ -1,6 +1,6 @@
 <?php require_once 'views/layout/head.php'; ?>
 <main class="full-page p-4">
-    <div class="bg-light pt-5 pb-5 min-vh-100">
+    <div class="bg-light pt-5 pb-5">
         <div class="container">
             <h1 class="display-4 font-weight-bold text-center mb-5">Política de Privacidad</h1>
             <p class="text-justify">

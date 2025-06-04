@@ -4,7 +4,7 @@
     <div class="container full-page d-flex justify-content-center">
         <?php require_once 'views/components/landingAnimation.php' ?>
 
-        <section class="quote mt-auto mb-auto" id="quote">
+        <section class="quote mt-auto mb-auto text-center" id="quote">
             <div class="quote-text section-bg-image-block">
                 <h3 class="p-2" data-aos="zoom-in" data-aos-delay="800">
                     <?= $quote ?>

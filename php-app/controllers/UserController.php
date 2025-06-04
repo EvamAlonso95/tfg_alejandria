@@ -84,6 +84,18 @@ class UserController extends BaseController
 			$user->setBiography('');
 
 			if ($user->save()) {
+				if ($user->getRole()->getName() === 'author') {
+					// Si el usuario es autor, crear un autor asociado
+					$author = new Author();
+					$author->setName($name);
+					$author->setBiography('');
+					$author->setProfileImage('assets/img/default_perfil.jpg');
+					$author->setUser($user);
+					$author->save();
+					$qdrant = new QdrantLogic();
+					$qdrant->restart();
+				}
+
 				$_SESSION['register'] = "complete";
 				$_SESSION['email'] = $user->getEmail();
 				return Utils::redirect('user/login');
@@ -160,7 +172,7 @@ class UserController extends BaseController
 
 		$user = User::createById($_SESSION['identity']->id);
 		$user->setName($_POST['name']);
-		
+
 		$user->setBiography($_POST['biography']);
 
 		// Comprobar si se ha subido una imagen

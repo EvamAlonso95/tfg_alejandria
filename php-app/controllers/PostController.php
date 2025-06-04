@@ -7,7 +7,7 @@ class PostController extends BaseController
 	 */
 	private function _checkIsAuthorPost($post)
 	{
-		if (!Utils::isAuthor() || $post->getAuhtor()->getId() !== $_SESSION['identity']->id) {
+		if (!Utils::isAuthor() || $post->getAuhtor()->getId() !== Author::createByUserId($_SESSION['identity']->id)->getId()) {
 			Utils::redirect('post');
 		}
 	}
@@ -15,8 +15,8 @@ class PostController extends BaseController
 	public function index()
 	{
 		$this->_checkLogged();
-		$this->_checkAuthor();
-		$posts = Post::getAllPostsByAuthor($_SESSION['identity']->id);
+		$this->_checkAuthor();;
+		$posts = Post::getAllPostsByAuthor(Author::createByUserId($_SESSION['identity']->id)->getId());
 		// var_dump($posts);
 		$this->title = 'Publicaciones';
 		require_once 'views/publication/publication.php';
@@ -76,7 +76,7 @@ class PostController extends BaseController
 		$post->setDate(date('Y-m-d H:i:s'));
 
 
-		$post->setUser(User::createById($_SESSION['identity']->id));
+		$post->setAuthor(Author::createByUserId($_SESSION['identity']->id));
 
 		// Guardar en la base de datos
 		$post->createPost();

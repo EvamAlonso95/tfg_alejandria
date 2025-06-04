@@ -6,7 +6,7 @@ class Post
 	private ?string $content = null;
 	private ?string $post_img = null;
 	private ?string $date = null;
-	private ?User $user;
+	private ?Author $author;
 
 	public static function createById(int $id): self
 	{
@@ -26,7 +26,7 @@ class Post
 		$post->setCoverImg($data->post_img);
 		$post->setDate($data->date);
 
-		$post->setUser(User::createById($data->id_author));
+		$post->setAuthor(Author::createById($data->id_author));
 
 		return $post;
 	}
@@ -56,9 +56,9 @@ class Post
 		$this->date = $date;
 	}
 
-	public function setUser(User $user): void
+	public function setAuthor(Author $author): void
 	{
-		$this->user = $user;
+		$this->author = $author;
 	}
 
 	//GETTERS
@@ -82,9 +82,9 @@ class Post
 	{
 		return Utils::escapeData($this->date);
 	}
-	public function getAuhtor(): User
+	public function getAuhtor(): Author
 	{
-		return $this->user;
+		return $this->author;
 	}
 
 	//Métodos
@@ -95,7 +95,7 @@ class Post
 	public static function getAllPosts(): array
 	{
 		$temp = Database::getInstance();
-		$sql = "SELECT * FROM posts ORDER BY date ASC";
+		$sql = "SELECT * FROM posts ORDER BY date DESC ";
 		$stmt = $temp->prepare($sql);
 		$stmt->execute();
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -109,12 +109,12 @@ class Post
 	/**
 	 * @return Post[]
 	 */
-	public static function getAllPostsByAuthor($userId): array
+	public static function getAllPostsByAuthor($authorId): array
 	{
 		$temp = Database::getInstance();
 		$sql = "SELECT * FROM posts WHERE id_author = :id_author ORDER BY date ASC";
 		$stmt = $temp->prepare($sql);
-		$stmt->execute([':id_author' => $userId]);
+		$stmt->execute([':id_author' => $authorId]);
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$posts = [];
 		foreach ($dataPosts as $dataPost) {
@@ -131,7 +131,7 @@ class Post
 		$stmt->bindParam(':title', $this->title);
 		$stmt->bindParam(':content', $this->content);
 		$stmt->bindParam(':post_img', $this->post_img);
-		$stmt->bindParam(':id_author', $this->user->getId());
+		$stmt->bindParam(':id_author', $this->author->getId());
 		return $stmt->execute();
 	}
 
@@ -139,7 +139,7 @@ class Post
 	public function deletePost(): bool
 	{
 		$stmt = Database::getInstance()->prepare("DELETE FROM posts WHERE id = :id AND id_author = :id_author");
-		$stmt->bindParam(':id_author', $this->user->getId(), PDO::PARAM_INT);
+		$stmt->bindParam(':id_author', $this->author->getId(), PDO::PARAM_INT);
 		$stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 		return $stmt->execute();
 	}

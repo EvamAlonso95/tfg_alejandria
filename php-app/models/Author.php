@@ -29,6 +29,29 @@ class Author
 		return $author;
 	}
 
+	public static function createByUserId(int $userId): self
+	{
+		$user = User::createById($userId);
+		if (!$user) {
+			throw new Exception("Usuario no encontrado con ID: $userId");
+		}
+		$stmt = Database::getInstance()->prepare("SELECT * FROM authors WHERE id_user = :id_user");
+		$stmt->execute([':id_user' => $userId]);
+		$data = $stmt->fetch(PDO::FETCH_OBJ);
+		if (!$data) {
+			throw new Exception("Autor no encontrado con ID de usuario: $userId");
+		}
+		$author = new self();
+		$author->setId($data->id);
+		$author->setName($data->name);
+		$author->setBiography($data->biography);
+		$author->setProfileImage($data->profile_img);
+		if ($data->id_user) {
+			$author->setUser(User::createById($data->id_user));
+		}
+		return $author;
+	}
+
 	public static function createByName(string $name): self
 	{
 		$author = new self();

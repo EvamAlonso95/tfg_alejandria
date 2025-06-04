@@ -1,6 +1,6 @@
 <?php require_once 'views/layout/head.php'; ?>
 <main class="full-page p-4">
-	<div class=" bg-light text-center pt-5" style="height: 100vh;">
+	<div class=" bg-light text-center p-5" >
 		<div class="container">
 			<h1 class="display-1 pt-5 font-weight-bold">404</h1>
 			<h1 class="display-4 pt-1 pb-3">Página no encotrada</h1>

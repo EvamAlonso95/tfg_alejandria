@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mysql
--- Tiempo de generación: 31-05-2025 a las 15:52:22
+-- Tiempo de generación: 04-06-2025 a las 18:18:52
 -- Versión del servidor: 8.4.5
 -- Versión de PHP: 8.2.27
 
@@ -30,9 +30,9 @@ use `alejandria`;
 
 CREATE TABLE `authors` (
   `id` int NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `biography` text COLLATE utf8mb4_general_ci NOT NULL,
-  `profile_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `biography` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `profile_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_user` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -155,9 +155,9 @@ INSERT INTO `authors` (`id`, `name`, `biography`, `profile_img`, `id_user`) VALU
 
 CREATE TABLE `books` (
   `id` int NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `synopsis` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `cover_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `synopsis` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cover_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2329,7 +2329,7 @@ CREATE TABLE `books_users_saved` (
   `id` int NOT NULL,
   `id_user` int NOT NULL,
   `id_book` int NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2453,9 +2453,6 @@ INSERT INTO `books_users_saved` (`id`, `id_user`, `id_book`, `status`) VALUES
 (128, 1, 25, 'want to read'),
 (134, 11, 155, 'want to read'),
 (137, 1, 61, 'reading'),
-(138, 12, 61, 'want to read'),
-(140, 12, 62, 'want to read'),
-(141, 12, 65, 'want to read'),
 (163, 11, 269, 'want to read'),
 (165, 6, 129, 'want to read');
 
@@ -2467,7 +2464,7 @@ INSERT INTO `books_users_saved` (`id`, `id_user`, `id_book`, `status`) VALUES
 
 CREATE TABLE `genres` (
   `id` int NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2611,10 +2608,10 @@ INSERT INTO `genres` (`id`, `name`) VALUES
 
 CREATE TABLE `posts` (
   `id` int NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `content` text COLLATE utf8mb4_general_ci NOT NULL,
-  `date` datetime NOT NULL,
-  `post_img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_author` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2623,55 +2620,55 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `content`, `date`, `post_img`, `id_author`) VALUES
-(1, 'El arte de la construcción de mundos por Sanderson', 'Un análisis profundo sobre cómo Brandon Sanderson crea sus universos complejos y detallados.', '2024-01-15 10:22:14', 'assets\\img\\default_post.jpg', 7),
-(2, 'Los sistemas de magia en el Cosmere', 'Explorando la alomancia, la feruquimia y otras formas de magia en las obras de Sanderson.', '2024-01-28 18:05:30', 'assets\\img\\default_post.jpg', 7),
-(3, 'Reseña: El Archivo de las Tormentas', 'Una mirada a la épica saga de Sanderson y por qué es tan aclamada.', '2024-02-10 09:15:55', 'assets\\img\\default_post.jpg', 7),
-(4, 'Sanderson y su ritmo de escritura prolífico', '¿Cómo logra Brandon Sanderson mantener una producción literaria tan constante y de alta calidad?', '2024-02-25 14:40:11', 'assets\\img\\default_post.jpg', 7),
-(5, 'Personajes memorables de Brandon Sanderson', 'Un homenaje a los héroes y villanos que pueblan sus novelas.', '2024-03-08 21:12:03', 'assets\\img\\default_post.jpg', 7),
-(6, 'La influencia de Tolkien en Sanderson', 'Rastreando las huellas del maestro de la fantasía en la obra de Sanderson.', '2024-03-22 11:55:48', 'assets\\img\\default_post.jpg', 7),
-(7, 'Mistborn: Más allá de la trilogía original', 'Explorando las eras de Mistborn y su evolución.', '2024-04-05 16:20:00', 'assets\\img\\default_post.jpg', 7),
-(8, 'El futuro del Cosmere: Teorías y expectativas', 'Qué podemos esperar de las próximas entregas del universo interconectado de Sanderson.', '2024-04-19 08:30:15', 'assets\\img\\default_post.jpg', 7),
-(9, 'Sanderson para principiantes: ¿Por dónde empezar?', 'Una guía para aquellos que quieren adentrarse en el mundo de Brandon Sanderson.', '2024-05-03 19:00:50', 'assets\\img\\default_post.jpg', 7),
-(10, 'Las clases de escritura de Brandon Sanderson', 'Lecciones valiosas del autor sobre el arte de narrar historias.', '2024-05-17 12:10:25', 'assets\\img\\default_post.jpg', 7),
-(11, 'La mitología reimaginada por Neil Gaiman', 'Cómo Gaiman toma mitos antiguos y los transforma en historias contemporáneas.', '2024-05-30 15:33:00', 'assets\\img\\default_post.jpg', 8),
-(12, 'Sandman: Un hito en la novela gráfica', 'Analizando el impacto y la profundidad de la obra maestra de Gaiman.', '2024-06-12 09:45:10', 'assets\\img\\default_post.jpg', 8),
-(13, 'El estilo narrativo único de Gaiman', 'Características de la prosa poética y oscura de Neil Gaiman.', '2024-06-26 17:28:42', 'assets\\img\\default_post.jpg', 8),
-(14, 'American Gods: Fe y modernidad', 'Una reflexión sobre la novela y su adaptación televisiva.', '2024-07-09 10:05:18', 'assets\\img\\default_post.jpg', 8),
-(15, 'Coraline y los miedos infantiles', 'Explorando los temas oscuros y la valentía en la obra juvenil de Gaiman.', '2024-07-24 20:50:35', 'assets\\img\\default_post.jpg', 8),
-(16, 'Gaiman y su relación con los cuentos de hadas', 'Cómo los cuentos clásicos inspiran y se reflejan en sus narraciones.', '2024-08-07 13:18:09', 'assets\\img\\default_post.jpg', 8),
-(17, 'Stardust: Un romance de fantasía', 'Una mirada a la belleza y la magia de esta historia de amor y aventura.', '2024-08-21 22:00:00', 'assets\\img\\default_post.jpg', 8),
-(18, 'La versatilidad de Neil Gaiman: De cómics a novelas', 'Explorando los diferentes formatos en los que Gaiman ha contado historias.', '2024-09-04 07:40:22', 'assets\\img\\default_post.jpg', 8),
-(19, 'Good Omens: Humor y apocalipsis', 'La colaboración entre Gaiman y Pratchett y su genial resultado.', '2024-09-18 18:15:57', 'assets\\img\\default_post.jpg', 8),
-(20, 'Los discursos inspiradores de Neil Gaiman', 'Sabiduría y motivación en las palabras del autor a nuevos creadores.', '2024-10-02 11:30:05', 'assets\\img\\default_post.jpg', 8),
-(21, 'El realismo mágico en la obra de Isabel Allende', 'Cómo Allende teje lo fantástico con la realidad latinoamericana.', '2024-10-15 14:05:33', 'assets\\img\\default_post.jpg', 9),
-(22, 'La Casa de los Espíritus: Un clásico moderno', 'Analizando la saga familiar y el contexto histórico de esta novela fundamental.', '2024-10-29 08:55:21', 'assets\\img\\default_post.jpg', 9),
-(23, 'Mujeres fuertes en las novelas de Allende', 'Un tributo a los personajes femeninos resilientes y poderosos creados por la autora.', '2024-11-11 19:40:00', 'assets\\img\\default_post.jpg', 9),
-(24, 'Isabel Allende y la memoria histórica', 'La importancia del recuerdo y la historia en su narrativa.', '2024-11-25 10:10:45', 'assets\\img\\default_post.jpg', 9),
-(25, 'Paula: Una carta de amor y duelo', 'Reflexionando sobre la obra más personal y conmovedora de Allende.', '2024-12-08 22:30:19', 'assets\\img\\default_post.jpg', 9),
-(26, 'El exilio y la identidad en Isabel Allende', 'Cómo la experiencia del exilio ha moldeado su perspectiva y su escritura.', '2024-12-22 12:00:50', 'assets\\img\\default_post.jpg', 9),
-(27, 'De amor y de sombra: Pasión y política', 'Explorando la intersección del romance y la lucha social en esta novela.', '2025-01-06 17:45:30', 'assets\\img\\default_post.jpg', 9),
-(28, 'La evolución de Isabel Allende como escritora', 'Desde sus primeras obras hasta sus novelas más recientes.', '2025-01-20 09:25:00', 'assets\\img\\default_post.jpg', 9),
-(29, 'Isabel Allende y su compromiso social', 'La voz de la autora en temas de justicia, feminismo y derechos humanos.', '2025-02-03 16:55:11', 'assets\\img\\default_post.jpg', 9),
-(30, 'Cuentos de Eva Luna: La magia de narrar', 'Una mirada a la colección de cuentos que encapsula el estilo de Allende.', '2025-02-17 11:11:22', 'assets\\img\\default_post.jpg', 9),
-(31, 'El surrealismo cotidiano de Haruki Murakami', 'Explorando cómo lo extraño se entrelaza con la vida diaria en sus novelas.', '2025-03-01 20:08:14', 'assets\\img\\default_post.jpg', 10),
-(32, 'Tokio Blues (Norwegian Wood): Nostalgia y pérdida', 'Un análisis de la obra que catapultó a Murakami a la fama internacional.', '2025-03-14 07:35:59', 'assets\\img\\default_post.jpg', 10),
-(33, 'La música como personaje en Murakami', 'La importancia del jazz, el rock y la música clásica en sus narrativas.', '2025-03-27 14:50:20', 'assets\\img\\default_post.jpg', 10),
-(34, 'Kafka en la orilla: Un viaje onírico', 'Descifrando los misterios y simbolismos de esta compleja novela.', '2025-04-09 23:15:00', 'assets\\img\\default_post.jpg', 10),
-(35, 'Los gatos en la obra de Murakami: ¿Qué significan?', 'Un elemento recurrente y enigmático en sus historias.', '2025-04-22 10:00:30', 'assets\\img\\default_post.jpg', 10),
-(36, 'La soledad y la alienación en el Japón moderno según Murakami', 'Temas centrales que resuenan en sus personajes y tramas.', '2025-05-05 15:22:45', 'assets\\img\\default_post.jpg', 10),
-(37, '1Q84: Mundos paralelos y realidades alternativas', 'Una inmersión en la ambiciosa trilogía de Murakami.', '2025-05-18 09:09:09', 'assets\\img\\default_post.jpg', 10),
-(38, 'El estilo minimalista y evocador de Murakami', 'Cómo Murakami crea atmósferas únicas con una prosa aparentemente sencilla.', '2025-05-31 19:30:17', 'assets\\img\\default_post.jpg', 10),
-(39, 'Murakami y la cultura pop occidental', 'Referencias a la literatura, cine y música de occidente en sus obras.', '2025-06-13 12:40:55', 'assets\\img\\default_post.jpg', 10),
-(40, 'Correr y escribir: La disciplina según Murakami', 'Reflexiones del autor sobre la conexión entre la actividad física y la creatividad.', '2025-06-26 21:05:00', 'assets\\img\\default_post.jpg', 10),
-(41, 'La voz poderosa de Chimamanda Ngozi Adichie', 'Explorando el impacto de Adichie en la literatura contemporánea y el feminismo.', '2025-07-08 08:10:12', 'assets\\img\\default_post.jpg', 11),
-(42, 'Americanah: Identidad, raza y migración', 'Un análisis profundo de la aclamada novela de Adichie.', '2025-07-21 16:35:40', 'assets\\img\\default_post.jpg', 11),
-(43, 'El peligro de la historia única', 'Reflexionando sobre la influyente charla TED de Adichie y su relevancia.', '2025-08-03 11:55:00', 'assets\\img\\default_post.jpg', 11),
-(45, 'Medio sol amarillo: Guerra y memoria en Nigeria', 'Una mirada a la novela histórica de Adichie sobre la guerra de Biafra.', '2025-08-29 09:00:15', 'assets\\img\\default_post.jpg', 11),
-(46, 'La importancia de la representación en la literatura según Adichie', 'Por qué es crucial que diversas voces y experiencias sean contadas.', '2025-09-11 14:48:30', 'assets\\img\\default_post.jpg', 11),
-(47, 'El estilo narrativo de Adichie: Claridad y emoción', 'Características de su prosa directa y conmovedora.', '2025-09-24 22:10:05', 'assets\\img\\default_post.jpg', 11),
-(48, 'Adichie y la diáspora africana', 'Explorando temas de pertenencia, hogar y la experiencia de vivir entre culturas.', '2025-10-07 10:25:50', 'assets\\img\\default_post.jpg', 11),
-(49, 'Querida Ijeawele: Un manifiesto feminista en quince sugerencias', 'Analizando las lecciones prácticas de Adichie para criar a una hija feminista.', '2025-10-20 17:00:00', 'assets\\img\\default_post.jpg', 11),
-(50, 'El legado de Chinua Achebe en la obra de Adichie', 'Rastreando la influencia del padre de la literatura africana moderna.', '2025-11-02 13:33:19', 'assets\\img\\default_post.jpg', 11);
+(1, 'El arte de la construcción de mundos por Sanderson', 'Un análisis profundo sobre cómo Brandon Sanderson crea sus universos complejos y detallados.', '2025-05-15 10:30:00', 'assets\\img\\default_post.jpg', 7),
+(2, 'Los sistemas de magia en el Cosmere', 'Explorando la alomancia, la feruquimia y otras formas de magia en las obras de Sanderson.', '2025-04-28 14:45:00', 'assets\\img\\default_post.jpg', 7),
+(3, 'Reseña: El Archivo de las Tormentas', 'Una mirada a la épica saga de Sanderson y por qué es tan aclamada.', '2025-03-20 09:10:00', 'assets\\img\\default_post.jpg', 7),
+(4, 'Sanderson y su ritmo de escritura prolífico', '¿Cómo logra Brandon Sanderson mantener una producción literaria tan constante y de alta calidad?', '2025-02-10 16:20:00', 'assets\\img\\default_post.jpg', 7),
+(5, 'Personajes memorables de Brandon Sanderson', 'Un homenaje a los héroes y villanos que pueblan sus novelas.', '2025-01-05 11:00:00', 'assets\\img\\default_post.jpg', 7),
+(6, 'La influencia de Tolkien en Sanderson', 'Rastreando las huellas del maestro de la fantasía en la obra de Sanderson.', '2024-12-22 08:30:00', 'assets\\img\\default_post.jpg', 7),
+(7, 'Mistborn: Más allá de la trilogía original', 'Explorando las eras de Mistborn y su evolución.', '2024-11-18 13:00:00', 'assets\\img\\default_post.jpg', 7),
+(8, 'El futuro del Cosmere: Teorías y expectativas', 'Qué podemos esperar de las próximas entregas del universo interconectado de Sanderson.', '2024-10-01 17:15:00', 'assets\\img\\default_post.jpg', 7),
+(9, 'Sanderson para principiantes: ¿Por dónde empezar?', 'Una guía para aquellos que quieren adentrarse en el mundo de Brandon Sanderson.', '2024-09-05 09:00:00', 'assets\\img\\default_post.jpg', 7),
+(10, 'Las clases de escritura de Brandon Sanderson', 'Lecciones valiosas del autor sobre el arte de narrar historias.', '2024-08-25 10:40:00', 'assets\\img\\default_post.jpg', 7),
+(11, 'La mitología reimaginada por Neil Gaiman', 'Cómo Gaiman toma mitos antiguos y los transforma en historias contemporáneas.', '2024-07-12 14:00:00', 'assets\\img\\default_post.jpg', 8),
+(12, 'Sandman: Un hito en la novela gráfica', 'Analizando el impacto y la profundidad de la obra maestra de Gaiman.', '2024-06-01 11:30:00', 'assets\\img\\default_post.jpg', 8),
+(13, 'El estilo narrativo único de Gaiman', 'Características de la prosa poética y oscura de Neil Gaiman.', '2024-05-28 16:00:00', 'assets\\img\\default_post.jpg', 8),
+(14, 'American Gods: Fe y modernidad', 'Una reflexión sobre la novela y su adaptación televisiva.', '2024-04-14 09:45:00', 'assets\\img\\default_post.jpg', 8),
+(15, 'Coraline y los miedos infantiles', 'Explorando los temas oscuros y la valentía en la obra juvenil de Gaiman.', '2024-03-08 12:00:00', 'assets\\img\\default_post.jpg', 8),
+(16, 'Gaiman y su relación con los cuentos de hadas', 'Cómo los cuentos clásicos inspiran y se reflejan en sus narraciones.', '2024-02-29 10:15:00', 'assets\\img\\default_post.jpg', 8),
+(17, 'Stardust: Un romance de fantasía', 'Una mirada a la belleza y la magia de esta historia de amor y aventura.', '2024-01-19 15:30:00', 'assets\\img\\default_post.jpg', 8),
+(18, 'La versatilidad de Neil Gaiman: De cómics a novelas', 'Explorando los diferentes formatos en los que Gaiman ha contado historias.', '2023-12-05 08:00:00', 'assets\\img\\default_post.jpg', 8),
+(19, 'Good Omens: Humor y apocalipsis', 'La colaboración entre Gaiman y Pratchett y su genial resultado.', '2023-11-11 17:00:00', 'assets\\img\\default_post.jpg', 8),
+(20, 'Los discursos inspiradores de Neil Gaiman', 'Sabiduría y motivación en las palabras del autor a nuevos creadores.', '2023-10-23 10:00:00', 'assets\\img\\default_post.jpg', 8),
+(21, 'El realismo mágico en la obra de Isabel Allende', 'Cómo Allende teje lo fantástico con la realidad latinoamericana.', '2023-09-15 14:10:00', 'assets\\img\\default_post.jpg', 9),
+(22, 'La Casa de los Espíritus: Un clásico moderno', 'Analizando la saga familiar y el contexto histórico de esta novela fundamental.', '2023-08-01 09:20:00', 'assets\\img\\default_post.jpg', 9),
+(23, 'Mujeres fuertes en las novelas de Allende', 'Un tributo a los personajes femeninos resilientes y poderosos creados por la autora.', '2023-07-25 11:50:00', 'assets\\img\\default_post.jpg', 9),
+(24, 'Isabel Allende y la memoria histórica', 'La importancia del recuerdo y la historia en su narrativa.', '2023-06-18 13:00:00', 'assets\\img\\default_post.jpg', 9),
+(25, 'Paula: Una carta de amor y duelo', 'Reflexionando sobre la obra más personal y conmovedora de Allende.', '2023-05-09 10:30:00', 'assets\\img\\default_post.jpg', 9),
+(26, 'El exilio y la identidad en Isabel Allende', 'Cómo la experiencia del exilio ha moldeado su perspectiva y su escritura.', '2023-04-03 16:40:00', 'assets\\img\\default_post.jpg', 9),
+(27, 'De amor y de sombra: Pasión y política', 'Explorando la intersección del romance y la lucha social en esta novela.', '2023-03-28 08:55:00', 'assets\\img\\default_post.jpg', 9),
+(28, 'La evolución de Isabel Allende como escritora', 'Desde sus primeras obras hasta sus novelas más recientes.', '2023-02-14 12:10:00', 'assets\\img\\default_post.jpg', 9),
+(29, 'Isabel Allende y su compromiso social', 'La voz de la autora en temas de justicia, feminismo y derechos humanos.', '2023-01-30 15:20:00', 'assets\\img\\default_post.jpg', 9),
+(30, 'Cuentos de Eva Luna: La magia de narrar', 'Una mirada a la colección de cuentos que encapsula el estilo de Allende.', '2023-01-07 09:30:00', 'assets\\img\\default_post.jpg', 9),
+(31, 'El surrealismo cotidiano de Haruki Murakami', 'Explorando cómo lo extraño se entrelaza con la vida diaria en sus novelas.', '2025-05-10 10:00:00', 'assets\\img\\default_post.jpg', 10),
+(32, 'Tokio Blues (Norwegian Wood): Nostalgia y pérdida', 'Un análisis de la obra que catapultó a Murakami a la fama internacional.', '2025-04-22 14:15:00', 'assets\\img\\default_post.jpg', 10),
+(33, 'La música como personaje en Murakami', 'La importancia del jazz, el rock y la música clásica en sus narrativas.', '2025-03-17 09:00:00', 'assets\\img\\default_post.jpg', 10),
+(34, 'Kafka en la orilla: Un viaje onírico', 'Descifrando los misterios y simbolismos de esta compleja novela.', '2025-02-05 16:30:00', 'assets\\img\\default_post.jpg', 10),
+(35, 'Los gatos en la obra de Murakami: ¿Qué significan?', 'Un elemento recurrente y enigmático en sus historias.', '2025-01-01 11:10:00', 'assets\\img\\default_post.jpg', 10),
+(36, 'La soledad y la alienación en el Japón moderno según Murakami', 'Temas centrales que resuenan en sus personajes y tramas.', '2024-12-19 08:45:00', 'assets\\img\\default_post.jpg', 10),
+(37, '1Q84: Mundos paralelos y realidades alternativas', 'Una inmersión en la ambiciosa trilogía de Murakami.', '2024-11-15 13:50:00', 'assets\\img\\default_post.jpg', 10),
+(38, 'El estilo minimalista y evocador de Murakami', 'Cómo Murakami crea atmósferas únicas con una prosa aparentemente sencilla.', '2024-10-08 17:05:00', 'assets\\img\\default_post.jpg', 10),
+(39, 'Murakami y la cultura pop occidental', 'Referencias a la literatura, cine y música de occidente en sus obras.', '2024-09-01 09:30:00', 'assets\\img\\default_post.jpg', 10),
+(40, 'Correr y escribir: La disciplina según Murakami', 'Reflexiones del autor sobre la conexión entre la actividad física y la creatividad.', '2024-08-20 10:55:00', 'assets\\img\\default_post.jpg', 10),
+(41, 'La voz poderosa de Chimamanda Ngozi Adichie', 'Explorando el impacto de Adichie en la literatura contemporánea y el feminismo.', '2025-05-20 10:15:00', 'assets\\img\\default_post.jpg', 11),
+(42, 'Americanah: Identidad, raza y migración', 'Un análisis profundo de la aclamada novela de Adichie.', '2025-04-10 14:30:00', 'assets\\img\\default_post.jpg', 11),
+(43, 'El peligro de la historia única', 'Reflexionando sobre la influyente charla TED de Adichie y su relevancia.', '2025-03-05 09:00:00', 'assets\\img\\default_post.jpg', 11),
+(45, 'Medio sol amarillo: Guerra y memoria en Nigeria', 'Una mirada a la novela histórica de Adichie sobre la guerra de Biafra.', '2025-02-01 16:00:00', 'assets\\img\\default_post.jpg', 11),
+(46, 'La importancia de la representación en la literatura según Adichie', 'Por qué es crucial que diversas voces y experiencias sean contadas.', '2025-01-10 11:20:00', 'assets\\img\\default_post.jpg', 11),
+(47, 'El estilo narrativo de Adichie: Claridad y emoción', 'Características de su prosa directa y conmovedora.', '2024-12-25 08:50:00', 'assets\\img\\default_post.jpg', 11),
+(48, 'Adichie y la diáspora africana', 'Explorando temas de pertenencia, hogar y la experiencia de vivir entre culturas.', '2024-11-02 13:40:00', 'assets\\img\\default_post.jpg', 11),
+(49, 'Querida Ijeawele: Un manifiesto feminista en quince sugerencias', 'Analizando las lecciones prácticas de Adichie para criar a una hija feminista.', '2024-10-18 17:20:00', 'assets\\img\\default_post.jpg', 11),
+(50, 'El legado de Chinua Achebe en la obra de Adichie', 'Rastreando la influencia del padre de la literatura africana moderna.', '2024-09-09 09:05:00', 'assets\\img\\default_post.jpg', 11);
 
 -- --------------------------------------------------------
 
@@ -2681,7 +2678,7 @@ INSERT INTO `posts` (`id`, `title`, `content`, `date`, `post_img`, `id_author`) 
 
 CREATE TABLE `roles` (
   `id` int NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2701,11 +2698,11 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `biography` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `profile_img` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `biography` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `profile_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id_role` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2724,9 +2721,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `biography`, `profile_im
 (8, 'Neil Gaiman', 'neil.gaiman@example.com', '$2y$04$LoRBFfIf1Rq4boZ7bN2TsOXnQLg/u8i7wZvy.CRKCTIHDuU6j9zAK', '', 'assets/img/default_perfil.jpg', 1),
 (9, 'Isabel Allende', 'isabel.allende@example.com', '$2y$04$cjX5YGJmFojBlan.dU3VqeJr8FYRaV.t97VvgI2vcwgry7U7yS5T6', '', 'assets/img/default_perfil.jpg', 1),
 (10, 'Haruki Murakami', 'haruki.murakami@example.com', '$2y$04$BGrja0AnKLKcdCCoYL67LeozwMEBfmeQIxUIydx9QoL.wAJmEp5iW', '', 'assets/img/default_perfil.jpg', 1),
-(11, 'Chimamanda Ngozi Adichie', 'autor@example.com', '$2y$04$DdiM84YeAZcK04RsUlRPeOwFYt5gIuvbz48ne1rCp5KRIXHywbIVm', '', 'assets/img/default_perfil.jpg', 1),
-(12, 'Eva Alonso', 'evaalonso888@gmail.com', '$2y$04$zEpVS3aIdm9sa6V3TpcN1eaX5PAHc3RcogMd3eJTPDWhhG1dbQzyu', '', 'assets/img/default_perfil.jpg', 2),
-(15, 'Prueba', 'correoPrueba@example.com', '$2y$04$hr0T40L9lvpGVIw6rbqzKu2nh8o2A6MdbGM/T7d/aGc.PvhM4apIO', '', 'assets/img/default_perfil.jpg', 2);
+(11, 'Chimamanda Ngozi Adichie', 'autor@example.com', '$2y$04$DdiM84YeAZcK04RsUlRPeOwFYt5gIuvbz48ne1rCp5KRIXHywbIVm', '', 'assets/img/default_perfil.jpg', 1);
 
 --
 -- Índices para tablas volcadas
@@ -2803,43 +2798,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT de la tabla `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 
 --
 -- AUTO_INCREMENT de la tabla `books_genres`
 --
 ALTER TABLE `books_genres`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1534;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1537;
 
 --
 -- AUTO_INCREMENT de la tabla `books_published`
 --
 ALTER TABLE `books_published`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=367;
 
 --
 -- AUTO_INCREMENT de la tabla `books_users_saved`
 --
 ALTER TABLE `books_users_saved`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT de la tabla `genres`
 --
 ALTER TABLE `genres`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -2851,7 +2846,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Restricciones para tablas volcadas
@@ -2888,7 +2883,7 @@ ALTER TABLE `books_users_saved`
 -- Filtros para la tabla `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `users_id_users_post` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `users_id_users_post` FOREIGN KEY (`id_author`) REFERENCES `authors` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `users`
