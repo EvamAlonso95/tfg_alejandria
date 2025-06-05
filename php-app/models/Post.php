@@ -112,7 +112,7 @@ class Post
 	public static function getAllPostsByAuthor($authorId): array
 	{
 		$temp = Database::getInstance();
-		$sql = "SELECT * FROM posts WHERE id_author = :id_author ORDER BY date ASC";
+		$sql = "SELECT * FROM posts WHERE id_author = :id_author ORDER BY date DESC";
 		$stmt = $temp->prepare($sql);
 		$stmt->execute([':id_author' => $authorId]);
 		$dataPosts = $stmt->fetchAll(PDO::FETCH_OBJ);

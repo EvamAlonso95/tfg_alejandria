@@ -145,9 +145,12 @@
 						$('#myTable').DataTable().ajax.reload();
 						showToast('¡Usuario eliminado correctamente!');
 					},
-					error: function(xhr, status, error) {
-						console.error('Error al eliminar:', error);
-						showToast('Ocurrió un error al eliminar. Intenta de nuevo.', false);
+					error: function(response) {
+						let msg = 'Error al eliminar el usuario. ';
+						if (response.responseJSON && response.responseJSON.error) {
+							msg += response.responseJSON.error;
+						}
+						showToast(msg, false);
 					},
 					complete: function() {
 						$('body').css('overflow', 'auto');
