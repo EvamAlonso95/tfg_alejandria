@@ -2,6 +2,7 @@
 
 /**
  * @var Post $post
+ * @var User $user
  */
 
 try {
@@ -22,7 +23,7 @@ require_once 'views/layout/head.php';
 		<div class="mb-3 ms-3 p-2 d-flex gap-4 align-items-center">
 			<h2 class="fw-bold m-0"><?= $post->getTitle() ?></h2>
 
-			<?php if ($post->getAuhtor()->getId() == $authorId): ?>
+			<?php if ($post->getAuhtor()->getId() == $authorId && $user->getRole()->getName() == "author") : ?>
 				<form action="<?= BASE_URL ?>post/delete" method="post" onsubmit="return confirm('¿Estás seguro de eliminar este post?');">
 					<input type="hidden" name="post_id" value="<?= $post->getId(); ?>">
 					<button type="submit" class="btn btn-delete-style btn-delete-post m">

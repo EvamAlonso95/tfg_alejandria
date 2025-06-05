@@ -73,6 +73,9 @@ class ApiController extends BaseController
 		} catch (Exception $e) {
 			$this->error->apiError('Usuario no encontrado');
 		}
+		if ($_POST['idUser'] == $_SESSION['identity']->id) {
+			$this->error->apiError('No puedes eliminarte a ti mismo.');
+		}
 		$user->deleteUser();
 		echo json_encode(['success' => 'Se ha podido eliminar el usuario.']);
 		return;
